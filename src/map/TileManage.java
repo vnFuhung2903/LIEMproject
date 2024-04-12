@@ -118,7 +118,7 @@ public class TileManage  {
             int tileNum = mapTileNum[col][row];
             int MapX = col * panel.tileSize;
             int MapY = row * panel.tileSize;
-            int screenX = MapX - panel.player.posX + panel.player.screenX;
+            int screenX = MapX - panel.player.posX + panel.player.screenX;// hoi kho hieu
             int screenY = MapY - panel.player.posY + panel.player.screenY;
             if (MapX > panel.player.posX - panel.player.screenX - 100 &&
                     MapX < panel.player.posX + panel.player.screenX + 100 &&
@@ -127,7 +127,7 @@ public class TileManage  {
             ) {
                 if(tile[tileNum] != null) {
                     g2.drawImage(tile[tileNum].image, screenX,screenY, panel.tileSize, panel.tileSize, null);
-                    System.out.println("sX: " +screenX +" sY: " + screenY);
+//                    System.out.println("sX: " +screenX +" sY: " + screenY);
                 } else {
                     g2.drawImage(tile[1].image, screenX,screenY, panel.tileSize, panel.tileSize, null);
                 }

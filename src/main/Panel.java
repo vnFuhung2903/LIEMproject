@@ -3,6 +3,8 @@ package main;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import entity.*;
 import map.*;
@@ -11,7 +13,7 @@ public class Panel extends JPanel implements Runnable {
 
     // SCREEN SETTINGS
     final int originalTileSize = 16; //16*16 tile
-    final int scale = 5;
+    final int scale = 3;
     final public int tileSize = originalTileSize * scale ; // 48*48 tile
     final int characterScale = 2;
     final public int characterSize = tileSize * characterScale;
@@ -22,13 +24,13 @@ public class Panel extends JPanel implements Runnable {
 
 
     // MAP SETTINGS
-    final public int maxMapCol = 200;
-    final public int maxMapRow = 200;
+    final public int maxMapCol = 20;
+    final public int maxMapRow = 20;
     final public int mapWidth = tileSize * maxScreenCol;
     final public int mapHeight = tileSize * maxScreenRow;
 
     // FPS
-    double FPS = 90;
+    double FPS = 60;
 
     // Systems
     public AssetSetter assetSetter = new AssetSetter(this) ;
@@ -38,15 +40,17 @@ public class Panel extends JPanel implements Runnable {
     public entity.Character player = new entity.Character(this, 2, 10, keyH);
     public Monster[] monster = new Monster[10];
     public EventHandler eHandler = new EventHandler(this);
+    ArrayList<Entity> entityList = new ArrayList<>();
+    public ArrayList<Entity> skillList = new ArrayList<>();
 
     public Panel() {
+
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
         this.setBackground(Color.BLACK);
         // reduce flicking when drawing and updating objects on the screen
         // in somes cases, using double buffered my increase resource usage and latency (tang tai nguyen va do tre)
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
-
         this.setFocusable(true);
         // it can receive keyboard and input events when it has input focus
         setUpGame();
@@ -119,8 +123,24 @@ public class Panel extends JPanel implements Runnable {
     }
     public  void update() {
         monster[0].update();
-        player.update();
+        monster[1].update();
+        monster[2].update();
+        monster[3].update();
 
+        player.update();
+        for(int i = 0; i < skillList.size(); i++){
+         if(skillList.get(i) != null){
+            if(skillList.get(i).alive == true) {
+                skillList.get(i).update();
+                System.out.println("loading");
+
+            }
+            else {
+                 skillList.remove(i);
+
+             }
+    }
+}
     }
 
 
@@ -134,11 +154,50 @@ public class Panel extends JPanel implements Runnable {
         mapTile.draw(g2);
 
 
-        // Draw monster
-        monster[0].draw(g2);
+        // ADD ENTITIES TO THE LIST
+        for( int i = 0; i < monster.length ; i++){
+            if (monster[i] != null) {
+                entityList.add(monster[i]);
+            }
+        }
+        for( int i = 0; i < skillList.size() ; i++){
+            if (skillList.get(i) != null) {
+                entityList.add(skillList.get(i));
+            }
+        }
+        entityList.add(player);
 
-        // Draw player character
-        player.draw(g2);
+
+        // SORT
+        Collections.sort(entityList, new Comparator<Entity>() {
+            @Override
+            public int compare(Entity entity1, Entity entity2) {
+                int  result = Integer.compare(entity1.posY, entity2.posY);
+                return 0;
+            }
+            // so sánh toạ độ của các entity
+
+        });
+
+        // DRAW ENTITIES
+        for(int i = 0; i< entityList.size(); i++){
+            entityList.get(i).draw(g2);
+
+        }
+        for(int i = 0; i< entityList.size(); i++){
+            entityList.remove(i);
+
+
+
+
+        }
+        // EMPTY ENTITY LIST
+
+//        // Draw monster
+//        monster[0].draw(g2);
+//
+//        // Draw player character
+//        player.draw(g2);
 
         g2.dispose();
     }

@@ -1,12 +1,13 @@
 package entity;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import main.Panel;
 
 public abstract class Entity {
 
-    Panel panel;
+    protected Panel panel;
     public int posX, posY;
     protected int speed;
     protected int moveCounter = 0;
@@ -14,9 +15,9 @@ public abstract class Entity {
     protected boolean attacking = false;
     protected int skillThread;
     protected boolean flash = false;
-    protected boolean alive;
-
-
+    protected boolean checkSkill = false;
+    public boolean alive;
+    protected Skill skill;
     protected BufferedImage[] moveUp;
     protected BufferedImage[] moveDown;
     protected BufferedImage[] moveLeft;
@@ -40,5 +41,11 @@ public abstract class Entity {
         this.speed = speed;
         this.alive = true;
         this.skillThread = skillThread;
+    }
+
+    public void draw(Graphics2D g2) {
+    }
+    public  void  update(){
+
     }
 }

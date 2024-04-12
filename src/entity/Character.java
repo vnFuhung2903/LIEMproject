@@ -2,6 +2,7 @@ package entity;
 
 import main.Panel;
 import main.KeyHandler;
+import skill.SkillOneForKnight;
 
 import java.awt.*;
 
@@ -23,13 +24,15 @@ public class Character extends Entity {
 
         this.panel = panel;
         this.keyH = keyH;
-        attacking = false;
+        this.attacking = false;
 
-        posX = panel.tileSize * 24;
-        posY = panel.tileSize * 25;
+        // set vi tri cua map so voi man hinh
+        posX = panel.tileSize * 11; // posX = 480
+        posY = panel.tileSize * 10; // posY =480
 
-        this.screenX = panel.screenWidth/2 + panel.tileSize/2;
-        this.screenY = panel.screenHeight/2 + panel.tileSize/2;
+        // set vi tri nhan vat so voi man hinh
+        this.screenX = panel.screenWidth/2 - panel.tileSize; // screenX = 480
+        this.screenY = panel.screenHeight/2 - panel.tileSize; // screenY = 276
 
         getPlayerImage();
         setDefaultValues();
@@ -100,6 +103,7 @@ public class Character extends Entity {
     }
     public void setDefaultValues() {
         direction = "down";
+        skill = new SkillOneForKnight(panel, 10, 30);
     }
 
 
@@ -108,6 +112,13 @@ public class Character extends Entity {
         if (attacking) {
             updateAnimationPunch();
             moveAnimation();
+            if(skill.alive == false && punchIndex == 6) {
+                skill.setSkill(posX, posY, direction, true, this);
+
+//        // ADD skill to The list
+                panel.skillList.add(skill);
+
+            }
 
         } else if(flash) {
             moveFlashAnimation();
@@ -236,7 +247,7 @@ public class Character extends Entity {
     }
 
     public void checkPunching() {
-        if(keyH.spacePressed == true) {
+        if(keyH.spacePressed == true || keyH.skillPressed == true) {
 
             attacking = true;
 
@@ -250,5 +261,15 @@ public class Character extends Entity {
             flash = true;
         } else {
             speed = 2;         }
+    }
+    public void checkSkill(){
+        if(keyH.skillPressed == true && skill.alive == false) {
+            skill.setSkill(posX, posY, direction, true, this);
+
+            // ADD skill to The list
+            panel.skillList.add(skill);
+            checkSkill = true;
+        }
+
     }
 }

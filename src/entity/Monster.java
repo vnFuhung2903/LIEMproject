@@ -61,21 +61,17 @@ public class Monster extends Entity {
             switch (direction) {
                 case "up":
                     currentFrameImg = moveUp[spriteNum];
-                    System.out.println(spriteNum);
                     break;
                 case "down":
                     currentFrameImg = moveDown[spriteNum];
-                    System.out.println(spriteNum);
 
                     break;
                 case "left":
                     currentFrameImg = moveLeft[spriteNum];
-                    System.out.println(spriteNum);
 
                     break;
                 case "right":
                     currentFrameImg = moveRight[spriteNum];
-                    System.out.println(spriteNum);
 
                     break;
 
