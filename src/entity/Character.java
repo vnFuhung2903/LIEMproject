@@ -36,6 +36,8 @@ public class Character extends Entity {
         getPlayerAttackImage();
     }
 
+
+
     public void getPlayerImage() {
 
         try {
@@ -167,7 +169,7 @@ public class Character extends Entity {
         checkPunching();
 
 
-        if (attacking || alive ) {
+        if (attacking ) {
 
             switch (direction) {
                 case "up":
