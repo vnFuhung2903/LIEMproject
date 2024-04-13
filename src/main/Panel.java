@@ -24,8 +24,8 @@ public class Panel extends JPanel implements Runnable {
 
 
     // MAP SETTINGS
-    final public int maxMapCol = 20;
-    final public int maxMapRow = 20;
+    final public int maxMapCol = 2000;
+    final public int maxMapRow = 2000;
     final public int mapWidth = tileSize * maxScreenCol;
     final public int mapHeight = tileSize * maxScreenRow;
 
@@ -37,7 +37,7 @@ public class Panel extends JPanel implements Runnable {
     TileManage mapTile = new TileManage(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
-    public entity.Character player = new entity.Character(this, 2, 10, keyH);
+    public entity.Character player = new entity.Character(this, 20, 10, keyH);
     public Monster[] monster = new Monster[10];
     public EventHandler eHandler = new EventHandler(this);
     ArrayList<Entity> entityList = new ArrayList<>();

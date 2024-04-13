@@ -12,31 +12,26 @@ public class TileManage  {
     Tile[] tile;
 
     int mapTileNum[][];
+    final int MARGIN = 100;
 
     public TileManage(Panel panel) {
         this.panel = panel;
         tile = new Tile[50];
-        getTileImage3();
+        getTileImage();
 
         mapTileNum = new int[panel.maxMapCol][panel.maxMapRow];
         loadMap("assets/mapDesert/map.txt");
     }
-    public void getTileImage () {
+    public void getTileImageTest() {
         try {
-
-
             tile[1] = new Tile();
-            tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("../assets/map/glass1.png")));
-            tile[0] = new Tile();
-            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("../assets/map/rock1.png")));
-            tile[2] = new Tile();
-            tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("../assets/map/water.png")));
-            tile[3] = new Tile();
-            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("../assets/map/water.png")));
+            tile[1].image = ImageIO.read(new File("assets/mapTest/test.png"));
             tile[4] = new Tile();
-            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("../assets/map/glass3.png")));
-            tile[5] = new Tile();
-            tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("../assets/map/rock2.png")));
+            tile[4].image = ImageIO.read(new File("assets/mapTest/earth.png"));
+            tile[2] = new Tile();
+            tile[2].image = ImageIO.read(new File("assets/mapTest/earth.png"));
+            tile[3] = new Tile();
+            tile[3].image = ImageIO.read(new File("assets/mapTest/earth.png"));
 
 
         } catch(IOException e)
@@ -44,28 +39,8 @@ public class TileManage  {
             e.printStackTrace();
         }
     }
-    public void getTileImage2 () {
-        try {
 
-
-            tile[1] = new Tile();
-            tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("../assets/map/Untitled-14-01.png")));
-            tile[2] = new Tile();
-            tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("../assets/map/Untitled-14-02.png")));
-            tile[3] = new Tile();
-            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("../assets/map/Untitled-14-03.png")));
-            tile[4] = new Tile();
-            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("../assets/map/Untitled-14-04.png")));
-            tile[5] = new Tile();
-            tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("../assets/map/Untitled-14-05.png")));
-            tile[0] = new Tile();
-            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("../assets/map/Untitled-14-03.png")));
-        } catch(IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
-    public void getTileImage3() {
+    public void getTileImage() {
         try {
             for (int i = 1; i <= 9;i++) {
 
@@ -109,37 +84,36 @@ public class TileManage  {
             e.printStackTrace();
         }
     }
-        public void draw(Graphics2D g2) {
+//
+public void draw(Graphics2D g2) {
+    int playerX = panel.player.posX;
+    int playerY = panel.player.posY;
+    int screenX = panel.player.screenX;
+    int screenY = panel.player.screenY;
 
-        int col = 0;
-        int row = 0;
+    int minX = playerX - screenX - MARGIN;
+    int maxX = playerX + screenX + MARGIN;
+    int minY = playerY - screenY - MARGIN;
+    int maxY = playerY + screenY + MARGIN;
 
-        while (col < panel.maxMapCol && row < panel.maxMapRow) {
-            int tileNum = mapTileNum[col][row];
-            int MapX = col * panel.tileSize;
-            int MapY = row * panel.tileSize;
-            int screenX = MapX - panel.player.posX + panel.player.screenX;// hoi kho hieu
-            int screenY = MapY - panel.player.posY + panel.player.screenY;
-            if (MapX > panel.player.posX - panel.player.screenX - 100 &&
-                    MapX < panel.player.posX + panel.player.screenX + 100 &&
-                    MapY > panel.player.posY - panel.player.screenY - 100 &&
-                    MapY < panel.player.posY + panel.player.screenY + 100
-            ) {
-                if(tile[tileNum] != null) {
-                    g2.drawImage(tile[tileNum].image, screenX,screenY, panel.tileSize, panel.tileSize, null);
-//                    System.out.println("sX: " +screenX +" sY: " + screenY);
+    for (int col = 0; col < panel.maxMapCol; col++) {
+        for (int row = 0; row < panel.maxMapRow; row++) {
+            int mapX = col * panel.tileSize;
+            int mapY = row * panel.tileSize;
+
+            if (isInDisplayArea(mapX, mapY, minX, minY, maxX, maxY)) {
+                int tileNum = mapTileNum[col][row];
+                if (tileNum != 0 && tile[tileNum] != null) {
+                    g2.drawImage(tile[tileNum].image, mapX - playerX + screenX, mapY - playerY + screenY, panel.tileSize, panel.tileSize, null);
                 } else {
-                    g2.drawImage(tile[1].image, screenX,screenY, panel.tileSize, panel.tileSize, null);
+                    g2.drawImage(tile[1].image, mapX - playerX + screenX, mapY - playerY + screenY, panel.tileSize, panel.tileSize, null);
                 }
             }
-            col++;
-            if (col == panel.maxMapCol) {
-                col=0;
-                row++;
-
-            }
-
         }
+    }
+}
 
+    private boolean isInDisplayArea(int mapX, int mapY, int minX, int minY, int maxX, int maxY) {
+        return mapX >= minX && mapX <= maxX && mapY >= minY && mapY <= maxY;
     }
 }

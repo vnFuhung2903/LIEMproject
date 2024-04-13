@@ -112,7 +112,8 @@ public class Character extends Entity {
         if (attacking) {
             updateAnimationPunch();
             moveAnimation();
-            if(skill.alive == false && punchIndex == 6) {
+            checkSkill();
+            if(checkSkill == true && skill.alive == false && punchIndex == 6) {
                 skill.setSkill(posX, posY, direction, true, this);
 
 //        // ADD skill to The list
@@ -257,17 +258,17 @@ public class Character extends Entity {
 
     public void checkFlash() {
         if(keyH.flashPressed == true) {
-            speed = 100;
+            speed = 1000;
             flash = true;
         } else {
             speed = 2;         }
     }
     public void checkSkill(){
         if(keyH.skillPressed == true && skill.alive == false) {
-            skill.setSkill(posX, posY, direction, true, this);
-
-            // ADD skill to The list
-            panel.skillList.add(skill);
+//            skill.setSkill(posX, posY, direction, true, this);
+//
+//            // ADD skill to The list
+//            panel.skillList.add(skill);
             checkSkill = true;
         }
 
