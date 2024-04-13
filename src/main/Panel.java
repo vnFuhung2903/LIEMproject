@@ -3,7 +3,6 @@ package main;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 import entity.*;
@@ -35,11 +34,14 @@ public class Panel extends JPanel implements Runnable {
     // Systems
     public AssetSetter assetSetter = new AssetSetter(this) ;
     TileManage mapTile = new TileManage(this);
-    KeyHandler keyH = new KeyHandler();
+    KeyHandler keyHandler = new KeyHandler();
+    MouseEventHandler mouseEventHandler = new MouseEventHandler();
     Thread gameThread;
-    public entity.Character player = new entity.Character(this, 20, 10, keyH);
+    public CollisionHandler collisionHandler = new CollisionHandler(this);
+
+    // Entities
+    public entity.Character player = new entity.Character(this, 1, 10, keyHandler, mouseEventHandler);
     public Monster[] monster = new Monster[10];
-    public EventHandler eHandler = new EventHandler(this);
     ArrayList<Entity> entityList = new ArrayList<>();
     public ArrayList<Entity> skillList = new ArrayList<>();
 
@@ -48,9 +50,10 @@ public class Panel extends JPanel implements Runnable {
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
         this.setBackground(Color.BLACK);
         // reduce flicking when drawing and updating objects on the screen
-        // in somes cases, using double buffered my increase resource usage and latency (tang tai nguyen va do tre)
+        // in some cases, using double buffered my increase resource usage and latency (tang tai nguyen va do tre)
         this.setDoubleBuffered(true);
-        this.addKeyListener(keyH);
+        this.addKeyListener(keyHandler);
+        this.addMouseListener(mouseEventHandler);
         this.setFocusable(true);
         // it can receive keyboard and input events when it has input focus
         setUpGame();
@@ -128,77 +131,50 @@ public class Panel extends JPanel implements Runnable {
         monster[3].update();
 
         player.update();
-        for(int i = 0; i < skillList.size(); i++){
-         if(skillList.get(i) != null){
-            if(skillList.get(i).alive == true) {
-                skillList.get(i).update();
-                System.out.println("loading");
-
+        for (Entity entity : skillList) {
+            if (entity != null) {
+                if (entity.isAlive()) {
+                    entity.update();
+                    System.out.println("loading");
+                }
+//                else {
+//                     skillList.remove(i);
+//                 }
             }
-            else {
-                 skillList.remove(i);
-
-             }
+        }
     }
-}
-    }
-
-
-
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 
         // Draw map tiles
         mapTile.draw(g2);
 
-
         // ADD ENTITIES TO THE LIST
-        for( int i = 0; i < monster.length ; i++){
-            if (monster[i] != null) {
-                entityList.add(monster[i]);
+        for (Monster value : monster) {
+            if (value != null) {
+                entityList.add(value);
             }
         }
-        for( int i = 0; i < skillList.size() ; i++){
-            if (skillList.get(i) != null) {
-                entityList.add(skillList.get(i));
+        for (Entity entity : skillList) {
+            if (entity != null) {
+                entityList.add(entity);
             }
         }
         entityList.add(player);
 
-
-        // SORT
-        Collections.sort(entityList, new Comparator<Entity>() {
-            @Override
-            public int compare(Entity entity1, Entity entity2) {
-                int  result = Integer.compare(entity1.posY, entity2.posY);
-                return 0;
-            }
-            // so sánh toạ độ của các entity
-
-        });
+        // SORT entities in posY
+        entityList.sort(Comparator.comparingInt(Entity::getPosY));
 
         // DRAW ENTITIES
-        for(int i = 0; i< entityList.size(); i++){
-            entityList.get(i).draw(g2);
-
+        for (Entity entity : entityList) {
+            entity.draw(g2);
         }
-        for(int i = 0; i< entityList.size(); i++){
-            entityList.remove(i);
 
-
-
-
-        }
-        // EMPTY ENTITY LIST
-
-//        // Draw monster
-//        monster[0].draw(g2);
-//
-//        // Draw player character
-//        player.draw(g2);
-
+        // Make entityList empty after drawing
+        entityList.clear();
         g2.dispose();
     }
 }

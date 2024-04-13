@@ -2,7 +2,6 @@ package map;
 
 import java.awt.Graphics2D;
 import java.io.*;
-import java.util.Objects;
 import javax.imageio.ImageIO;
 
 import main.Panel;
@@ -11,7 +10,7 @@ public class TileManage  {
     Panel panel;
     Tile[] tile;
 
-    int mapTileNum[][];
+    int[][] mapTileNum;
     final int MARGIN = 100;
 
     public TileManage(Panel panel) {
@@ -84,36 +83,39 @@ public class TileManage  {
             e.printStackTrace();
         }
     }
-//
-public void draw(Graphics2D g2) {
-    int playerX = panel.player.posX;
-    int playerY = panel.player.posY;
-    int screenX = panel.player.screenX;
-    int screenY = panel.player.screenY;
 
-    int minX = playerX - screenX - MARGIN;
-    int maxX = playerX + screenX + MARGIN;
-    int minY = playerY - screenY - MARGIN;
-    int maxY = playerY + screenY + MARGIN;
+    public void draw(Graphics2D g2) {
+        int playerX = panel.player.getPosX();
+        int playerY = panel.player.getPosY();
+        int screenX = panel.player.screenX;
+        int screenY = panel.player.screenY;
 
-    for (int col = 0; col < panel.maxMapCol; col++) {
-        for (int row = 0; row < panel.maxMapRow; row++) {
-            int mapX = col * panel.tileSize;
-            int mapY = row * panel.tileSize;
+        int minX = playerX - screenX - MARGIN;
+        int maxX = playerX + screenX + MARGIN;
+        int minY = playerY - screenY - MARGIN;
+        int maxY = playerY + screenY + MARGIN;
 
-            if (isInDisplayArea(mapX, mapY, minX, minY, maxX, maxY)) {
-                int tileNum = mapTileNum[col][row];
-                if (tileNum != 0 && tile[tileNum] != null) {
-                    g2.drawImage(tile[tileNum].image, mapX - playerX + screenX, mapY - playerY + screenY, panel.tileSize, panel.tileSize, null);
-                } else {
-                    g2.drawImage(tile[1].image, mapX - playerX + screenX, mapY - playerY + screenY, panel.tileSize, panel.tileSize, null);
+        for (int col = 0; col < panel.maxMapCol; col++) {
+            for (int row = 0; row < panel.maxMapRow; row++) {
+                int mapX = col * panel.tileSize;
+                int mapY = row * panel.tileSize;
+
+                if (isInDisplayArea(mapX, mapY, minX, minY, maxX, maxY)) {
+                    int tileNum = mapTileNum[col][row];
+                    if (tileNum != 0 && tile[tileNum] != null) {
+                        g2.drawImage(tile[tileNum].image, mapX - playerX + screenX, mapY - playerY + screenY, panel.tileSize, panel.tileSize, null);
+                    } else {
+                        g2.drawImage(tile[1].image, mapX - playerX + screenX, mapY - playerY + screenY, panel.tileSize, panel.tileSize, null);
+                    }
                 }
             }
         }
     }
-}
 
     private boolean isInDisplayArea(int mapX, int mapY, int minX, int minY, int maxX, int maxY) {
         return mapX >= minX && mapX <= maxX && mapY >= minY && mapY <= maxY;
     }
+
+    public int getMapTileNum(int x, int y) { return mapTileNum[x][y]; }
+    public Tile getTile(int num) { return tile[num]; }
 }

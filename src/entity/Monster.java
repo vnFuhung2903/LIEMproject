@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Random;
 import javax.imageio.ImageIO;
 
@@ -12,12 +11,11 @@ import main.Panel;
 public class Monster extends Entity {
     public Monster(Panel panel, int speed, int skillThread) {
         super(panel, speed, skillThread);
-        direction = "down";
-        speed = 1;
-        getPlayerImage();
+        this.direction = "down";
+        getMonsterImage();
     }
 
-    public void getPlayerImage() {
+    public void getMonsterImage() {
 
         try {
             moveUp = new BufferedImage[6];
@@ -64,18 +62,13 @@ public class Monster extends Entity {
                     break;
                 case "down":
                     currentFrameImg = moveDown[spriteNum];
-
                     break;
                 case "left":
                     currentFrameImg = moveLeft[spriteNum];
-
                     break;
                 case "right":
                     currentFrameImg = moveRight[spriteNum];
-
                     break;
-
-
             }
             g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize, panel.tileSize, null);
 

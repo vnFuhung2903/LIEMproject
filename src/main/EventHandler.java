@@ -8,7 +8,7 @@ public class EventHandler {
     Rectangle eventRect;
     int eventRectDefaultX, eventRectDefaultY;
 
-    public EventHandler(Panel gp) {
+    public EventHandler(Panel panel) {
         this.panel = panel;
 
         eventRect = new Rectangle();

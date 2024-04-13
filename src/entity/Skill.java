@@ -12,10 +12,10 @@ public class Skill extends Entity {
         super(panel, speed, skillThread);
     }
 
-    public void setSkill(int posX, int posY, String diretion, boolean alive, Entity user) {
+    public void setSkill(int posX, int posY, String direction, boolean alive, Entity user) {
         this.posX = posX;
         this.posY = posY;
-        this.direction = diretion;
+        this.direction = direction;
         this.alive = alive;
         this.user = user;
 
@@ -79,7 +79,6 @@ public class Skill extends Entity {
                 g2.drawImage(currentFrameImg, screenX, screenY, panel.characterSize, panel.characterSize, null);
                 System.out.println(posX + posY);
                 System.out.println("pew pew");
-
         }
     }
 }
