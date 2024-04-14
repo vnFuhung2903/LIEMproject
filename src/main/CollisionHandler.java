@@ -2,6 +2,8 @@ package main;
 
 import entity.*;
 
+import java.util.Arrays;
+
 public class CollisionHandler {
     Panel panel;
 
@@ -9,7 +11,7 @@ public class CollisionHandler {
         this.panel = panel;
     }
 
-    public void checkTileCollision(Entity entity) {
+    public void checkMapCollision(Entity entity) {
         int entityLeftCollision = entity.getPosX() + entity.getCollisionArea().x;
         int entityRightCollision = entityLeftCollision + entity.getCollisionArea().width;
         int entityTopCollision = entity.getPosY() + entity.getCollisionArea().y;
@@ -20,31 +22,84 @@ public class CollisionHandler {
             case "left":
                 tileNum1 = panel.mapTile.getMapTileNum( (entityLeftCollision - entity.getSpeed()) / panel.tileSize,entityTopCollision / panel.tileSize);
                 tileNum2 = panel.mapTile.getMapTileNum( (entityLeftCollision - entity.getSpeed()) / panel.tileSize,entityBottomCollision / panel.tileSize);
-                if(panel.mapTile.getTile(tileNum1).collision || panel.mapTile.getTile(tileNum2).collision) {
+                if(tileNum1 != 1 || tileNum2 != 1 || panel.mapTile.getTile(tileNum1) == null || panel.mapTile.getTile(tileNum1) == null) {
                     entity.detectCollision();
                 }
                 break;
             case "right":
                 tileNum1 = panel.mapTile.getMapTileNum( (entityRightCollision + entity.getSpeed()) / panel.tileSize,entityTopCollision / panel.tileSize);
                 tileNum2 = panel.mapTile.getMapTileNum( (entityRightCollision + entity.getSpeed()) / panel.tileSize,entityBottomCollision / panel.tileSize);
-                if(panel.mapTile.getTile(tileNum1).collision || panel.mapTile.getTile(tileNum2).collision) {
+                if(tileNum1 != 1 || tileNum2 != 1 || panel.mapTile.getTile(tileNum1) == null || panel.mapTile.getTile(tileNum1) == null) {
                     entity.detectCollision();
                 }
                 break;
             case "up":
                 tileNum1 = panel.mapTile.getMapTileNum( entityLeftCollision / panel.tileSize,(entityTopCollision - entity.getSpeed()) / panel.tileSize);
                 tileNum2 = panel.mapTile.getMapTileNum( entityRightCollision / panel.tileSize,(entityTopCollision - entity.getSpeed()) / panel.tileSize);
-                if(panel.mapTile.getTile(tileNum1).collision || panel.mapTile.getTile(tileNum2).collision) {
+                if(tileNum1 != 1 || tileNum2 != 1 || panel.mapTile.getTile(tileNum1) == null || panel.mapTile.getTile(tileNum1) == null) {
                     entity.detectCollision();
                 }
                 break;
             case "down":
                 tileNum1 = panel.mapTile.getMapTileNum( entityLeftCollision / panel.tileSize,(entityBottomCollision + entity.getSpeed()) / panel.tileSize);
                 tileNum2 = panel.mapTile.getMapTileNum( entityRightCollision / panel.tileSize,(entityBottomCollision + entity.getSpeed()) / panel.tileSize);
-                if(panel.mapTile.getTile(tileNum1).collision || panel.mapTile.getTile(tileNum2).collision) {
+                if(tileNum1 != 1 || tileNum2 != 1 || panel.mapTile.getTile(tileNum1) == null || panel.mapTile.getTile(tileNum1) == null) {
                     entity.detectCollision();
                 }
                 break;
         }
+    }
+
+    public void checkMonsterCollision(Entity entity) {
+        int entityLeftCollision = entity.getPosX() + entity.getCollisionArea().x;
+        int entityRightCollision = entityLeftCollision + entity.getCollisionArea().width;
+        int entityTopCollision = entity.getPosY() + entity.getCollisionArea().y;
+        int entityBottomCollision = entityTopCollision + entity.getCollisionArea().height;
+
+        Monster[] monsters = panel.getMonsters();
+//        System.out.println(Arrays.toString(monsters));
+        for(Monster monster : monsters) {
+            if(monster == null) continue;
+
+            int monsterLeftCollision = monster.getPosX() + monster.getCollisionArea().x;
+            int monsterRightCollision = monsterLeftCollision + monster.getCollisionArea().width;
+            int monsterTopCollision = monster.getPosY() + monster.getCollisionArea().y;
+            int monsterBottomCollision = monsterTopCollision + monster.getCollisionArea().height;
+
+            switch (entity.getDirection()) {
+                case "left":
+                    if(checkMiddlePos(entityTopCollision, monsterTopCollision, monsterBottomCollision) || checkMiddlePos(entityBottomCollision, monsterTopCollision, monsterBottomCollision)) {
+                        if (checkMiddlePos(entityLeftCollision - entity.getSpeed(), monsterLeftCollision, monsterRightCollision)) {
+                            entity.detectCollision();
+                        }
+                    }
+                    break;
+                case "right":
+                    if(checkMiddlePos(entityTopCollision, monsterTopCollision, monsterBottomCollision) || checkMiddlePos(entityBottomCollision, monsterTopCollision, monsterBottomCollision)) {
+                        if (checkMiddlePos(entityRightCollision + entity.getSpeed(), monsterLeftCollision, monsterRightCollision)) {
+                            entity.detectCollision();
+                        }
+                    }
+                    break;
+                case "up":
+                    if(checkMiddlePos(entityLeftCollision, monsterLeftCollision, monsterRightCollision) || checkMiddlePos(entityRightCollision, monsterLeftCollision, monsterRightCollision)) {
+                        if (checkMiddlePos(entityTopCollision - entity.getSpeed(), monsterTopCollision, monsterBottomCollision)) {
+                            entity.detectCollision();
+                        }
+                    }
+                    break;
+                case "down":
+                    if(checkMiddlePos(entityLeftCollision, monsterLeftCollision, monsterRightCollision) || checkMiddlePos(entityRightCollision, monsterLeftCollision, monsterRightCollision)) {
+                        if (checkMiddlePos(entityBottomCollision + entity.getSpeed(), monsterTopCollision, monsterBottomCollision)) {
+                            entity.detectCollision();
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    private boolean checkMiddlePos(int pos, int low, int high) {
+        return (pos > low && pos < high);
     }
 }

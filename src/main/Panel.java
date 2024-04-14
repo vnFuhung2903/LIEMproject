@@ -40,8 +40,8 @@ public class Panel extends JPanel implements Runnable {
     public CollisionHandler collisionHandler = new CollisionHandler(this);
 
     // Entities
-    public entity.Character player = new entity.Character(this, 1, 10, keyHandler, mouseEventHandler);
-    public Monster[] monster = new Monster[10];
+    public entity.Character player = new entity.Character(this, 10, keyHandler, mouseEventHandler);
+    public Monster[] monsters = new Monster[10];
     ArrayList<Entity> entityList = new ArrayList<>();
     public ArrayList<Entity> skillList = new ArrayList<>();
 
@@ -125,10 +125,10 @@ public class Panel extends JPanel implements Runnable {
         }
     }
     public  void update() {
-        monster[0].update();
-        monster[1].update();
-        monster[2].update();
-        monster[3].update();
+        monsters[0].update();
+        monsters[1].update();
+        monsters[2].update();
+        monsters[3].update();
 
         player.update();
         for (Entity entity : skillList) {
@@ -153,7 +153,7 @@ public class Panel extends JPanel implements Runnable {
         mapTile.draw(g2);
 
         // ADD ENTITIES TO THE LIST
-        for (Monster value : monster) {
+        for (Monster value : monsters) {
             if (value != null) {
                 entityList.add(value);
             }
@@ -177,4 +177,6 @@ public class Panel extends JPanel implements Runnable {
         entityList.clear();
         g2.dispose();
     }
+
+    public Monster[] getMonsters() { return monsters; }
 }

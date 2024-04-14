@@ -17,14 +17,14 @@ public class Character extends Entity {
     final public int screenY;
     int attackIndex,attackTick, attackSpeed = 10;
 
-    public Character(Panel panel, int speed, int skillThread, KeyHandler keyHandler, MouseEventHandler mouseEventHandler) {
+    public Character(Panel panel, int skillThread, KeyHandler keyHandler, MouseEventHandler mouseEventHandler) {
 
-        super(panel, speed, skillThread);
+        super(panel, 1, skillThread);
         this.keyHandler = keyHandler;
         this.mouseHandler = mouseEventHandler;
         this.attacking = false;
 
-        this.collisionArea = new Rectangle(0, panel.tileSize, panel.tileSize, panel.tileSize);
+        this.collisionArea = new Rectangle(panel.tileSize , panel.tileSize , 0, panel.tileSize / 2);
 
         // set vi tri cua map so voi man hinh
         posX = panel.tileSize * 11; // posX = 480
@@ -140,7 +140,8 @@ public class Character extends Entity {
 
             // Check collision
             collisionDetected = false;
-            panel.collisionHandler.checkTileCollision(this);
+            panel.collisionHandler.checkMapCollision(this);
+            panel.collisionHandler.checkMonsterCollision(this);
             if(!collisionDetected) {
                 switch (direction) {
                     case "left":

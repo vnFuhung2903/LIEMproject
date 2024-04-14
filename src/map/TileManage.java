@@ -95,8 +95,8 @@ public class TileManage  {
         int minY = playerY - screenY - MARGIN;
         int maxY = playerY + screenY + MARGIN;
 
-        for (int col = 0; col < panel.maxMapCol; col++) {
-            for (int row = 0; row < panel.maxMapRow; row++) {
+        for (int row = 0; row < panel.maxMapRow; row++) {
+            for (int col = 0; col < panel.maxMapCol; col++) {
                 int mapX = col * panel.tileSize;
                 int mapY = row * panel.tileSize;
 
@@ -116,6 +116,10 @@ public class TileManage  {
         return mapX >= minX && mapX <= maxX && mapY >= minY && mapY <= maxY;
     }
 
-    public int getMapTileNum(int x, int y) { return mapTileNum[x][y]; }
+    public int getMapTileNum(int x, int y) {
+        if(x >= 0 && y >= 0 && x < panel.maxMapRow && y < panel.maxMapCol)
+            return mapTileNum[x][y];
+        return 0;
+    }
     public Tile getTile(int num) { return tile[num]; }
 }

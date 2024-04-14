@@ -1,6 +1,6 @@
 package entity;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +13,7 @@ public class Monster extends Entity {
         super(panel, speed, skillThread);
         this.direction = "down";
         getMonsterImage();
+        collisionArea = new Rectangle(0, 0, 0, 0);
     }
 
     public void getMonsterImage() {
@@ -51,7 +52,7 @@ public class Monster extends Entity {
         int screenX = posX - panel.player.posX + panel.player.screenX;
         int screenY = posY - panel.player.posY + panel.player.screenY;
 
-        if ( posX + panel.tileSize > panel.player.posX - panel.player.screenX &&
+        if (posX + panel.tileSize > panel.player.posX - panel.player.screenX &&
                 posX - panel.tileSize < panel.player.posX + panel.player.screenX &&
                 posY + panel.tileSize > panel.player.posY - panel.player.screenY &&
                 posY - panel.tileSize < panel.player.posY + panel.player.screenY
@@ -101,19 +102,25 @@ public class Monster extends Entity {
         setAction();
         moveCounter ++;
         if(moveCounter == 10) {
-            switch (direction) {
-                case "up":
-                    posY -= speed;
-                    break;
-                case "down":
-                    posY += speed;
-                    break;
-                case "left":
-                    posX -= speed;
-                    break;
-                case "right":
-                    posX += speed;
-                    break;
+
+            //Check collision
+            collisionDetected = false;
+//            panel.collisionHandler.checkMapCollision(this);
+            if(!collisionDetected) {
+                switch (direction) {
+                    case "up":
+                        posY -= speed;
+                        break;
+                    case "down":
+                        posY += speed;
+                        break;
+                    case "left":
+                        posX -= speed;
+                        break;
+                    case "right":
+                        posX += speed;
+                        break;
+                }
             }
             moveCounter = 0;
         }
