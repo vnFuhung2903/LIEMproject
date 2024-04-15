@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.Random;
 
 import entity.*;
+import entity.monsters.*;
 import map.*;
 
 public class Panel extends JPanel implements Runnable {
@@ -40,13 +41,12 @@ public class Panel extends JPanel implements Runnable {
     public CollisionHandler collisionHandler = new CollisionHandler(this);
 
     // Entities
-    public entity.Character player = new entity.Character(this, 10, keyHandler, mouseEventHandler);
+    public entity.Character player = new entity.characters.Witch(this, 10, keyHandler, mouseEventHandler);
     public Monster[] monsters = new Monster[10];
     ArrayList<Entity> entityList = new ArrayList<>();
     public ArrayList<Entity> skillList = new ArrayList<>();
 
     public Panel() {
-
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
         this.setBackground(Color.BLACK);
         // reduce flicking when drawing and updating objects on the screen
@@ -94,10 +94,10 @@ public class Panel extends JPanel implements Runnable {
         }
     }
     public  void update() {
-        monsters[0].update();
-        monsters[1].update();
-        monsters[2].update();
-        monsters[3].update();
+
+        for(Monster monster : monsters) {
+            monster.update();
+        }
 
         player.update();
         for (Entity entity : skillList) {
@@ -106,9 +106,6 @@ public class Panel extends JPanel implements Runnable {
                     entity.update();
                     System.out.println("loading");
                 }
-//                else {
-//                     skillList.remove(i);
-//                 }
             }
         }
     }
@@ -149,15 +146,38 @@ public class Panel extends JPanel implements Runnable {
 
     public Monster[] getMonsters() { return monsters; }
     public void setMonsters() {
-        for(int i = 0; i <= 3; ++i) {
+
+        for(int i = 0; i <= 9; ++i) {
             boolean created = false;
             while (!created) {
+
+                Random randomColor = new Random();
+                int colorIndex = randomColor.nextInt(5);
+                String color = "Blue";
+                switch (colorIndex) {
+                    case 1:
+                        color = "Blue";
+                        break;
+                    case 2:
+                        color = "Red";
+                        break;
+                    case 3:
+                        color = "Yellow";
+                        break;
+                    case 4:
+                        color = "Green";
+                        break;
+                }
+
                 Random randomX = new Random();
                 Random randomY = new Random();
                 int x = randomX.nextInt(mapWidth) + 1;
                 int y = randomY.nextInt(mapHeight) + 1;
-                if(mapTile.getMapTileNum(x / tileSize, y / tileSize) == 1 && mapTile.getMapTileNum(x / tileSize + 1, y / tileSize) == 1 && mapTile.getMapTileNum(x / tileSize, y / tileSize + 1) == 1 && mapTile.getMapTileNum(x / tileSize + 1, y / tileSize + 1) == 1) {
-                    monsters[i] = new Monster(this, 1, 0);
+
+                if(mapTile.getMapTileNum(x / tileSize, y / tileSize) == 1) {
+                    if(i < 5) monsters[i] = new Slime(this, 5, 0, color);
+                    else if(i < 8) monsters[i] = new Spider(this, 5, 0);
+                    else monsters[i] = new Slave(this, 5, 10);
                     monsters[i].setPosX(x);
                     monsters[i].setPosY(y);
                     System.out.print(x);

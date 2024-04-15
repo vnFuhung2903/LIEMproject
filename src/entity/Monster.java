@@ -9,42 +9,11 @@ import javax.imageio.ImageIO;
 
 import main.Panel;
 public class Monster extends Entity {
+
+    protected String name;
+    protected int spriteInterval, maxSpriteNum = 5, monsterSize;
     public Monster(Panel panel, int speed, int skillThread) {
         super(panel, speed, skillThread);
-        this.direction = "down";
-        getMonsterImage();
-        collisionArea = new Rectangle(0, 0, 0, 0);
-    }
-
-    public void getMonsterImage() {
-
-        try {
-            moveUp = new BufferedImage[6];
-            moveDown = new BufferedImage[6];
-            moveLeft = new BufferedImage[6];
-            moveRight = new BufferedImage[6];
-
-            //get Move
-            int move = 6;
-            for (int i =0; i< move;i++) {
-
-                String fileMoveUp = "assets/slime/slimeMoveUp-0" + (i+1) +".png";
-                moveUp[i] = ImageIO.read(new File(fileMoveUp));
-                String fileMoveDown = "assets/slime/slimeMoveDown-0" + (i+1) + ".png";
-                moveDown[i] = ImageIO.read(new File(fileMoveDown));
-                String fileMoveLeft = "assets/slime/slimeMoveLeft-0" + (i+1) +".png";
-                moveLeft[i] = ImageIO.read(new File(fileMoveLeft));
-                String fileMoveRight = "assets/slime/slimeMoveRight-0" + (i+1) +".png";
-                moveRight[i] = ImageIO.read(new File(fileMoveRight));
-            }
-
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
     }
     public void draw(Graphics2D g2) {
         BufferedImage currentFrameImg = null;
@@ -71,20 +40,17 @@ public class Monster extends Entity {
                     currentFrameImg = moveRight[spriteNum];
                     break;
             }
-            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize, panel.tileSize, null);
-
+            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * monsterSize, panel.tileSize * monsterSize, null);
         }
 
     }
     public void setAction() {
-        actionLockCounter++;
-        if(actionLockCounter == 200 ) {
+        if(++actionLockCounter == 200 ) {
             Random random = new Random();
             int i = random.nextInt(100) + 1;
 
             if(i <= 25) {
                 direction = "up";
-
             }
             else if (i <= 50) {
                 direction = "down";
@@ -100,8 +66,7 @@ public class Monster extends Entity {
     }
     public void update() {
         setAction();
-        moveCounter++;
-        if(moveCounter == 10) {
+        if(++moveCounter == 10) {
 
             //Check collision
             collisionDetected = false;
@@ -124,10 +89,8 @@ public class Monster extends Entity {
             }
             moveCounter = 0;
         }
-        spriteCounter++;
-        if (spriteCounter > 20) {
-            if (spriteNum > 4) spriteNum = 0;
-            else spriteNum ++;
+        if (++spriteCounter > spriteInterval) {
+            if (++spriteNum > maxSpriteNum) spriteNum = 0;
             spriteCounter = 0;
         }
     }

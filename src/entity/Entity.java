@@ -3,6 +3,8 @@ package entity;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import main.KeyHandler;
+import main.MouseEventHandler;
 import main.Panel;
 
 public abstract class Entity {
@@ -18,6 +20,9 @@ public abstract class Entity {
     protected boolean checkSkill = false;
     protected boolean alive;
     protected Skill skill;
+
+    KeyHandler keyHandler;
+    MouseEventHandler mouseHandler;
 
     // For Graphic
     protected BufferedImage[] moveUp;
@@ -36,6 +41,7 @@ public abstract class Entity {
     // For collisions
     protected  boolean collisionDetected;
     protected Rectangle collisionArea;
+    protected  Rectangle attackArea;
 
     protected String direction;
 

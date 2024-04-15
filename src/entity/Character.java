@@ -2,7 +2,6 @@ package entity;
 
 import main.*;
 import main.Panel;
-import skill.SkillOneForKnight;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,11 +10,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Character extends Entity {
-    KeyHandler keyHandler;
-    MouseEventHandler mouseHandler;
     final public int screenX;
     final public int screenY;
-    int attackIndex,attackTick, attackSpeed = 10;
+    protected int attackIndex, attackTick, attackInterval;
 
     public Character(Panel panel, int skillThread, KeyHandler keyHandler, MouseEventHandler mouseEventHandler) {
 
@@ -23,8 +20,7 @@ public class Character extends Entity {
         this.keyHandler = keyHandler;
         this.mouseHandler = mouseEventHandler;
         this.attacking = false;
-
-        this.collisionArea = new Rectangle(panel.tileSize , panel.tileSize , 0, panel.tileSize / 2);
+        direction = "down";
 
         // set vi tri cua map so voi man hinh
         posX = panel.tileSize * 11; // posX = 480
@@ -35,85 +31,18 @@ public class Character extends Entity {
         this.screenY = panel.screenHeight/2 - panel.tileSize; // screenY = 276
 
         getPlayerImage();
-        setDefaultValues();
-        getPlayerAttackImage();
     }
 
-    public void getPlayerImage() {
-
-        try {
-            moveUp = new BufferedImage[6];
-            moveDown = new BufferedImage[6];
-            moveLeft = new BufferedImage[6];
-            moveRight = new BufferedImage[6];
-            attackUp = new BufferedImage[8];
-            attackDown = new BufferedImage[8];
-            attackLeft = new BufferedImage[8];
-            attackRight = new BufferedImage[8];
-
-            //get Move
-            int move = 5;
-            for (int i =0; i< move;i++) {
-
-                String fileMoveUp = "assets/knight/knightMoveUp-0" + (i+1) +".png";
-                moveUp[i] = ImageIO.read(new File(fileMoveUp));
-                String fileMoveDown = "assets/knight/knightMoveDown-0" + (i+1) + ".png";
-                moveDown[i] = ImageIO.read(new File(fileMoveDown));
-                String fileMoveLeft = "assets/knight/knightMoveLeft-0" + (i+1) +".png";
-                moveLeft[i] = ImageIO.read(new File(fileMoveLeft));
-                String fileMoveRight = "assets/knight/knightMoveRight-0" + (i+1) +".png";
-                moveRight[i] = ImageIO.read(new File(fileMoveRight));
-            }
-
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void getPlayerAttackImage() {
-        try {
-            attackUp = new BufferedImage[8];
-            attackDown = new BufferedImage[8];
-            attackLeft = new BufferedImage[8];
-            attackRight = new BufferedImage[8];
-
-            int attack = 8;
-
-            for (int i =0; i< attack;i++) {
-
-                String fileMoveUp = "assets/knight/knightPunchUp-0" + (i+1) +".png";
-                attackUp[i] = ImageIO.read(new File(fileMoveUp));
-                String fileMoveDown = "assets/knight/knightPunchDown-0" + (i+1) + ".png";
-                attackDown[i] = ImageIO.read(new File(fileMoveDown));
-                String fileMoveLeft = "assets/knight/knightPunchLeft-0" + (i+1) +".png";
-                attackLeft[i] = ImageIO.read(new File(fileMoveLeft));
-                String fileMoveRight = "assets/knight/knightPunchRight-0" + (i+1) +".png";
-                attackRight[i] = ImageIO.read(new File(fileMoveRight));
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setDefaultValues() {
-        direction = "down";
-        skill = new SkillOneForKnight(panel, 10, 30);
-    }
+    public void getPlayerImage() {}
 
     public void update() {
         checkFlash();
         if (attacking) {
-            updateAnimationAttack();
+            updateAttackAnimation();
             moveAnimation();
             checkSkill();
             if(checkSkill&& skill.alive && attackIndex == 6) {
                 skill.setSkill(posX, posY, direction, true, this);
-
-//        // ADD skill to The list
-                panel.skillList.add(skill);
             }
 
         } else if(flash) {
@@ -166,8 +95,7 @@ public class Character extends Entity {
     private void updateSprite() {
         spriteCounter++;
         if (spriteCounter > 10) {
-            if (spriteNum > 4) spriteNum = 1;
-            else spriteNum ++;
+            if (++spriteNum > 5) spriteNum = 0;
             spriteCounter = 0;
         }
     }
@@ -215,29 +143,26 @@ public class Character extends Entity {
         {
             switch (direction) {
                 case "up":
-                    currentFrameImg = moveUp[spriteNum - 1];
+                    currentFrameImg = moveUp[spriteNum];
                     break;
                 case "down":
-                    currentFrameImg = moveDown[spriteNum - 1];
+                    currentFrameImg = moveDown[spriteNum];
                     break;
                 case "left":
-                    currentFrameImg = moveLeft[spriteNum - 1];
+                    currentFrameImg = moveLeft[spriteNum];
                     break;
                 case "right":
-                    currentFrameImg = moveRight[spriteNum - 1];
+                    currentFrameImg = moveRight[spriteNum];
                     break;
             }
 
             g2.drawImage(currentFrameImg, screenX, screenY, panel.characterSize, panel.characterSize, null);
         }
     }
-    public void updateAnimationAttack() {
-        attackTick++;
-        if (attackTick >= attackSpeed) {
+    public void updateAttackAnimation() {
+        if (++attackTick >= attackInterval) {
             attackTick = 0;
-            attackIndex ++;
-            System.out.println(attackIndex);
-            if (attackIndex > 7 ) {
+            if (++attackIndex > 7 ) {
                 attackIndex = 0;
                 attacking = false;
             }
