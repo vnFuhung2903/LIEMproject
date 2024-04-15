@@ -2,8 +2,6 @@ package main;
 
 import entity.*;
 
-import java.util.Arrays;
-
 public class CollisionHandler {
     Panel panel;
 
@@ -22,29 +20,41 @@ public class CollisionHandler {
             case "left":
                 tileNum1 = panel.mapTile.getMapTileNum( (entityLeftCollision - entity.getSpeed()) / panel.tileSize,entityTopCollision / panel.tileSize);
                 tileNum2 = panel.mapTile.getMapTileNum( (entityLeftCollision - entity.getSpeed()) / panel.tileSize,entityBottomCollision / panel.tileSize);
-                if(tileNum1 != 1 || tileNum2 != 1 || panel.mapTile.getTile(tileNum1) == null || panel.mapTile.getTile(tileNum1) == null) {
+                if(entityLeftCollision - entity.getSpeed() < 0 || tileNum1 != 1 || tileNum2 != 1) {
                     entity.detectCollision();
+//                    System.out.println("Cannot move left");
+//                    System.out.print(tileNum1);
+//                    System.out.println(tileNum2);
                 }
                 break;
             case "right":
                 tileNum1 = panel.mapTile.getMapTileNum( (entityRightCollision + entity.getSpeed()) / panel.tileSize,entityTopCollision / panel.tileSize);
                 tileNum2 = panel.mapTile.getMapTileNum( (entityRightCollision + entity.getSpeed()) / panel.tileSize,entityBottomCollision / panel.tileSize);
-                if(tileNum1 != 1 || tileNum2 != 1 || panel.mapTile.getTile(tileNum1) == null || panel.mapTile.getTile(tileNum1) == null) {
+                if(tileNum1 != 1 || tileNum2 != 1) {
                     entity.detectCollision();
+//                    System.out.println("Cannot move right");
+//                    System.out.print(tileNum1);
+//                    System.out.println(tileNum2);
                 }
                 break;
             case "up":
                 tileNum1 = panel.mapTile.getMapTileNum( entityLeftCollision / panel.tileSize,(entityTopCollision - entity.getSpeed()) / panel.tileSize);
                 tileNum2 = panel.mapTile.getMapTileNum( entityRightCollision / panel.tileSize,(entityTopCollision - entity.getSpeed()) / panel.tileSize);
-                if(tileNum1 != 1 || tileNum2 != 1 || panel.mapTile.getTile(tileNum1) == null || panel.mapTile.getTile(tileNum1) == null) {
+                if(entityTopCollision - entity.getSpeed() < 0 || tileNum1 != 1 || tileNum2 != 1) {
                     entity.detectCollision();
+//                    System.out.println("Cannot move up");
+//                    System.out.print(tileNum1);
+//                    System.out.println(tileNum2);
                 }
                 break;
             case "down":
                 tileNum1 = panel.mapTile.getMapTileNum( entityLeftCollision / panel.tileSize,(entityBottomCollision + entity.getSpeed()) / panel.tileSize);
                 tileNum2 = panel.mapTile.getMapTileNum( entityRightCollision / panel.tileSize,(entityBottomCollision + entity.getSpeed()) / panel.tileSize);
-                if(tileNum1 != 1 || tileNum2 != 1 || panel.mapTile.getTile(tileNum1) == null || panel.mapTile.getTile(tileNum1) == null) {
+                if(tileNum1 != 1 || tileNum2 != 1) {
                     entity.detectCollision();
+//                    System.out.println("Cannot move down");
+//                    System.out.print(tileNum1);
+//                    System.out.println(tileNum2);
                 }
                 break;
         }

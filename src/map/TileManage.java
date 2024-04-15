@@ -74,7 +74,7 @@ public class TileManage  {
                 String[] numbers = line.split(" ");
                 for (int col = 0; col < panel.maxMapCol && col < numbers.length; col++) {
                     int num = Integer.parseInt(numbers[col]);
-                    mapTileNum[col][row] = num;
+                    mapTileNum[row][col] = num;
                 }
                 row++;
             }
@@ -101,11 +101,9 @@ public class TileManage  {
                 int mapY = row * panel.tileSize;
 
                 if (isInDisplayArea(mapX, mapY, minX, minY, maxX, maxY)) {
-                    int tileNum = mapTileNum[col][row];
+                    int tileNum = mapTileNum[row][col];
                     if (tileNum != 0 && tile[tileNum] != null) {
                         g2.drawImage(tile[tileNum].image, mapX - playerX + screenX, mapY - playerY + screenY, panel.tileSize, panel.tileSize, null);
-                    } else {
-                        g2.drawImage(tile[1].image, mapX - playerX + screenX, mapY - playerY + screenY, panel.tileSize, panel.tileSize, null);
                     }
                 }
             }
@@ -117,8 +115,8 @@ public class TileManage  {
     }
 
     public int getMapTileNum(int x, int y) {
-        if(x >= 0 && y >= 0 && x < panel.maxMapRow && y < panel.maxMapCol)
-            return mapTileNum[x][y];
+        if(x >= 0 && y >= 0 && x < panel.maxMapCol && y < panel.maxMapRow)
+            return mapTileNum[y][x];
         return 0;
     }
     public Tile getTile(int num) { return tile[num]; }

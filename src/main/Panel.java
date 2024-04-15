@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Random;
 
 import entity.*;
 import map.*;
@@ -32,7 +33,6 @@ public class Panel extends JPanel implements Runnable {
     double FPS = 60;
 
     // Systems
-    public AssetSetter assetSetter = new AssetSetter(this) ;
     TileManage mapTile = new TileManage(this);
     KeyHandler keyHandler = new KeyHandler();
     MouseEventHandler mouseEventHandler = new MouseEventHandler();
@@ -61,43 +61,13 @@ public class Panel extends JPanel implements Runnable {
 
     }
     public void setUpGame() {
-        assetSetter.setMonster();
+        setMonsters();
 
     }
     public  void startThread(){
         gameThread = new Thread(this);
         gameThread.start();
     }
-/*
-    @Override
-    public void run() {
-        double drawInterval = 1000000000/FPS;
-        double nextDrawTime = System.nanoTime() + drawInterval;
-
-        while (gameThread != null) {
-            System.out.println("The game loop is running");
-            // long currentTime = System.nanoTime();
-            // long currentTime2 = System.currentTimeMillis();
-
-            // 1 UPDATE: update information such as character position
-            update();
-            // 2 DRAW: draw the screen with the updated information
-            repaint();
-            try{
-                double remainingTime = nextDrawTime - System.nanoTime();
-                remainingTime = remainingTime/100000;
-                if (remainingTime < 0) remainingTime = 0;
-
-                Thread.sleep((long) remainingTime);
-
-                nextDrawTime += drawInterval;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
- */
 
     public void run(){
 
@@ -121,7 +91,6 @@ public class Panel extends JPanel implements Runnable {
 
                 delta--;
             }
-
         }
     }
     public  void update() {
@@ -179,4 +148,23 @@ public class Panel extends JPanel implements Runnable {
     }
 
     public Monster[] getMonsters() { return monsters; }
+    public void setMonsters() {
+        for(int i = 0; i <= 3; ++i) {
+            boolean created = false;
+            while (!created) {
+                Random randomX = new Random();
+                Random randomY = new Random();
+                int x = randomX.nextInt(mapWidth) + 1;
+                int y = randomY.nextInt(mapHeight) + 1;
+                if(mapTile.getMapTileNum(x / tileSize, y / tileSize) == 1 && mapTile.getMapTileNum(x / tileSize + 1, y / tileSize) == 1 && mapTile.getMapTileNum(x / tileSize, y / tileSize + 1) == 1 && mapTile.getMapTileNum(x / tileSize + 1, y / tileSize + 1) == 1) {
+                    monsters[i] = new Monster(this, 1, 0);
+                    monsters[i].setPosX(x);
+                    monsters[i].setPosY(y);
+                    System.out.print(x);
+                    System.out.println(y);
+                    created = true;
+                }
+            }
+        }
+    }
 }

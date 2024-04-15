@@ -100,12 +100,12 @@ public class Monster extends Entity {
     }
     public void update() {
         setAction();
-        moveCounter ++;
+        moveCounter++;
         if(moveCounter == 10) {
 
             //Check collision
             collisionDetected = false;
-//            panel.collisionHandler.checkMapCollision(this);
+            panel.collisionHandler.checkMapCollision(this);
             if(!collisionDetected) {
                 switch (direction) {
                     case "up":
