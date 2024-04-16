@@ -38,7 +38,7 @@ public class Panel extends JPanel implements Runnable {
 
     // Systems
     TileManage mapTile = new TileManage(this);
-    Night night = new Night(this);
+//    Night night = new Night(this);
     KeyHandler keyHandler = new KeyHandler();
     MouseEventHandler mouseEventHandler = new MouseEventHandler();
     Thread gameThread;
@@ -157,7 +157,7 @@ public class Panel extends JPanel implements Runnable {
         fire[0].draw(g2);
         fire[1].draw(g2);
         fire[2].draw(g2);
-        night.draw(g2);
+//        night.draw(g2);
         // Make entityList empty after drawing
         skillList.clear();
         entityList.clear();
