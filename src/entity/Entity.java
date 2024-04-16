@@ -25,6 +25,7 @@ public abstract class Entity {
     MouseEventHandler mouseHandler;
 
     // For Graphic
+    protected BufferedImage[] fire;
     protected BufferedImage[] moveUp;
     protected BufferedImage[] moveDown;
     protected BufferedImage[] moveLeft;

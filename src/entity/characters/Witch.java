@@ -29,7 +29,7 @@ public class Witch extends Character {
             attackDown = new BufferedImage[8];
             attackLeft = new BufferedImage[8];
             attackRight = new BufferedImage[8];
-            
+
             for (int i =0; i < 6; ++i) {
                 String fileMoveUp = "assets/witch/witchMoveUp-0" + (i + 1) +".png";
                 moveUp[i] = ImageIO.read(new File(fileMoveUp));
@@ -40,7 +40,7 @@ public class Witch extends Character {
                 String fileMoveRight = "assets/witch/witchMoveRight-0" + (i + 1) +".png";
                 moveRight[i] = ImageIO.read(new File(fileMoveRight));
             }
-            
+
             for(int i = 0; i < 8; ++i) {
                 String fileAttackUp = "assets/witch/witchAttack/witchQUp-0" + (i + 1) +".png";
                 attackUp[i] = ImageIO.read(new File(fileAttackUp));

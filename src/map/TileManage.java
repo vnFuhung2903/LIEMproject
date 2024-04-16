@@ -41,24 +41,34 @@ public class TileManage  {
 
     public void getTileImage() {
         try {
-            for (int i = 1; i <= 9;i++) {
+            for (int i = 1; i <= 3;i++) {
 
                 tile[i] = new Tile();
-                tile[i].image = ImageIO.read(new File("assets/mapDesert/mapDesert-0" + i +".png"));
+                tile[i].image = ImageIO.read(new File("assets/mapDesert/tileDesert-0" + i + ".png"));
 
             }
-            for (int i = 10; i <= 30;i++) {
+            tile[31] = new Tile();
+            tile[31].image = ImageIO.read(new File("assets/mapDesert/boneDesert-01.png"));
+            tile[32] = new Tile();
+            tile[32].image = ImageIO.read(new File("assets/mapDesert/rockDesert-01.png"));
+            for (int i = 11; i <= 15;i++) {
 
                 tile[i] = new Tile();
-                tile[i].image = ImageIO.read(new File("assets/mapDesert/mapDesert-" + i + ".png"));
+                tile[i].image = ImageIO.read(new File("assets/mapDesert/barrierMapDesert-0" + (i-10) +".png"));
 
             }
-            for (int i = 31; i <= 39;i++) {
+            for (int i = 21; i <= 22;i++) {
 
                 tile[i] = new Tile();
-                tile[i].image = ImageIO.read(new File("assets/mapDesert/cat-0" + (i-30) + ".png"));
+                tile[i].image = ImageIO.read(new File("assets/mapDesert/treeDesert-0" + (i-20) + ".png"));
 
             }
+//            for (int i = 31; i <= 39;i++) {
+//
+//                tile[i] = new Tile();
+//                tile[i].image = ImageIO.read(new File("assets/mapDesert/cat-0" + (i-30) + ".png"));
+//
+//            }
         } catch(IOException e)
         {
             e.printStackTrace();
@@ -95,6 +105,7 @@ public class TileManage  {
         int minY = playerY - screenY - MARGIN;
         int maxY = playerY + screenY + MARGIN;
 
+
         for (int row = 0; row < panel.maxMapRow; row++) {
             for (int col = 0; col < panel.maxMapCol; col++) {
                 int mapX = col * panel.tileSize;
@@ -102,7 +113,15 @@ public class TileManage  {
 
                 if (isInDisplayArea(mapX, mapY, minX, minY, maxX, maxY)) {
                     int tileNum = mapTileNum[row][col];
-                    if (tileNum != 0 && tile[tileNum] != null) {
+                    if (tileNum == 31 & tile[tileNum] != null) {
+                        g2.drawImage(tile[tileNum].image, mapX - playerX + screenX, mapY - playerY + screenY, panel.tileSize*3, panel.tileSize*3, null);
+
+                    }
+                    else if (tileNum == 32 & tile[tileNum] != null) {
+                        g2.drawImage(tile[tileNum].image, mapX - playerX + screenX, mapY - playerY + screenY, panel.tileSize*3, panel.tileSize*2, null);
+
+                    }
+                    else if (tileNum != 0 && tile[tileNum] != null) {
                         g2.drawImage(tile[tileNum].image, mapX - playerX + screenX, mapY - playerY + screenY, panel.tileSize, panel.tileSize, null);
                     }
                 }

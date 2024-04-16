@@ -10,6 +10,7 @@ import entity.*;
 import entity.Character;
 import entity.monsters.*;
 import map.*;
+import skill.PunchForWitch;
 
 public class Panel extends JPanel implements Runnable {
 
@@ -17,6 +18,8 @@ public class Panel extends JPanel implements Runnable {
     final int originalTileSize = 16; //16*16 tile
     final int scale = 3;
     final public int tileSize = originalTileSize * scale ; // 48*48 tile
+    final int characterScale = 2;
+    final public int characterSize = tileSize * characterScale;
     final int maxScreenCol = 20;
     final int maxScreenRow = 12;
     final public int screenWidth = tileSize * maxScreenCol; // 960 pixels
@@ -24,8 +27,8 @@ public class Panel extends JPanel implements Runnable {
 
 
     // MAP SETTINGS
-    final public int maxMapCol = 2000;
-    final public int maxMapRow = 2000;
+    final public int maxMapCol = 20;
+    final public int maxMapRow = 20;
     final public int mapWidth = tileSize * maxScreenCol;
     final public int mapHeight = tileSize * maxScreenRow;
 
@@ -34,16 +37,19 @@ public class Panel extends JPanel implements Runnable {
 
     // Systems
     TileManage mapTile = new TileManage(this);
+    Night night = new Night(this);
     KeyHandler keyHandler = new KeyHandler();
     MouseEventHandler mouseEventHandler = new MouseEventHandler();
     Thread gameThread;
     public CollisionHandler collisionHandler = new CollisionHandler(this);
+    AssetSetter assetSetter = new AssetSetter(this);
 
     // Entities
     entity.Character player = new entity.characters.Witch(this, 10, keyHandler, mouseEventHandler);
     Monster[] monsters = new Monster[1];
     ArrayList<Entity> entityList = new ArrayList<>();
-    ArrayList<Entity> skillList = new ArrayList<>();
+    public ArrayList<Entity> skillList = new ArrayList<>();
+    public PunchForWitch[] fire = new PunchForWitch[10];
 
     public Panel() {
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
@@ -61,7 +67,7 @@ public class Panel extends JPanel implements Runnable {
     }
     public void setUpGame() {
         setMonsters();
-
+        assetSetter.setFire();
     }
     public  void startThread(){
         gameThread = new Thread(this);
@@ -93,6 +99,9 @@ public class Panel extends JPanel implements Runnable {
         }
     }
     public  void update() {
+        fire[0].update();
+        fire[1].update();
+        fire[2].update();
 
         for(Monster monster : monsters) {
             monster.update();
@@ -117,6 +126,10 @@ public class Panel extends JPanel implements Runnable {
         // Draw map tiles
         mapTile.draw(g2);
 
+        fire[0].draw(g2);
+        fire[1].draw(g2);
+        fire[2].draw(g2);
+
         // ADD ENTITIES TO THE LIST
         for (Monster value : monsters) {
             if (value != null) {
@@ -137,6 +150,8 @@ public class Panel extends JPanel implements Runnable {
         for (Entity entity : entityList) {
             entity.draw(g2);
         }
+
+        night.draw(g2);
 
         // Make entityList empty after drawing
         entityList.clear();

@@ -48,7 +48,7 @@ public class Monster extends Entity {
     public void setAction() {
 
         checkTriggerPlayer();
-        if(++actionLockCounter == 100) {
+        if(++actionLockCounter == 10) {
             actionLockCounter = 0;
 
             if (triggering) {
@@ -94,7 +94,7 @@ public class Monster extends Entity {
     public void update() {
 
         setAction();
-        if(++moveCounter == 10) {
+        if(++moveCounter == 3) {
 
             //Check collision
             collisionDetected = false;

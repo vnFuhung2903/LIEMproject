@@ -76,9 +76,9 @@ public class Skill extends Entity {
                     break;
 
             }
-                g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
-                System.out.println(posX + posY);
-                System.out.println("pew pew");
+            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
+            System.out.println(posX + posY);
+            System.out.println("pew pew");
         }
     }
 }

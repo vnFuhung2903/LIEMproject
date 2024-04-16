@@ -134,7 +134,7 @@ public class Character extends Entity {
 
             g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
         }
-        
+
         else
         {
             switch (direction) {
