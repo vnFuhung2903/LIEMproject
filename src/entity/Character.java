@@ -2,6 +2,7 @@ package entity;
 
 import main.*;
 import main.Panel;
+import skill.QWitch;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -10,7 +11,7 @@ public class Character extends Entity {
     final public int screenX;
     final public int screenY;
     protected int attackIndex, attackTick, attackInterval;
-
+    QWitch laze = new QWitch(panel,10,20);
     public Character(Panel panel, int skillThread, KeyHandler keyHandler, MouseEventHandler mouseEventHandler) {
 
         super(panel, 1, skillThread);
@@ -39,7 +40,8 @@ public class Character extends Entity {
             moveAnimation();
             checkSkill();
             if(checkSkill&& skill.alive && attackIndex == 6) {
-                skill.setSkill(posX, posY, direction, true, this);
+//                skill.setSkill(posX, posY, direction, true, this);
+                panel.laze.setSkill(posX, posY,direction, true, this);
             }
 
         } else if(flash) {
@@ -184,8 +186,11 @@ public class Character extends Entity {
 //
 //            // ADD skill to The list
 //            panel.skillList.add(skill);
+            laze.setSkill(posX,posY,direction,true, this);
+            panel.skillList.add(laze);
             checkSkill = true;
         }
 
     }
+
 }

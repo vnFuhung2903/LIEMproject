@@ -11,6 +11,7 @@ import entity.Character;
 import entity.monsters.*;
 import map.*;
 import skill.PunchForWitch;
+import skill.QWitch;
 
 public class Panel extends JPanel implements Runnable {
 
@@ -46,10 +47,11 @@ public class Panel extends JPanel implements Runnable {
 
     // Entities
     entity.Character player = new entity.characters.Witch(this, 10, keyHandler, mouseEventHandler);
-    Monster[] monsters = new Monster[1];
+    Monster[] monsters = new Monster[10];
     ArrayList<Entity> entityList = new ArrayList<>();
-    public ArrayList<Entity> skillList = new ArrayList<>();
+    public ArrayList<Skill> skillList = new ArrayList<>();
     public PunchForWitch[] fire = new PunchForWitch[10];
+    public skill.QWitch laze = new QWitch(this, 10, 20);
 
     public Panel() {
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
@@ -102,20 +104,20 @@ public class Panel extends JPanel implements Runnable {
         fire[0].update();
         fire[1].update();
         fire[2].update();
-
         for(Monster monster : monsters) {
             monster.update();
         }
 
         player.update();
-        for (Entity entity : skillList) {
-            if (entity != null) {
-                if (entity.isAlive()) {
-                    entity.update();
+        for (Skill skill : skillList) {
+            if (skill != null) {
+                if (skill.isAlive()) {
+                    skill.update();
                     System.out.println("loading");
                 }
             }
         }
+
     }
 
     public void paintComponent(Graphics g){
@@ -126,9 +128,6 @@ public class Panel extends JPanel implements Runnable {
         // Draw map tiles
         mapTile.draw(g2);
 
-        fire[0].draw(g2);
-        fire[1].draw(g2);
-        fire[2].draw(g2);
 
         // ADD ENTITIES TO THE LIST
         for (Monster value : monsters) {
@@ -136,9 +135,10 @@ public class Panel extends JPanel implements Runnable {
                 entityList.add(value);
             }
         }
-        for (Entity entity : skillList) {
-            if (entity != null) {
-                entityList.add(entity);
+
+        for (Skill skill : skillList) {
+            if (skill != null) {
+                skillList.add(skill);
             }
         }
         entityList.add(player);
@@ -150,10 +150,16 @@ public class Panel extends JPanel implements Runnable {
         for (Entity entity : entityList) {
             entity.draw(g2);
         }
+        for (Skill skill : skillList) {
+            skill.draw(g2);
+        }
 
+        fire[0].draw(g2);
+        fire[1].draw(g2);
+        fire[2].draw(g2);
         night.draw(g2);
-
         // Make entityList empty after drawing
+        skillList.clear();
         entityList.clear();
         g2.dispose();
     }
@@ -161,7 +167,7 @@ public class Panel extends JPanel implements Runnable {
     public Monster[] getMonsters() { return monsters; }
     public void setMonsters() {
 
-        for(int i = 0; i <= 0; ++i) {
+        for(int i = 0; i <= 9; ++i) {
             boolean created = false;
             while (!created) {
 

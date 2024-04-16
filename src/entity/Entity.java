@@ -10,7 +10,7 @@ import main.Panel;
 public abstract class Entity {
 
     protected Panel panel;
-    protected int posX, posY;
+    public int posX, posY;
     protected int speed;
     protected int moveCounter = 0;
     protected int actionLockCounter = 0;
@@ -20,6 +20,7 @@ public abstract class Entity {
     protected boolean checkSkill = false;
     protected boolean alive;
     protected Skill skill;
+    protected Skill laze;
 
     KeyHandler keyHandler;
     MouseEventHandler mouseHandler;
@@ -34,10 +35,10 @@ public abstract class Entity {
     protected BufferedImage[] attackDown;
     protected BufferedImage[] attackLeft;
     protected BufferedImage[] attackRight;
-    protected BufferedImage skillUp;
-    protected BufferedImage skillDown;
-    protected BufferedImage skillLeft;
-    protected BufferedImage skillRight;
+    protected BufferedImage skillUp[];
+    protected BufferedImage skillDown[];
+    protected BufferedImage skillLeft[];
+    protected BufferedImage skillRight[];
 
     // For collisions
     protected  boolean collisionDetected;
