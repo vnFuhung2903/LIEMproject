@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 public class Character extends Entity {
     final public int screenX;
     final public int screenY;
-    protected int attackIndex, attackTick, attackInterval;
 
     public Character(Panel panel, int skillThread, KeyHandler keyHandler, MouseEventHandler mouseEventHandler) {
 
@@ -90,21 +89,19 @@ public class Character extends Entity {
     }
 
     private void updateSprite() {
-        spriteCounter++;
-        if (spriteCounter > 10) {
-            if (++spriteNum > 5) spriteNum = 0;
-            spriteCounter = 0;
+        if (++spriteTick > 10) {
+            if (++spriteIndex > 5) spriteIndex = 0;
+            spriteTick = 0;
         }
     }
 
     public void moveFlashAnimation() {
         if (keyHandler.flashPressed) {
             speed = 10;
-            spriteCounter++;
-            if (spriteCounter > 5) {
-                if (spriteNum > 4) spriteNum = 1;
-                else spriteNum ++;
-                spriteCounter = 0;
+            if (++spriteTick > 5) {
+                if (spriteIndex > 4) spriteIndex = 1;
+                else spriteIndex ++;
+                spriteTick = 0;
                 flash = false;
                 speed = 2;
             }
@@ -139,16 +136,16 @@ public class Character extends Entity {
         {
             switch (direction) {
                 case "up":
-                    currentFrameImg = moveUp[spriteNum];
+                    currentFrameImg = moveUp[spriteIndex];
                     break;
                 case "down":
-                    currentFrameImg = moveDown[spriteNum];
+                    currentFrameImg = moveDown[spriteIndex];
                     break;
                 case "left":
-                    currentFrameImg = moveLeft[spriteNum];
+                    currentFrameImg = moveLeft[spriteIndex];
                     break;
                 case "right":
-                    currentFrameImg = moveRight[spriteNum];
+                    currentFrameImg = moveRight[spriteIndex];
                     break;
             }
 

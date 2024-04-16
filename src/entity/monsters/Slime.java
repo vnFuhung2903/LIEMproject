@@ -34,7 +34,7 @@ public class Slime extends Monster {
                 break;
         }
         this.color = color;
-        this.spriteInterval = 20;
+
         this.monsterSize = 1;
         this.triggerArea = null;
         this.collisionArea = new Rectangle(panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4);

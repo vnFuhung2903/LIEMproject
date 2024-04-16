@@ -8,37 +8,36 @@ import main.Panel;
 public class Monster extends Entity {
 
     protected String name;
-    protected int spriteInterval, maxSpriteNum = 5, monsterSize;
+    protected int monsterSize, attackIndex, attackTick = 0, attackInterval;
     protected Rectangle triggerArea;
     protected boolean triggering = false;
     public Monster(Panel panel, int speed, int skillThread) {
         super(panel, speed, skillThread);
     }
+
     public void draw(Graphics2D g2) {
         BufferedImage currentFrameImg = null;
 
         int screenX = posX - panel.getPlayer().posX + panel.getPlayer().screenX;
         int screenY = posY - panel.getPlayer().posY + panel.getPlayer().screenY;
 
-//        boolean check;
         if (posX + panel.tileSize >= panel.getPlayer().posX - panel.getPlayer().screenX &&
                 posX - panel.tileSize <= panel.getPlayer().posX + panel.getPlayer().screenX &&
                 posY + panel.tileSize >= panel.getPlayer().posY - panel.getPlayer().screenY &&
                 posY - panel.tileSize <= panel.getPlayer().posY + panel.getPlayer().screenY
         ) {
-//            check =  true;
             switch (direction) {
                 case "up":
-                    currentFrameImg = moveUp[spriteNum];
+                    currentFrameImg = moveUp[spriteIndex];
                     break;
                 case "down":
-                    currentFrameImg = moveDown[spriteNum];
+                    currentFrameImg = moveDown[spriteIndex];
                     break;
                 case "left":
-                    currentFrameImg = moveLeft[spriteNum];
+                    currentFrameImg = moveLeft[spriteIndex];
                     break;
                 case "right":
-                    currentFrameImg = moveRight[spriteNum];
+                    currentFrameImg = moveRight[spriteIndex];
                     break;
             }
             g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * monsterSize, panel.tileSize * monsterSize, null);
@@ -46,53 +45,37 @@ public class Monster extends Entity {
 
     }
     public void setAction() {
-
-        checkTriggerPlayer();
-        if(++actionLockCounter == 10) {
+        if(++actionLockCounter == 50) {
             actionLockCounter = 0;
 
-            if (triggering) {
+            // Random path
+            Random random = new Random();
+            int i = random.nextInt(100) + 1;
 
-                int playerLeftTrigger = panel.getPlayer().getPosX();
-                int playerRightTrigger = playerLeftTrigger + panel.tileSize * 2;
-                int playerTopTrigger = panel.getPlayer().getPosY();
-                int playerBottomTrigger = playerTopTrigger + panel.tileSize * 2;
-
-                if(playerBottomTrigger > posY + panel.tileSize * monsterSize) {
-                    direction = "down";
-                }
-
-                else if(playerLeftTrigger < posX) {
-                    direction = "left";
-                }
-
-                else if(playerRightTrigger > posX + panel.tileSize * monsterSize) {
-                    direction = "right";
-                }
-
-                else if(playerTopTrigger < posY) {
-                    direction = "up";
-                }
-            }
-
-            else {
-                Random random = new Random();
-                int i = random.nextInt(100) + 1;
-
-                if (i <= 25) {
-                    direction = "up";
-                } else if (i <= 50) {
-                    direction = "down";
-                } else if (i <= 75) {
-                    direction = "left";
-                } else {
-                    direction = "right";
-                }
+            if (i <= 25) {
+                direction = "up";
+            } else if (i <= 50) {
+                direction = "down";
+            } else if (i <= 75) {
+                direction = "left";
+            } else {
+                direction = "right";
             }
         }
     }
     public void update() {
 
+        checkAttacking();
+        if(attacking) {
+            System.out.println("attack");
+            updateAttackAnimation();
+        }
+        move();
+    }
+
+    public void updateSprite() {}
+
+    public void move() {
         setAction();
         if(++moveCounter == 3) {
 
@@ -117,11 +100,10 @@ public class Monster extends Entity {
             }
             moveCounter = 0;
         }
-        if (++spriteCounter > spriteInterval) {
-            if (++spriteNum > maxSpriteNum) spriteNum = 0;
-            spriteCounter = 0;
-        }
+        updateSprite();
     }
+
+    public void updateAttackAnimation() {}
 
     public void checkTriggerPlayer() {
 
@@ -142,4 +124,6 @@ public class Monster extends Entity {
             triggering = true;
         }
     }
+
+    public void checkAttacking() {}
 }

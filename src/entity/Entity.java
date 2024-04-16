@@ -42,12 +42,11 @@ public abstract class Entity {
     // For collisions
     protected  boolean collisionDetected;
     protected Rectangle collisionArea;
-    protected  Rectangle attackArea;
 
     protected String direction = "down";
 
-    protected int spriteCounter = 0;
-    protected int spriteNum = 1;
+    protected int spriteTick, spriteIndex, attackIndex, attackTick, attackInterval;
+
 
     public Entity(Panel panel, int speed, int skillThread) {
         this.panel = panel;

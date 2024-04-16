@@ -31,9 +31,8 @@ public class Spider extends Monster {
                 break;
         }
 
-        this.spriteInterval = 10;
         this.monsterSize = 1;
-        this.maxSpriteNum = 5;
+
         this.triggerArea = new Rectangle(-5 * panel.tileSize, -5 * panel.tileSize, 11 * panel.tileSize, 11 * panel.tileSize);
         this.collisionArea = new Rectangle(panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4);
         getMonsterImage();
