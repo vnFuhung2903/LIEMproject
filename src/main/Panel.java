@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.Random;
 
 import entity.*;
+import entity.Character;
 import entity.monsters.*;
 import map.*;
 
@@ -16,8 +17,6 @@ public class Panel extends JPanel implements Runnable {
     final int originalTileSize = 16; //16*16 tile
     final int scale = 3;
     final public int tileSize = originalTileSize * scale ; // 48*48 tile
-    final int characterScale = 2;
-    final public int characterSize = tileSize * characterScale;
     final int maxScreenCol = 20;
     final int maxScreenRow = 12;
     final public int screenWidth = tileSize * maxScreenCol; // 960 pixels
@@ -41,10 +40,10 @@ public class Panel extends JPanel implements Runnable {
     public CollisionHandler collisionHandler = new CollisionHandler(this);
 
     // Entities
-    public entity.Character player = new entity.characters.Witch(this, 10, keyHandler, mouseEventHandler);
-    public Monster[] monsters = new Monster[10];
+    entity.Character player = new entity.characters.Witch(this, 10, keyHandler, mouseEventHandler);
+    Monster[] monsters = new Monster[1];
     ArrayList<Entity> entityList = new ArrayList<>();
-    public ArrayList<Entity> skillList = new ArrayList<>();
+    ArrayList<Entity> skillList = new ArrayList<>();
 
     public Panel() {
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
@@ -147,7 +146,7 @@ public class Panel extends JPanel implements Runnable {
     public Monster[] getMonsters() { return monsters; }
     public void setMonsters() {
 
-        for(int i = 0; i <= 9; ++i) {
+        for(int i = 0; i <= 0; ++i) {
             boolean created = false;
             while (!created) {
 
@@ -175,9 +174,12 @@ public class Panel extends JPanel implements Runnable {
                 int y = randomY.nextInt(mapHeight) + 1;
 
                 if(mapTile.getMapTileNum(x / tileSize, y / tileSize) == 1) {
-                    if(i < 5) monsters[i] = new Slime(this, 5, 0, color);
-                    else if(i < 8) monsters[i] = new Spider(this, 5, 0);
-                    else monsters[i] = new Slave(this, 5, 10);
+//                    if(i < 5) monsters[i] = new Slime(this, 5, 0, color);
+//                    else
+//                        if(i < 8)
+//                            monsters[i] = new Spider(this, 5, 0);
+//                        else
+                        monsters[i] = new Slave(this, 5, 10);
                     monsters[i].setPosX(x);
                     monsters[i].setPosY(y);
                     System.out.print(x);
@@ -186,5 +188,9 @@ public class Panel extends JPanel implements Runnable {
                 }
             }
         }
+    }
+
+    public Character getPlayer() {
+        return player;
     }
 }

@@ -43,7 +43,7 @@ public abstract class Entity {
     protected Rectangle collisionArea;
     protected  Rectangle attackArea;
 
-    protected String direction;
+    protected String direction = "down";
 
     protected int spriteCounter = 0;
     protected int spriteNum = 1;

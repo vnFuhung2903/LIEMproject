@@ -49,13 +49,13 @@ public class Skill extends Entity {
     public void draw(Graphics2D g2) {
 
         BufferedImage currentFrameImg = null;
-        int screenX = posX - panel.player.posX + panel.player.screenX;
-        int screenY = posY - panel.player.posY + panel.player.screenY;
+        int screenX = posX - panel.getPlayer().posX + panel.getPlayer().screenX;
+        int screenY = posY - panel.getPlayer().posY + panel.getPlayer().screenY;
 
-        if (posX + panel.tileSize > panel.player.posX - panel.player.screenX &&
-                posX - panel.tileSize < panel.player.posX + panel.player.screenX &&
-                posY + panel.tileSize > panel.player.posY - panel.player.screenY &&
-                posY - panel.tileSize < panel.player.posY + panel.player.screenY
+        if (posX + panel.tileSize > panel.getPlayer().posX - panel.getPlayer().screenX &&
+                posX - panel.tileSize < panel.getPlayer().posX + panel.getPlayer().screenX &&
+                posY + panel.tileSize > panel.getPlayer().posY - panel.getPlayer().screenY &&
+                posY - panel.tileSize < panel.getPlayer().posY + panel.getPlayer().screenY
         ) {
             switch (direction) {
                 case "up":
@@ -76,7 +76,7 @@ public class Skill extends Entity {
                     break;
 
             }
-                g2.drawImage(currentFrameImg, screenX, screenY, panel.characterSize, panel.characterSize, null);
+                g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
                 System.out.println(posX + posY);
                 System.out.println("pew pew");
         }

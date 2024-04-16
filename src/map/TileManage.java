@@ -85,10 +85,10 @@ public class TileManage  {
     }
 
     public void draw(Graphics2D g2) {
-        int playerX = panel.player.getPosX();
-        int playerY = panel.player.getPosY();
-        int screenX = panel.player.screenX;
-        int screenY = panel.player.screenY;
+        int playerX = panel.getPlayer().getPosX();
+        int playerY = panel.getPlayer().getPosY();
+        int screenX = panel.getPlayer().screenX;
+        int screenY = panel.getPlayer().screenY;
 
         int minX = playerX - screenX - MARGIN;
         int maxX = playerX + screenX + MARGIN;

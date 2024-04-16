@@ -2,30 +2,31 @@ package entity;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Random;
-import javax.imageio.ImageIO;
 
 import main.Panel;
 public class Monster extends Entity {
 
     protected String name;
     protected int spriteInterval, maxSpriteNum = 5, monsterSize;
+    protected Rectangle triggerArea;
+    protected boolean triggering = false;
     public Monster(Panel panel, int speed, int skillThread) {
         super(panel, speed, skillThread);
     }
     public void draw(Graphics2D g2) {
         BufferedImage currentFrameImg = null;
 
-        int screenX = posX - panel.player.posX + panel.player.screenX;
-        int screenY = posY - panel.player.posY + panel.player.screenY;
+        int screenX = posX - panel.getPlayer().posX + panel.getPlayer().screenX;
+        int screenY = posY - panel.getPlayer().posY + panel.getPlayer().screenY;
 
-        if (posX + panel.tileSize > panel.player.posX - panel.player.screenX &&
-                posX - panel.tileSize < panel.player.posX + panel.player.screenX &&
-                posY + panel.tileSize > panel.player.posY - panel.player.screenY &&
-                posY - panel.tileSize < panel.player.posY + panel.player.screenY
+//        boolean check;
+        if (posX + panel.tileSize >= panel.getPlayer().posX - panel.getPlayer().screenX &&
+                posX - panel.tileSize <= panel.getPlayer().posX + panel.getPlayer().screenX &&
+                posY + panel.tileSize >= panel.getPlayer().posY - panel.getPlayer().screenY &&
+                posY - panel.tileSize <= panel.getPlayer().posY + panel.getPlayer().screenY
         ) {
+//            check =  true;
             switch (direction) {
                 case "up":
                     currentFrameImg = moveUp[spriteNum];
@@ -45,26 +46,53 @@ public class Monster extends Entity {
 
     }
     public void setAction() {
-        if(++actionLockCounter == 200 ) {
-            Random random = new Random();
-            int i = random.nextInt(100) + 1;
 
-            if(i <= 25) {
-                direction = "up";
-            }
-            else if (i <= 50) {
-                direction = "down";
-            }
-            else if (i <= 75) {
-                direction = "left";
-            }
-            else  {
-                direction = "right";
-            }
+        checkTriggerPlayer();
+        if(++actionLockCounter == 100) {
             actionLockCounter = 0;
+
+            if (triggering) {
+
+                int playerLeftTrigger = panel.getPlayer().getPosX();
+                int playerRightTrigger = playerLeftTrigger + panel.tileSize * 2;
+                int playerTopTrigger = panel.getPlayer().getPosY();
+                int playerBottomTrigger = playerTopTrigger + panel.tileSize * 2;
+
+                if(playerBottomTrigger > posY + panel.tileSize * monsterSize) {
+                    direction = "down";
+                }
+
+                else if(playerLeftTrigger < posX) {
+                    direction = "left";
+                }
+
+                else if(playerRightTrigger > posX + panel.tileSize * monsterSize) {
+                    direction = "right";
+                }
+
+                else if(playerTopTrigger < posY) {
+                    direction = "up";
+                }
+            }
+
+            else {
+                Random random = new Random();
+                int i = random.nextInt(100) + 1;
+
+                if (i <= 25) {
+                    direction = "up";
+                } else if (i <= 50) {
+                    direction = "down";
+                } else if (i <= 75) {
+                    direction = "left";
+                } else {
+                    direction = "right";
+                }
+            }
         }
     }
     public void update() {
+
         setAction();
         if(++moveCounter == 10) {
 
@@ -92,6 +120,26 @@ public class Monster extends Entity {
         if (++spriteCounter > spriteInterval) {
             if (++spriteNum > maxSpriteNum) spriteNum = 0;
             spriteCounter = 0;
+        }
+    }
+
+    public void checkTriggerPlayer() {
+
+        triggering = false;
+        if(triggerArea == null) return;
+
+        int monsterLeftTrigger = posX + triggerArea.x;
+        int monsterRightTrigger = monsterLeftTrigger + triggerArea.width;
+        int monsterTopTrigger = posY + triggerArea.y;
+        int monsterBottomTrigger = monsterTopTrigger + triggerArea.height;
+
+        int playerLeftTrigger = panel.getPlayer().getPosX();
+        int playerRightTrigger = playerLeftTrigger + panel.tileSize * 2;
+        int playerTopTrigger = panel.getPlayer().getPosY();
+        int playerBottomTrigger = playerTopTrigger + panel.tileSize * 2;
+
+        if(playerLeftTrigger >= monsterLeftTrigger && playerRightTrigger <= monsterRightTrigger && playerTopTrigger >= monsterTopTrigger && playerBottomTrigger <= monsterBottomTrigger) {
+            triggering = true;
         }
     }
 }

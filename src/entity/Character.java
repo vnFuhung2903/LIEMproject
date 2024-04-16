@@ -5,9 +5,6 @@ import main.Panel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 public class Character extends Entity {
     final public int screenX;
@@ -135,8 +132,7 @@ public class Character extends Entity {
                     break;
             }
 
-            g2.drawImage(currentFrameImg, screenX, screenY, panel.characterSize, panel.characterSize, null);
-            System.out.println("attacking");
+            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
         }
         
         else
@@ -156,7 +152,7 @@ public class Character extends Entity {
                     break;
             }
 
-            g2.drawImage(currentFrameImg, screenX, screenY, panel.characterSize, panel.characterSize, null);
+            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
         }
     }
     public void updateAttackAnimation() {

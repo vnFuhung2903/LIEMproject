@@ -19,7 +19,6 @@ public class Slime extends Monster {
 
         Random randomColor = new Random();
         int directionIndex = randomColor.nextInt(5);
-        direction = "down";
         switch (directionIndex) {
             case 1:
                 direction = "left";
@@ -37,6 +36,7 @@ public class Slime extends Monster {
         this.color = color;
         this.spriteInterval = 20;
         this.monsterSize = 1;
+        this.triggerArea = null;
         this.collisionArea = new Rectangle(panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4);
         getMonsterImage();
     }
@@ -44,10 +44,10 @@ public class Slime extends Monster {
     public void getMonsterImage() {
 
         try {
-            moveUp = new BufferedImage[7];
-            moveDown = new BufferedImage[7];
-            moveLeft = new BufferedImage[7];
-            moveRight = new BufferedImage[7];
+            moveUp = new BufferedImage[6];
+            moveDown = new BufferedImage[6];
+            moveLeft = new BufferedImage[6];
+            moveRight = new BufferedImage[6];
 
             for (int i = 0; i < 6;i++) {
 

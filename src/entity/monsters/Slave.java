@@ -16,7 +16,6 @@ public class Slave extends Monster {
 
         Random randomColor = new Random();
         int directionIndex = randomColor.nextInt(5);
-        direction = "down";
         switch (directionIndex) {
             case 1:
                 direction = "left";
@@ -35,6 +34,7 @@ public class Slave extends Monster {
         this.spriteInterval = 20;
         this.maxSpriteNum = 1;
         this.monsterSize = 2;
+        this.triggerArea = new Rectangle(-5 * panel.tileSize, -5 * panel.tileSize, 12 * panel.tileSize, 12 * panel.tileSize);
         this.collisionArea = new Rectangle(panel.tileSize, panel.tileSize, 0, panel.tileSize / 2);
         getMonsterImage();
     }
