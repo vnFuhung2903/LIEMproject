@@ -1,5 +1,6 @@
 package skill;
 
+import entity.Entity;
 import entity.Skill;
 import main.Panel;
 
@@ -10,11 +11,10 @@ import java.io.IOException;
 
 public class SkillOneForKnight extends Skill {
 
-    public SkillOneForKnight(Panel panel, int speed, int skillThread) {
-        super(panel, speed, skillThread);
+    public SkillOneForKnight(Panel panel, int speed, int skillThread, Entity user) {
+        super(panel, speed, skillThread, user);
 
         this.panel = panel;
-        alive = false;
         getImage();
     }
 

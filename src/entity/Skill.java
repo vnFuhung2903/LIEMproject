@@ -7,25 +7,20 @@ import java.awt.image.BufferedImage;
 
 public class Skill extends Entity {
 
-    Entity user;
-    protected Skill(Panel panel, int speed, int skillThread) {
+    protected Entity user;
+    protected boolean casted;
+    protected BufferedImage[] skillUp;
+    protected BufferedImage[] skillDown;
+    protected BufferedImage[] skillLeft;
+    protected BufferedImage[] skillRight;
+
+    protected Skill(Panel panel, int speed, int skillThread, Entity user) {
         super(panel, speed, skillThread);
-    }
-
-    public void setSkill(int posX, int posY, String direction, boolean alive, Entity user) {
-        this.posX = posX;
-        this.posY = posY;
-        this.direction = direction;
-        this.alive = alive;
         this.user = user;
-
+        casted = false;
     }
 
-    public void update() {
+    public void setSkill(int posX, int posY) {}
 
-    }
-
-    public void draw(Graphics2D g2) {
-
-    }
+    public boolean isCasted() { return casted; }
 }

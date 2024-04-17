@@ -67,7 +67,6 @@ public class Monster extends Entity {
 
         checkAttacking();
         if(attacking) {
-            System.out.println("attack");
             updateAttackAnimation();
         }
         move();

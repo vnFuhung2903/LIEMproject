@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 public class Character extends Entity {
     final public int screenX;
     final public int screenY;
+    protected Skill skillQ, skillE;
+    protected boolean usingSkillQ, usingSkillE;
 
     public Character(Panel panel, int skillThread, KeyHandler keyHandler, MouseEventHandler mouseEventHandler) {
 
@@ -32,23 +34,30 @@ public class Character extends Entity {
     public void getPlayerImage() {}
 
     public void update() {
-        checkFlash();
+//        checkFlash();
         if (attacking) {
             updateAttackAnimation();
             moveAnimation();
-            checkSkill();
-            if(checkSkill&& skill.alive && attackIndex == 6) {
-                skill.setSkill(posX, posY, direction, true, this);
+            checkSkillQ();
+            if(usingSkillQ && !skillQ.isCasted() && attackIndex == 6) {
+                skillQ.setSkill(posX, posY);
             }
 
-        } else if(flash) {
-            moveFlashAnimation();
-            moveAnimation();
+            checkSkillE();
+            if(usingSkillE && !skillE.isCasted() && attackIndex == 6) {
+                skillE.setSkill(posX, posY);
+            }
+
         }
+//        else if(flash) {
+//            moveFlashAnimation();
+//            moveAnimation();
+//        }
         else moveAnimation();
     }
 
     public void moveAnimation() {
+
         if (keyHandler.isMoving()) {
             if (keyHandler.upPressed){
                 direction = "up";
@@ -66,7 +75,7 @@ public class Character extends Entity {
             // Check collision
             collisionDetected = false;
             panel.collisionHandler.checkMapCollision(this);
-            panel.collisionHandler.checkMonsterCollision(this);
+//            panel.collisionHandler.checkMonsterCollision(this);
             if(!collisionDetected) {
                 switch (direction) {
                     case "left":
@@ -95,18 +104,18 @@ public class Character extends Entity {
         }
     }
 
-    public void moveFlashAnimation() {
-        if (keyHandler.flashPressed) {
-            speed = 10;
-            if (++spriteTick > 5) {
-                if (spriteIndex > 4) spriteIndex = 1;
-                else spriteIndex ++;
-                spriteTick = 0;
-                flash = false;
-                speed = 2;
-            }
-        }
-    }
+//    public void moveFlashAnimation() {
+//        if (keyHandler.flashPressed) {
+//            speed = 10;
+//            if (++spriteTick > 5) {
+//                if (spriteIndex > 4) spriteIndex = 1;
+//                else spriteIndex ++;
+//                spriteTick = 0;
+//                flash = false;
+//                speed = 2;
+//            }
+//        }
+//    }
     public void draw(Graphics2D g2) {
 
         BufferedImage currentFrameImg = null;
@@ -152,6 +161,7 @@ public class Character extends Entity {
             g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
         }
     }
+
     public void updateAttackAnimation() {
         if (++attackTick >= attackInterval) {
             attackTick = 0;
@@ -168,21 +178,15 @@ public class Character extends Entity {
         }
     }
 
-    public void checkFlash() {
-        if(keyHandler.flashPressed) {
-            speed = 1000;
-            flash = true;
-        } else {
-            speed = 2;         }
-    }
-    public void checkSkill(){
-        if(keyHandler.isUsingSkill() && skill.alive) {
-//            skill.setSkill(posX, posY, direction, true, this);
-//
-//            // ADD skill to The list
-//            panel.skillList.add(skill);
-            checkSkill = true;
-        }
+//    public void checkFlash() {
+//        if(keyHandler.flashPressed) {
+//            speed = 1000;
+//            flash = true;
+//        } else {
+//            speed = 2;
+//        }
+//    }
+    public void checkSkillQ() {}
 
-    }
+    public void checkSkillE() {}
 }

@@ -4,15 +4,17 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
-    public boolean upPressed, downPressed, leftPressed, rightPressed, spacePressed, QPressed, EPressed, flashPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed;
+    boolean spacePressed, QPressed, EPressed, flashPressed;
 
     public boolean isMoving() {
         return upPressed || downPressed || leftPressed || rightPressed;
     }
 
-    public boolean isUsingSkill() {
-        return QPressed || EPressed;
+    public boolean isUsingSkillQ() {
+        return QPressed;
     }
+    public boolean isUsingSkillE() { return EPressed; }
     public void keyTyped(KeyEvent e){}
     public void keyPressed(KeyEvent e){
         int code = e.getKeyCode();
