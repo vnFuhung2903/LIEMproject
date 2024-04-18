@@ -33,8 +33,9 @@ public class Spider extends Monster {
 
         this.monsterSize = 1;
 
-        this.triggerArea = new Rectangle(-5 * panel.tileSize, -5 * panel.tileSize, 11 * panel.tileSize, 11 * panel.tileSize);
+        this.triggerArea = new Rectangle(-2 * panel.tileSize, -2 * panel.tileSize, 5 * panel.tileSize, 5 * panel.tileSize);
         this.collisionArea = new Rectangle(panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4);
+        this.hitBoxArea = new Rectangle(0, 0, panel.tileSize, panel.tileSize);
         getMonsterImage();
     }
 
@@ -60,5 +61,73 @@ public class Spider extends Monster {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void draw(Graphics2D g2) {
+        BufferedImage currentFrameImg = null;
+
+        int screenX = posX - panel.getPlayer().getPosX() + panel.getPlayer().screenX;
+        int screenY = posY - panel.getPlayer().getPosY() + panel.getPlayer().screenY;
+
+        if (posX + panel.tileSize >= panel.getPlayer().getPosX() - panel.getPlayer().screenX &&
+                posX - panel.tileSize <= panel.getPlayer().getPosX() + panel.getPlayer().screenX &&
+                posY + panel.tileSize >= panel.getPlayer().getPosY() - panel.getPlayer().screenY &&
+                posY - panel.tileSize <= panel.getPlayer().getPosY() + panel.getPlayer().screenY
+        ) {
+            switch (direction) {
+                case "up":
+                    currentFrameImg = moveUp[spriteIndex];
+                    break;
+                case "down":
+                    currentFrameImg = moveDown[spriteIndex];
+                    break;
+                case "left":
+                    currentFrameImg = moveLeft[spriteIndex];
+                    break;
+                case "right":
+                    currentFrameImg = moveRight[spriteIndex];
+                    break;
+            }
+
+            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * monsterSize, panel.tileSize * monsterSize, null);
+        }
+    }
+
+    public void setAction() {
+        if (++actionLockCounter == 50) {
+            actionLockCounter = 0;
+
+            checkTriggerPlayer();
+            if (triggering) {
+
+                int distanceX = posX - panel.getPlayer().getPosX();
+                int distanceY = posY - panel.getPlayer().getPosY();
+
+                if (Math.abs(distanceX) < Math.abs(distanceY)) {
+                    collisionDetected = false;
+                    direction = distanceY < 0 ? "down" : "up";
+                    panel.collisionHandler.checkMapCollision(this);
+                    if (!collisionDetected)
+                        return;
+                } else {
+                    collisionDetected = false;
+                    direction = distanceX < 0 ? "right" : "left";
+                    panel.collisionHandler.checkMapCollision(this);
+                    if (!collisionDetected)
+                        return;
+                }
+
+                collisionDetected = false;
+                triggering = false;
+            }
+
+            setRandomDirection();
+        }
+    }
+
+    public void checkHitBox() {
+
+        if(posX >= panel.getPlayer().getPosX() && posX <= panel.getPlayer().getPosX() + panel.tileSize * 2 && posY >= panel.getPlayer().getPosY() && posY <= panel.getPlayer().getPosY() + panel.tileSize * 2)
+            System.out.println(true);
     }
 }

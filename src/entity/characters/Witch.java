@@ -21,25 +21,24 @@ public class Witch extends Character {
         super(panel, skillThread, keyHandler, mouseEventHandler);
         this.attackInterval = 10;
         this.collisionArea = new Rectangle(panel.tileSize , panel.tileSize , 0, panel.tileSize / 2);
-        this.skillQ = witchQ;
+        this.hitBoxArea = new Rectangle(panel.tileSize / 2, panel.tileSize / 2, panel.tileSize, panel.tileSize);
 
         // Set up passive
         witchPassives = new WitchPassive[3];
-        for(int i = 0; i < 3; ++i) {
-            witchPassives[i] = new WitchPassive(panel, 1, 10, this);
-        }
         double angle = 0;
         for(int i = 0; i < 3; ++i) {
-            witchPassives[i].setAngle(angle);
+            witchPassives[i] = new WitchPassive(panel, 1, 10, this, angle);
             angle += 2 * Math.PI / 3;
         }
 
         // Set up skill Q
         witchQ = new WitchQ(panel, 1, 10, this);
+        this.skillQ = witchQ;
     }
 
     public void update() {
 
+        checkHitBox();
         for(int i = 0; i < 3; ++i) {
             witchPassives[i].update();
         }
@@ -50,9 +49,6 @@ public class Witch extends Character {
             if(attackIndex >= 5 && !witchQ.isCasted()) {
                 witchQ.setSkill();
                 usingSkillQ = true;
-            }
-            else {
-                moveAnimation();
             }
         }
         else moveAnimation();
@@ -134,13 +130,13 @@ public class Witch extends Character {
             }
 
             for(int i = 0; i < 8; ++i) {
-                String fileAttackUp = "assets/witch/witchAttack/witchQUp-0" + (i + 1) +".png";
+                String fileAttackUp = "assets/witch/witchAttack/witchAttackUp-0" + (i + 1) +".png";
                 attackUp[i] = ImageIO.read(new File(fileAttackUp));
-                String fileAttackDown = "assets/witch/witchAttack/witchQDown-0" + (i + 1) + ".png";
+                String fileAttackDown = "assets/witch/witchAttack/witchAttackDown-0" + (i + 1) + ".png";
                 attackDown[i] = ImageIO.read(new File(fileAttackDown));
-                String fileAttackLeft = "assets/witch/witchAttack/witchQLeft-0" + (i + 1) +".png";
+                String fileAttackLeft = "assets/witch/witchAttack/witchAttackLeft-0" + (i + 1) +".png";
                 attackLeft[i] = ImageIO.read(new File(fileAttackLeft));
-                String fileAttackRight = "assets/witch/witchAttack/witchQRight-0" + (i + 1) +".png";
+                String fileAttackRight = "assets/witch/witchAttack/witchAttackRight-0" + (i + 1) +".png";
                 attackRight[i] = ImageIO.read(new File(fileAttackRight));
             }
         } catch (IOException e) {
@@ -163,6 +159,15 @@ public class Witch extends Character {
 
         if(keyHandler.isUsingSkillQ() && !witchQ.isCasted()) {
             attacking = true;
+        }
+    }
+
+    public void checkHitBox() {
+        for(int i = 0; i < 3; ++i) {
+            witchPassives[i].checkHitBox();
+        }
+        if(usingSkillQ) {
+            witchQ.checkHitBox();
         }
     }
 }

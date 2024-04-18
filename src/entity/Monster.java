@@ -15,66 +15,36 @@ public class Monster extends Entity {
         super(panel, speed, skillThread);
     }
 
-    public void draw(Graphics2D g2) {
-        BufferedImage currentFrameImg = null;
+    public void setAction() {}
 
-        int screenX = posX - panel.getPlayer().posX + panel.getPlayer().screenX;
-        int screenY = posY - panel.getPlayer().posY + panel.getPlayer().screenY;
+    public void setRandomDirection() {
 
-        if (posX + panel.tileSize >= panel.getPlayer().posX - panel.getPlayer().screenX &&
-                posX - panel.tileSize <= panel.getPlayer().posX + panel.getPlayer().screenX &&
-                posY + panel.tileSize >= panel.getPlayer().posY - panel.getPlayer().screenY &&
-                posY - panel.tileSize <= panel.getPlayer().posY + panel.getPlayer().screenY
-        ) {
-            switch (direction) {
-                case "up":
-                    currentFrameImg = moveUp[spriteIndex];
-                    break;
-                case "down":
-                    currentFrameImg = moveDown[spriteIndex];
-                    break;
-                case "left":
-                    currentFrameImg = moveLeft[spriteIndex];
-                    break;
-                case "right":
-                    currentFrameImg = moveRight[spriteIndex];
-                    break;
-            }
-            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * monsterSize, panel.tileSize * monsterSize, null);
-        }
+        Random random = new Random();
+        int i = random.nextInt(100) + 1;
 
-    }
-    public void setAction() {
-        if(++actionLockCounter == 50) {
-            actionLockCounter = 0;
-
-            // Random path
-            Random random = new Random();
-            int i = random.nextInt(100) + 1;
-
-            if (i <= 25) {
-                direction = "up";
-            } else if (i <= 50) {
-                direction = "down";
-            } else if (i <= 75) {
-                direction = "left";
-            } else {
-                direction = "right";
-            }
+        if (i <= 25) {
+            direction = "up";
+        } else if (i <= 50) {
+            direction = "down";
+        } else if (i <= 75) {
+            direction = "left";
+        } else {
+            direction = "right";
         }
     }
+
     public void update() {
 
         checkAttacking();
+        checkHitBox();
         if(attacking) {
             updateAttackAnimation();
         }
         move();
     }
 
-    public void updateSprite() {}
-
     public void move() {
+
         setAction();
         if(++moveCounter == 3) {
 
@@ -99,8 +69,11 @@ public class Monster extends Entity {
             }
             moveCounter = 0;
         }
+
         updateSprite();
     }
+
+    public void updateSprite() {}
 
     public void updateAttackAnimation() {}
 

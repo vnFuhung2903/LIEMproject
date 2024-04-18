@@ -24,13 +24,13 @@ public class WitchQ extends Skill {
             skillRight = new BufferedImage[3];
 
             for (int i = 0; i < 3; ++i) {
-                String fileAttackUp = "assets/laze/witchLazeUp-0" + (i + 1) + ".png";
+                String fileAttackUp = "assets/witch/witchQ/witchQUp-0" + (i + 1) + ".png";
                 skillUp[i] = ImageIO.read(new File(fileAttackUp));
-                String fileAttackDown = "assets/laze/witchLazeDown-0" + (i + 1) + ".png";
+                String fileAttackDown = "assets/witch/witchQ/witchQDown-0" + (i + 1) + ".png";
                 skillDown[i] = ImageIO.read(new File(fileAttackDown));
-                String fileAttackLeft = "assets/laze/witchLazeLeft-0" + (i + 1) + ".png";
+                String fileAttackLeft = "assets/witch/witchQ/witchQLeft-0" + (i + 1) + ".png";
                 skillLeft[i] = ImageIO.read(new File(fileAttackLeft));
-                String fileAttackRight = "assets/laze/witchLazeRight-0" + (i + 1) + ".png";
+                String fileAttackRight = "assets/witch/witchQ/witchQRight-0" + (i + 1) + ".png";
                 skillRight[i] = ImageIO.read(new File(fileAttackRight));
             }
 
@@ -61,24 +61,69 @@ public class WitchQ extends Skill {
         int screenX = panel.getPlayer().screenX;
         int screenY = panel.getPlayer().screenY;
 
-        if (panel.tileSize >  - panel.getPlayer().screenX &&
-                - panel.tileSize < + panel.getPlayer().screenX &&
-                panel.tileSize > - panel.getPlayer().screenY &&
-                - panel.tileSize < panel.getPlayer().screenY
-        ) {
-            System.out.println(spriteIndex);
+        switch (panel.getPlayer().getDirection()) {
+            case "up":
+                g2.drawImage(skillUp[spriteIndex], screenX, screenY - panel.tileSize * 19 / 4, panel.tileSize * 2, panel.tileSize * 6, null);
+                break;
+            case "down":
+                g2.drawImage(skillDown[spriteIndex], screenX, screenY, panel.tileSize * 2, panel.tileSize * 6, null);
+                break;
+            case "left":
+                g2.drawImage(skillLeft[spriteIndex], screenX - panel.tileSize * 4, screenY, panel.tileSize * 6, panel.tileSize * 2, null);
+                break;
+            case "right":
+                g2.drawImage(skillRight[spriteIndex], screenX, screenY, panel.tileSize * 6, panel.tileSize * 2, null);
+                break;
+        }
+    }
+
+    public void checkHitBox() {
+        Monster[] monsters = panel.getMonsters();
+
+        for(Monster monster : monsters) {
+
+            Rectangle monsterHitBoxArea = monster.getHitBoxArea();
+            int monsterLeftHitBox = monster.getPosX() + monsterHitBoxArea.x;
+            int monsterRightHitBox = monsterLeftHitBox + monsterHitBoxArea.width;
+            int monsterTopHitBox = monster.getPosY() + monsterHitBoxArea.y;
+            int monsterBottomHitBox = monsterTopHitBox + monsterHitBoxArea.height;
+
             switch (panel.getPlayer().getDirection()) {
                 case "up":
-                    g2.drawImage(skillUp[spriteIndex], screenX, screenY - panel.tileSize * 19 / 4, panel.tileSize * 2, panel.tileSize * 6, null);
+                    posX = panel.getPlayer().getPosX();
+                    posY = panel.getPlayer().getPosY() - panel.tileSize * 5;
+                    if(monsterLeftHitBox - panel.tileSize / 2 <= posX + panel.tileSize / 2
+                        && monsterRightHitBox + panel.tileSize / 2 >= posX + panel.tileSize * 3 / 2
+                        && monsterTopHitBox >= posY
+                        && monsterBottomHitBox <= posY + panel.tileSize * 6)
+                        System.out.println("Q hit");
                     break;
                 case "down":
-                    g2.drawImage(skillDown[spriteIndex], screenX, screenY, panel.tileSize * 2, panel.tileSize * 6, null);
+                    posX = panel.getPlayer().getPosX();
+                    posY = panel.getPlayer().getPosY();
+                    if(monsterLeftHitBox - panel.tileSize / 2 <= posX + panel.tileSize / 2
+                        && monsterRightHitBox + panel.tileSize / 2 >= posX + panel.tileSize * 3 / 2
+                        && monsterTopHitBox >= posY
+                        && monsterBottomHitBox <= posY + panel.tileSize * 6)
+                        System.out.println("Q hit");
                     break;
                 case "left":
-                    g2.drawImage(skillLeft[spriteIndex], screenX - panel.tileSize * 4, screenY, panel.tileSize * 6, panel.tileSize * 2, null);
+                    posX = panel.getPlayer().getPosX() - panel.tileSize * 4;
+                    posY = panel.getPlayer().getPosY();
+                    if(monsterLeftHitBox >= posX
+                        && monsterRightHitBox <= posX + panel.tileSize * 6
+                        && monsterTopHitBox - panel.tileSize / 2 <= posY + panel.tileSize / 2
+                        && monsterBottomHitBox + panel.tileSize / 2 >= posY + panel.tileSize * 3 / 2)
+                        System.out.println("Q hit");
                     break;
                 case "right":
-                    g2.drawImage(skillRight[spriteIndex], screenX, screenY, panel.tileSize * 6, panel.tileSize * 2, null);
+                    posX = panel.getPlayer().getPosX();
+                    posY = panel.getPlayer().getPosY();
+                    if(monsterLeftHitBox >= posX
+                        && monsterRightHitBox >= posX + panel.tileSize * 6
+                        && monsterTopHitBox - panel.tileSize / 2 <= posY + panel.tileSize / 2
+                        && monsterBottomHitBox + panel.tileSize / 2 >= posY + panel.tileSize * 3 / 2)
+                        System.out.println("Q hit");
                     break;
             }
         }

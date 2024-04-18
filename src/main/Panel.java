@@ -43,7 +43,7 @@ public class Panel extends JPanel implements Runnable {
 
     // Entities
     entity.Character player = new entity.characters.Witch(this, 10, keyHandler, mouseEventHandler);
-    Monster[] monsters = new Monster[10];
+    Monster[] monsters = new Monster[1];
     ArrayList<Entity> entityList = new ArrayList<>();
     ArrayList<Skill> skillList = new ArrayList<>();
 
@@ -156,27 +156,9 @@ public class Panel extends JPanel implements Runnable {
     public Monster[] getMonsters() { return monsters; }
     public void setMonsters() {
 
-        for(int i = 0; i <= 9; ++i) {
+        for(int i = 0; i < 1; ++i) {
             boolean created = false;
             while (!created) {
-
-                Random randomColor = new Random();
-                int colorIndex = randomColor.nextInt(5);
-                String color = "Blue";
-                switch (colorIndex) {
-                    case 1:
-                        color = "Blue";
-                        break;
-                    case 2:
-                        color = "Red";
-                        break;
-                    case 3:
-                        color = "Yellow";
-                        break;
-                    case 4:
-                        color = "Green";
-                        break;
-                }
 
                 Random randomX = new Random();
                 Random randomY = new Random();
@@ -184,12 +166,11 @@ public class Panel extends JPanel implements Runnable {
                 int y = randomY.nextInt(mapHeight) + 1;
 
                 if(mapTile.getMapTileNum(x / tileSize, y / tileSize) == 1) {
-//                    if(i < 5) monsters[i] = new Slime(this, 5, 0, color);
+                    if(i < 5) monsters[i] = new Slime(this, 1, 0);
 //                    else
 //                        if(i < 8)
 //                            monsters[i] = new Spider(this, 5, 0);
-//                        else
-                        monsters[i] = new Slave(this, 5, 10);
+//                        else monsters[i] = new Slave(this, 5, 10);
                     monsters[i].setPosX(x);
                     monsters[i].setPosY(y);
                     System.out.print(x);

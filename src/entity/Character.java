@@ -14,7 +14,7 @@ public class Character extends Entity {
 
     public Character(Panel panel, int skillThread, KeyHandler keyHandler, MouseEventHandler mouseEventHandler) {
 
-        super(panel, 1, skillThread);
+        super(panel, 5, skillThread);
         this.keyHandler = keyHandler;
         this.mouseHandler = mouseEventHandler;
         this.attacking = false;
@@ -32,29 +32,6 @@ public class Character extends Entity {
     }
 
     public void getPlayerImage() {}
-
-    public void update() {
-//        checkFlash();
-        if (attacking) {
-            updateAttackAnimation();
-            moveAnimation();
-            checkSkillQ();
-            if(usingSkillQ && !skillQ.isCasted() && attackIndex == 6) {
-                skillQ.setSkill(posX, posY);
-            }
-
-            checkSkillE();
-            if(usingSkillE && !skillE.isCasted() && attackIndex == 6) {
-                skillE.setSkill(posX, posY);
-            }
-
-        }
-//        else if(flash) {
-//            moveFlashAnimation();
-//            moveAnimation();
-//        }
-        else moveAnimation();
-    }
 
     public void moveAnimation() {
 
@@ -116,51 +93,6 @@ public class Character extends Entity {
 //            }
 //        }
 //    }
-    public void draw(Graphics2D g2) {
-
-        BufferedImage currentFrameImg = null;
-
-        checkAttacking();
-
-        if (attacking) {
-            switch (direction) {
-                case "up":
-                    currentFrameImg = attackUp[attackIndex];
-                    break;
-                case "down":
-                    currentFrameImg = attackDown[attackIndex];
-                    break;
-                case "left":
-                    currentFrameImg = attackLeft[attackIndex];
-                    break;
-                case "right":
-                    currentFrameImg = attackRight[attackIndex];
-                    break;
-            }
-
-            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
-        }
-
-        else
-        {
-            switch (direction) {
-                case "up":
-                    currentFrameImg = moveUp[spriteIndex];
-                    break;
-                case "down":
-                    currentFrameImg = moveDown[spriteIndex];
-                    break;
-                case "left":
-                    currentFrameImg = moveLeft[spriteIndex];
-                    break;
-                case "right":
-                    currentFrameImg = moveRight[spriteIndex];
-                    break;
-            }
-
-            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
-        }
-    }
 
     public void updateAttackAnimation() {
         if (++attackTick >= attackInterval) {
@@ -172,11 +104,7 @@ public class Character extends Entity {
         }
     }
 
-    public void checkAttacking() {
-        if(mouseHandler.isLeftClicked() || mouseHandler.isRightClicked()) {
-            attacking = true;
-        }
-    }
+    public void checkAttacking() {}
 
 //    public void checkFlash() {
 //        if(keyHandler.flashPressed) {

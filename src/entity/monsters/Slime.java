@@ -13,31 +13,32 @@ import java.util.Random;
 public class Slime extends Monster {
 
     String color;
-    public Slime(Panel panel, int speed, int skillThread, String color) {
+    public Slime(Panel panel, int speed, int skillThread) {
         super(panel, speed, skillThread);
         this.name = "Slime";
 
         Random randomColor = new Random();
-        int directionIndex = randomColor.nextInt(5);
-        switch (directionIndex) {
+        int colorIndex = randomColor.nextInt(5);
+        switch (colorIndex % 4) {
+            case 0:
+                color = "Blue";
+                break;
             case 1:
-                direction = "left";
+                color = "Green";
                 break;
             case 2:
-                direction = "right";
+                color = "Red";
                 break;
             case 3:
-                direction = "up";
-                break;
-            case 4:
-                direction = "down";
+                color = "Yellow";
                 break;
         }
-        this.color = color;
+        setRandomDirection();
 
         this.monsterSize = 1;
         this.triggerArea = null;
         this.collisionArea = new Rectangle(panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4);
+        this.hitBoxArea = new Rectangle(0, 0, panel.tileSize, panel.tileSize);
         getMonsterImage();
     }
 
@@ -51,17 +52,55 @@ public class Slime extends Monster {
 
             for (int i = 0; i < 6;i++) {
 
-                String fileMoveUp = "assets/slime/slime" + color + "MoveUp-0" + (i + 1) +".png";
+                String fileMoveUp = "assets/slimes/slime" + color + "MoveUp-0" + (i + 1) +".png";
                 moveUp[i] = ImageIO.read(new File(fileMoveUp));
-                String fileMoveDown = "assets/slime/slime" + color + "MoveDown-0" + (i + 1) + ".png";
+                String fileMoveDown = "assets/slimes/slime" + color + "MoveDown-0" + (i + 1) + ".png";
                 moveDown[i] = ImageIO.read(new File(fileMoveDown));
-                String fileMoveLeft = "assets/slime/slime" + color + "MoveLeft-0" + (i + 1) +".png";
+                String fileMoveLeft = "assets/slimes/slime" + color + "MoveLeft-0" + (i + 1) +".png";
                 moveLeft[i] = ImageIO.read(new File(fileMoveLeft));
-                String fileMoveRight = "assets/slime/slime" + color + "MoveRight-0" + (i + 1) +".png";
+                String fileMoveRight = "assets/slimes/slime" + color + "MoveRight-0" + (i + 1) +".png";
                 moveRight[i] = ImageIO.read(new File(fileMoveRight));
             }
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println(color);
+        }
+    }
+
+    public void draw(Graphics2D g2) {
+        BufferedImage currentFrameImg = null;
+
+        int screenX = posX - panel.getPlayer().getPosX() + panel.getPlayer().screenX;
+        int screenY = posY - panel.getPlayer().getPosY() + panel.getPlayer().screenY;
+
+        if (posX + panel.tileSize >= panel.getPlayer().getPosX() - panel.getPlayer().screenX &&
+                posX - panel.tileSize <= panel.getPlayer().getPosX() + panel.getPlayer().screenX &&
+                posY + panel.tileSize >= panel.getPlayer().getPosY() - panel.getPlayer().screenY &&
+                posY - panel.tileSize <= panel.getPlayer().getPosY() + panel.getPlayer().screenY
+        ) {
+            switch (direction) {
+                case "up":
+                    currentFrameImg = moveUp[spriteIndex];
+                    break;
+                case "down":
+                    currentFrameImg = moveDown[spriteIndex];
+                    break;
+                case "left":
+                    currentFrameImg = moveLeft[spriteIndex];
+                    break;
+                case "right":
+                    currentFrameImg = moveRight[spriteIndex];
+                    break;
+            }
+
+            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * monsterSize, panel.tileSize * monsterSize, null);
+        }
+    }
+
+    public void setAction() {
+        if(++actionLockCounter == 50) {
+            actionLockCounter = 0;
+            setRandomDirection();
         }
     }
 }

@@ -1,7 +1,6 @@
 package entity.monsters;
 
 import entity.Monster;
-import main.Main;
 import main.Panel;
 
 import javax.imageio.ImageIO;
@@ -9,7 +8,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Queue;
 import java.util.Random;
 
 public class Slave extends Monster {
@@ -36,8 +34,9 @@ public class Slave extends Monster {
         this.monsterSize = 2;
         this.attackInterval = 10;
 
-        this.triggerArea = new Rectangle(-5 * panel.tileSize, -5 * panel.tileSize, 12 * panel.tileSize, 12 * panel.tileSize);
+        this.triggerArea = new Rectangle(-3 * panel.tileSize, -3 * panel.tileSize, 8 * panel.tileSize, 8 * panel.tileSize);
         this.collisionArea = new Rectangle(panel.tileSize, panel.tileSize, 0, panel.tileSize / 2);
+        this.hitBoxArea = new Rectangle(panel.tileSize / 2, panel.tileSize / 2, panel.tileSize, panel.tileSize);
         getMonsterImage();
     }
 
@@ -83,6 +82,7 @@ public class Slave extends Monster {
     }
 
     public void draw(Graphics2D g2) {
+
         BufferedImage currentFrameImg = null;
 
         int screenX = posX - panel.getPlayer().getPosX() + panel.getPlayer().screenX;
@@ -109,6 +109,7 @@ public class Slave extends Monster {
                         currentFrameImg = attackRight[attackIndex];
                         break;
                 }
+
                 g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
                 return;
             }
@@ -127,12 +128,14 @@ public class Slave extends Monster {
                     currentFrameImg = moveRight[spriteIndex];
                     break;
             }
+
             g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * monsterSize, panel.tileSize * monsterSize, null);
         }
 
     }
 
     public void setAction() {
+
         checkTriggerPlayer();
         if(++actionLockCounter == 50) {
             actionLockCounter = 0;
@@ -142,9 +145,9 @@ public class Slave extends Monster {
                 int distanceX = posX - panel.getPlayer().getPosX();
                 int distanceY = posY - panel.getPlayer().getPosY();
 
-                if(Math.abs(distanceX) > Math.abs(distanceY)) {
+                if(Math.abs(distanceX) < Math.abs(distanceY)) {
                     collisionDetected = false;
-                    direction = distanceX < 0 ? "right" : "left";
+                    direction = distanceY < 0 ? "down" : "up";
                     panel.collisionHandler.checkMapCollision(this);
                     if(!collisionDetected)
                         return;
@@ -152,7 +155,7 @@ public class Slave extends Monster {
 
                 else {
                     collisionDetected = false;
-                    direction = distanceY < 0 ? "down" : "up";
+                    direction = distanceX < 0 ? "right" : "left";
                     panel.collisionHandler.checkMapCollision(this);
                     if(!collisionDetected)
                         return;
@@ -162,22 +165,10 @@ public class Slave extends Monster {
                 triggering = false;
             }
 
-            // Random path
-            Random random = new Random();
-            int i = random.nextInt(100) + 1;
-
-            if (i <= 25) {
-                direction = "up";
-            } else if (i <= 50) {
-                direction = "down";
-            } else if (i <= 75) {
-                direction = "left";
-            } else {
-                direction = "right";
-            }
+            setRandomDirection();
         }
     }
-    
+
     public void updateSprite() {
         if (++spriteTick > 10) {
             if (++spriteIndex > 1) spriteIndex = 0;
@@ -197,20 +188,34 @@ public class Slave extends Monster {
 
     public void checkAttacking() {
 
-        if(posX >= panel.getPlayer().getPosX() && posX <= panel.getPlayer().getPosX() + panel.tileSize && posY >= panel.getPlayer().getPosY() && posY <= panel.getPlayer().getPosY() + panel.tileSize)
+        if(posX >= panel.getPlayer().getPosX() && posX <= panel.getPlayer().getPosX() + panel.tileSize && posY >= panel.getPlayer().getPosY() - panel.tileSize / 2 && posY <= panel.getPlayer().getPosY() + panel.tileSize / 2)
             attacking = true;
 
-        if(posX <= panel.getPlayer().getPosX() && posX >= panel.getPlayer().getPosX() - panel.tileSize && posY >= panel.getPlayer().getPosY() && posY <= panel.getPlayer().getPosY() + panel.tileSize)
+        if(posX <= panel.getPlayer().getPosX() && posX >= panel.getPlayer().getPosX() - panel.tileSize && posY >= panel.getPlayer().getPosY() - panel.tileSize / 2 && posY <= panel.getPlayer().getPosY() + panel.tileSize / 2)
             attacking = true;
 
-        if(posX >= panel.getPlayer().getPosX() && posX <= panel.getPlayer().getPosX() + panel.tileSize && posY <= panel.getPlayer().getPosY() && posY >= panel.getPlayer().getPosY() - panel.tileSize)
+        if(posX >= panel.getPlayer().getPosX() - panel.tileSize / 2 && posX <= panel.getPlayer().getPosX() + panel.tileSize / 2 && posY <= panel.getPlayer().getPosY() && posY >= panel.getPlayer().getPosY() - panel.tileSize)
             attacking = true;
 
-        if(posX <= panel.getPlayer().getPosX() && posX >= panel.getPlayer().getPosX() + panel.tileSize && posY <= panel.getPlayer().getPosY() && posY >= panel.getPlayer().getPosY() + panel.tileSize)
+        if(posX >= panel.getPlayer().getPosX() - panel.tileSize / 2 && posX <= panel.getPlayer().getPosX() + panel.tileSize / 2 && posY >= panel.getPlayer().getPosY() && posY <= panel.getPlayer().getPosY() + panel.tileSize)
             attacking = true;
+    }
 
-        // In an exactly area with the player
-        if(posX == panel.getPlayer().getPosX() && posY == panel.getPlayer().getPosY())
-            attacking = true;
+    public void checkHitBox() {
+
+        if(!attacking)      return;
+        if(attackIndex < 4) return;
+
+        if(posX >= panel.getPlayer().getPosX() && posX <= panel.getPlayer().getPosX() + panel.tileSize && posY >= panel.getPlayer().getPosY() - panel.tileSize / 2 && posY <= panel.getPlayer().getPosY() + panel.tileSize / 2)
+            System.out.println(true);
+
+        if(posX <= panel.getPlayer().getPosX() && posX >= panel.getPlayer().getPosX() - panel.tileSize && posY >= panel.getPlayer().getPosY() - panel.tileSize / 2 && posY <= panel.getPlayer().getPosY() + panel.tileSize / 2)
+            System.out.println(true);
+
+        if(posX >= panel.getPlayer().getPosX() - panel.tileSize / 2 && posX <= panel.getPlayer().getPosX() + panel.tileSize / 2 && posY <= panel.getPlayer().getPosY() && posY >= panel.getPlayer().getPosY() - panel.tileSize)
+            System.out.println(true);
+
+        if(posX >= panel.getPlayer().getPosX() - panel.tileSize / 2 && posX <= panel.getPlayer().getPosX() + panel.tileSize / 2 && posY >= panel.getPlayer().getPosY() && posY <= panel.getPlayer().getPosY() + panel.tileSize)
+            System.out.println(true);
     }
 }

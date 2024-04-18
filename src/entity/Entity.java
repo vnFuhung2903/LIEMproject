@@ -34,6 +34,7 @@ public abstract class Entity {
     // For collisions
     protected  boolean collisionDetected;
     protected Rectangle collisionArea;
+    protected Rectangle hitBoxArea;
 
     protected String direction = "down";
 
@@ -61,10 +62,12 @@ public abstract class Entity {
     }
 
     public Rectangle getCollisionArea() { return collisionArea; }
+    public Rectangle getHitBoxArea() { return hitBoxArea; }
     public String getDirection() { return direction; }
     public int getSpeed() { return speed; }
     public void detectCollision() { collisionDetected = true; }
 
     public void update() {}
     public void draw(Graphics2D g2) {}
+    public void checkHitBox() {}
 }
