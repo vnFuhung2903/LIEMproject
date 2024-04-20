@@ -42,7 +42,7 @@ public class Panel extends JPanel implements Runnable {
 
     // Entities
     entity.Character player = new entity.characters.Witch(this, 10, keyHandler, mouseEventHandler);
-    int numMonsters = 1, numItems = 0;
+    int numMonsters = 10, numItems = 0;
     Monster[] monsters = new Monster[numMonsters];
     Item[] items = new Item[numItems];
     ArrayList<Entity> entityList = new ArrayList<>();
@@ -65,12 +65,12 @@ public class Panel extends JPanel implements Runnable {
         setMonsters();
     }
 
-    public  void startThread(){
+    public  void startThread() {
         gameThread = new Thread(this);
         gameThread.start();
     }
 
-    public void run(){
+    public void run() {
 
         double drawInterval = 1000000000/FPS;
         double delta = 0;
@@ -175,7 +175,7 @@ public class Panel extends JPanel implements Runnable {
                 int y = randomY.nextInt(mapHeight) + 1;
 
 //                if(mapTile.getMapTileNum(x / tileSize, y / tileSize) == 1) {
-                    if(i < 5) monsters[i] = new Slime(this, 1, 0);
+                    monsters[i] = new Slave(this, 1, 10);
 //                    else
 //                        if(i < 8)
 //                            monsters[i] = new Spider(this, 5, 0);
@@ -191,9 +191,13 @@ public class Panel extends JPanel implements Runnable {
     }
 
     public void createItem(int id, int posX, int posY) {
-        ++numItems;
-        items = new Item[numItems];
-        items[numItems - 1] = new Item(this, id, posX, posY);
+        itemList = new ArrayList<>(Arrays.asList(items));
+        numItems += 3;
+        itemList.add(new Item(this, 1, posX, posY));
+        itemList.add(new Item(this, 2, posX + 1, posY));
+        itemList.add(new Item(this, 3, posX, posY + 1));
+        items = itemList.toArray(new Item[numItems]);
+        itemList.clear();
     }
 
     public void collectItem() {

@@ -91,10 +91,10 @@ public class TileManage  {
             for(int row = 0; row < height; ++row) {
                 for (int col = 0; col < height; ++col) {
                     mapTileNum[row][col] = data.getInt(row * panel.maxMapCol + col);
-                    System.out.print(mapTileNum[row][col]);
-                    System.out.print(", ");
+//                    System.out.print(mapTileNum[row][col]);
+//                    System.out.print(", ");
                 }
-                System.out.println();
+//                System.out.println();
             }
 //            System.out.println(data.get(0));
         } catch (FileNotFoundException e) {
