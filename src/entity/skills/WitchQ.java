@@ -95,8 +95,10 @@ public class WitchQ extends Skill {
                     if(monsterLeftHitBox - panel.tileSize / 2 <= posX + panel.tileSize / 2
                         && monsterRightHitBox + panel.tileSize / 2 >= posX + panel.tileSize * 3 / 2
                         && monsterTopHitBox >= posY
-                        && monsterBottomHitBox <= posY + panel.tileSize * 6)
+                        && monsterBottomHitBox <= posY + panel.tileSize * 6) {
                         System.out.println("Q hit");
+                        monster.damage(1);
+                    }
                     break;
                 case "down":
                     posX = panel.getPlayer().getPosX();
@@ -104,8 +106,10 @@ public class WitchQ extends Skill {
                     if(monsterLeftHitBox - panel.tileSize / 2 <= posX + panel.tileSize / 2
                         && monsterRightHitBox + panel.tileSize / 2 >= posX + panel.tileSize * 3 / 2
                         && monsterTopHitBox >= posY
-                        && monsterBottomHitBox <= posY + panel.tileSize * 6)
+                        && monsterBottomHitBox <= posY + panel.tileSize * 6) {
                         System.out.println("Q hit");
+                        monster.damage(1);
+                    }
                     break;
                 case "left":
                     posX = panel.getPlayer().getPosX() - panel.tileSize * 4;
@@ -113,8 +117,10 @@ public class WitchQ extends Skill {
                     if(monsterLeftHitBox >= posX
                         && monsterRightHitBox <= posX + panel.tileSize * 6
                         && monsterTopHitBox - panel.tileSize / 2 <= posY + panel.tileSize / 2
-                        && monsterBottomHitBox + panel.tileSize / 2 >= posY + panel.tileSize * 3 / 2)
+                        && monsterBottomHitBox + panel.tileSize / 2 >= posY + panel.tileSize * 3 / 2) {
                         System.out.println("Q hit");
+                        monster.damage(1);
+                    }
                     break;
                 case "right":
                     posX = panel.getPlayer().getPosX();
@@ -122,8 +128,10 @@ public class WitchQ extends Skill {
                     if(monsterLeftHitBox >= posX
                         && monsterRightHitBox >= posX + panel.tileSize * 6
                         && monsterTopHitBox - panel.tileSize / 2 <= posY + panel.tileSize / 2
-                        && monsterBottomHitBox + panel.tileSize / 2 >= posY + panel.tileSize * 3 / 2)
+                        && monsterBottomHitBox + panel.tileSize / 2 >= posY + panel.tileSize * 3 / 2) {
                         System.out.println("Q hit");
+                        monster.damage(1);
+                    }
                     break;
             }
         }

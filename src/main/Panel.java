@@ -2,9 +2,8 @@ package main;
 
 import javax.swing.JPanel;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Random;
+import java.sql.Array;
+import java.util.*;
 
 import entity.*;
 import entity.Character;
@@ -24,8 +23,8 @@ public class Panel extends JPanel implements Runnable {
 
 
     // MAP SETTINGS
-    final public int maxMapCol = 20;
-    final public int maxMapRow = 20;
+    final public int maxMapCol = 50;
+    final public int maxMapRow = 50;
     final public int mapWidth = tileSize * maxScreenCol;
     final public int mapHeight = tileSize * maxScreenRow;
 
@@ -34,18 +33,21 @@ public class Panel extends JPanel implements Runnable {
 
     // Systems
     TileManage mapTile = new TileManage(this);
-    Nightmode nightmode = new Nightmode(this);
+//    Nightmode nightmode = new Nightmode(this);
     KeyHandler keyHandler = new KeyHandler();
     MouseEventHandler mouseEventHandler = new MouseEventHandler();
     Thread gameThread;
     public CollisionHandler collisionHandler = new CollisionHandler(this);
-    AssetSetter assetSetter = new AssetSetter(this);
+//    AssetSetter assetSetter = new AssetSetter(this);
 
     // Entities
     entity.Character player = new entity.characters.Witch(this, 10, keyHandler, mouseEventHandler);
-    Monster[] monsters = new Monster[1];
+    int numMonsters = 1, numItems = 0;
+    Monster[] monsters = new Monster[numMonsters];
+    Item[] items = new Item[numItems];
     ArrayList<Entity> entityList = new ArrayList<>();
-    ArrayList<Skill> skillList = new ArrayList<>();
+//    ArrayList<Skill> skillList = new ArrayList<>();
+    ArrayList<Item> itemList = new ArrayList<>();
 
     public Panel() {
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
@@ -58,13 +60,11 @@ public class Panel extends JPanel implements Runnable {
         this.setFocusable(true);
         // it can receive keyboard and input events when it has input focus
         setUpGame();
-
-
     }
     public void setUpGame() {
-
         setMonsters();
     }
+
     public  void startThread(){
         gameThread = new Thread(this);
         gameThread.start();
@@ -78,38 +78,43 @@ public class Panel extends JPanel implements Runnable {
         long currentTime;
 
         while (gameThread != null) {
-
             currentTime = System.nanoTime();
-
             delta += (currentTime - lastTime) / drawInterval;
-
             lastTime = currentTime;
-
             if(delta >= 1){
-
                 update();
                 repaint();
-
                 delta--;
             }
         }
     }
 
-    public  void update() {
+    public void update() {
+
+//        System.out.print(Arrays.toString(monsters));
+        ArrayList<Monster> monsterList = new ArrayList<>(Arrays.asList(monsters));
+        monsterList.removeIf(monster -> monster.getHp() <= 0);
+        numMonsters = monsterList.size();
+        monsters = monsterList.toArray(new Monster[numMonsters]);
+        monsterList.clear();
+//        System.out.println(Arrays.toString(monsters));
 
         for(Monster monster : monsters) {
             monster.update();
         }
 
-        player.update();
-        for (Skill skill : skillList) {
-            if (skill != null) {
-                if (!skill.isCasted()) {
-                    skill.update();
-                }
-            }
+        for(Item item : items) {
+            item.update();
         }
 
+        player.update();
+//        for (Skill skill : skillList) {
+//            if (skill != null) {
+//                if (!skill.isCasted()) {
+//                    skill.update();
+//                }
+//            }
+//        }
     }
 
     public void paintComponent(Graphics g){
@@ -121,18 +126,19 @@ public class Panel extends JPanel implements Runnable {
         mapTile.draw(g2);
 
         // ADD ENTITIES TO THE LIST
-        for (Monster value : monsters) {
-            if (value != null) {
-                entityList.add(value);
+        for (Monster monster : monsters) {
+            if (monster != null) {
+                entityList.add(monster);
             }
         }
 
-        for (Skill skill : skillList) {
-            if (skill != null) {
-                skillList.add(skill);
-            }
-        }
+//        for (Skill skill : skillList) {
+//            if (skill != null) {
+//                skillList.add(skill);
+//            }
+//        }
         entityList.add(player);
+        itemList = new ArrayList<>(Arrays.asList(items));
 
         // SORT entities in posY
         entityList.sort(Comparator.comparingInt(Entity::getPosY));
@@ -141,31 +147,34 @@ public class Panel extends JPanel implements Runnable {
         for (Entity entity : entityList) {
             entity.draw(g2);
         }
-        for (Skill skill : skillList) {
-            skill.draw(g2);
+//        for (Skill skill : skillList) {
+//            skill.draw(g2);
+//        }
+
+        for(Item item : itemList) {
+            item.draw(g2);
         }
 
-        nightmode.draw(g2);
+//        nightmode.draw(g2);
 
         // Make entityList empty after drawing
-        skillList.clear();
+        itemList.clear();
+//        skillList.clear();
         entityList.clear();
         g2.dispose();
     }
 
-    public Monster[] getMonsters() { return monsters; }
-    public void setMonsters() {
+    void setMonsters() {
 
-        for(int i = 0; i < 1; ++i) {
+        for(int i = 0; i < numMonsters; ++i) {
             boolean created = false;
             while (!created) {
-
                 Random randomX = new Random();
                 Random randomY = new Random();
                 int x = randomX.nextInt(mapWidth) + 1;
                 int y = randomY.nextInt(mapHeight) + 1;
 
-                if(mapTile.getMapTileNum(x / tileSize, y / tileSize) == 1) {
+//                if(mapTile.getMapTileNum(x / tileSize, y / tileSize) == 1) {
                     if(i < 5) monsters[i] = new Slime(this, 1, 0);
 //                    else
 //                        if(i < 8)
@@ -176,12 +185,26 @@ public class Panel extends JPanel implements Runnable {
                     System.out.print(x);
                     System.out.println(y);
                     created = true;
-                }
+//                }
             }
         }
     }
 
-    public Character getPlayer() {
-        return player;
+    public void createItem(int id, int posX, int posY) {
+        ++numItems;
+        items = new Item[numItems];
+        items[numItems - 1] = new Item(this, id, posX, posY);
     }
+
+    public void collectItem() {
+        itemList = new ArrayList<>(Arrays.asList(items));
+        itemList.removeIf(item -> !item.isCollectable());
+        numItems = itemList.size();
+        items = itemList.toArray(new Item[numItems]);
+        itemList.clear();
+    }
+
+    public Monster[] getMonsters() { return monsters; }
+
+    public Character getPlayer() { return player; }
 }

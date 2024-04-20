@@ -127,7 +127,9 @@ public class Spider extends Monster {
 
     public void checkHitBox() {
 
-        if(posX >= panel.getPlayer().getPosX() && posX <= panel.getPlayer().getPosX() + panel.tileSize * 2 && posY >= panel.getPlayer().getPosY() && posY <= panel.getPlayer().getPosY() + panel.tileSize * 2)
-            System.out.println(true);
+        if(posX > panel.getPlayer().getPosX() - panel.tileSize && posX < panel.getPlayer().getPosX() + panel.tileSize * 3 && posY > panel.getPlayer().getPosY() - panel.tileSize && posY <= panel.getPlayer().getPosY() + panel.tileSize * 3) {
+            System.out.println("Spider attack");
+            panel.getPlayer().damage(1);
+        }
     }
 }

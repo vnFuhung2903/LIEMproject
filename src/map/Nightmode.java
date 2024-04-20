@@ -18,11 +18,11 @@ public class Nightmode {
     }
 
     public void getTileImage() {
-        try {
-            tile.image = ImageIO.read(new File("assets/map/night-01.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            tile.image = ImageIO.read(new File("assets/map/night-01.png"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void draw(Graphics2D g2) {

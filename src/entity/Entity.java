@@ -9,15 +9,9 @@ import main.Panel;
 public abstract class Entity {
 
     protected Panel panel;
-    protected int posX, posY;
-    protected int speed;
-    protected int moveCounter = 0;
-    protected int actionLockCounter = 0;
+    protected int posX, posY, speed, moveCounter = 0, actionLockCounter = 0, skillThread, hp;
     protected boolean attacking = false;
-
-    protected int skillThread;
     protected boolean flash = false;
-
     protected KeyHandler keyHandler;
     MouseEventHandler mouseHandler;
 
@@ -31,15 +25,13 @@ public abstract class Entity {
     protected BufferedImage[] attackLeft;
     protected BufferedImage[] attackRight;
 
-    // For collisions
+    // For collision and hit box
     protected  boolean collisionDetected;
     protected Rectangle collisionArea;
     protected Rectangle hitBoxArea;
 
     protected String direction = "down";
-
     protected int spriteTick, spriteIndex, attackIndex, attackTick, attackInterval;
-
 
     public Entity(Panel panel, int speed, int skillThread) {
         this.panel = panel;
@@ -70,4 +62,6 @@ public abstract class Entity {
     public void update() {}
     public void draw(Graphics2D g2) {}
     public void checkHitBox() {}
+    public void damage(int damagePerHit) {}
+    public int getHp() { return hp; }
 }

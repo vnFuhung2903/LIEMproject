@@ -97,5 +97,12 @@ public class Monster extends Entity {
         }
     }
 
+    public void damage(int damagePerHit) {
+        this.hp -= damagePerHit;
+        if(this.hp <= 0) {
+            panel.createItem(1, posX + panel.tileSize * (monsterSize - 1), posY + panel.tileSize * (monsterSize - 1));
+        }
+    }
+
     public void checkAttacking() {}
 }

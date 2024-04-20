@@ -20,30 +20,30 @@ public class CollisionHandler {
             case "left":
                 tileNum1 = panel.mapTile.getMapTileNum( (entityLeftCollision - entity.getSpeed()) / panel.tileSize,entityTopCollision / panel.tileSize);
                 tileNum2 = panel.mapTile.getMapTileNum( (entityLeftCollision - entity.getSpeed()) / panel.tileSize,entityBottomCollision / panel.tileSize);
-                if(entityLeftCollision - entity.getSpeed() < 0 || tileNum1 != 1 || tileNum2 != 1) {
-                    entity.detectCollision();
-                }
+//                if(entityLeftCollision - entity.getSpeed() < 0 || tileNum1 != 1 || tileNum2 != 1) {
+//                    entity.detectCollision();
+//                }
                 break;
             case "right":
                 tileNum1 = panel.mapTile.getMapTileNum( (entityRightCollision + entity.getSpeed()) / panel.tileSize,entityTopCollision / panel.tileSize);
                 tileNum2 = panel.mapTile.getMapTileNum( (entityRightCollision + entity.getSpeed()) / panel.tileSize,entityBottomCollision / panel.tileSize);
-                if(tileNum1 != 1 || tileNum2 != 1) {
-                    entity.detectCollision();
-                }
+//                if(tileNum1 != 1 || tileNum2 != 1) {
+//                    entity.detectCollision();
+//                }
                 break;
             case "up":
                 tileNum1 = panel.mapTile.getMapTileNum( entityLeftCollision / panel.tileSize,(entityTopCollision - entity.getSpeed()) / panel.tileSize);
                 tileNum2 = panel.mapTile.getMapTileNum( entityRightCollision / panel.tileSize,(entityTopCollision - entity.getSpeed()) / panel.tileSize);
-                if(entityTopCollision - entity.getSpeed() < 0 || tileNum1 != 1 || tileNum2 != 1) {
-                    entity.detectCollision();
-                }
+//                if(entityTopCollision - entity.getSpeed() < 0 || tileNum1 != 1 || tileNum2 != 1) {
+//                    entity.detectCollision();
+//                }
                 break;
             case "down":
                 tileNum1 = panel.mapTile.getMapTileNum( entityLeftCollision / panel.tileSize,(entityBottomCollision + entity.getSpeed()) / panel.tileSize);
                 tileNum2 = panel.mapTile.getMapTileNum( entityRightCollision / panel.tileSize,(entityBottomCollision + entity.getSpeed()) / panel.tileSize);
-                if(tileNum1 != 1 || tileNum2 != 1) {
-                    entity.detectCollision();
-                }
+//                if(tileNum1 != 1 || tileNum2 != 1) {
+//                    entity.detectCollision();
+//                }
                 break;
         }
     }

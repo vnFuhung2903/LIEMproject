@@ -37,6 +37,7 @@ public class Slime extends Monster {
 
         this.monsterSize = 1;
         this.triggerArea = null;
+        this.hp = 1;
         this.collisionArea = new Rectangle(panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4);
         this.hitBoxArea = new Rectangle(0, 0, panel.tileSize, panel.tileSize);
         getMonsterImage();
