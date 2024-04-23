@@ -10,7 +10,7 @@ public class Character extends Entity {
     final public int screenX;
     final public int screenY;
     protected Skill skillQ, skillE;
-    protected boolean usingSkillQ, usingSkillE;
+    protected boolean usingSkillQ, usingSkillE, getHit;
 
     public Character(Panel panel, int skillThread, KeyHandler keyHandler, MouseEventHandler mouseEventHandler) {
 
@@ -21,8 +21,8 @@ public class Character extends Entity {
         direction = "down";
 
         // set vi tri cua map so voi man hinh
-        posX = panel.tileSize * 11; // posX = 480
-        posY = panel.tileSize * 10; // posY =480
+        posX = panel.mapWidth / 2; // posX = 480
+        posY = panel.mapHeight / 2; // posY =480
 
         // set vi tri nhan vat so voi man hinh
         this.screenX = panel.screenWidth/2 - panel.tileSize; // screenX = 480
@@ -74,7 +74,7 @@ public class Character extends Entity {
         }
     }
 
-    private void updateSprite() {
+    public void updateSprite() {
         if (++spriteTick > 10) {
             if (++spriteIndex > 5) spriteIndex = 0;
             spriteTick = 0;

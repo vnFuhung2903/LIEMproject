@@ -31,4 +31,5 @@ bin/
 ### IntelliJ ###
 /.idea
 /out
+/lib
 LIEMproject.iml

@@ -104,4 +104,21 @@ public class Slime extends Monster {
             setRandomDirection();
         }
     }
+
+    public void checkHitBox() {
+
+        if(posX > panel.getPlayer().getPosX() && posX < panel.getPlayer().getPosX() + panel.tileSize * 2 && posY > panel.getPlayer().getPosY() && posY <= panel.getPlayer().getPosY() + panel.tileSize * 2) {
+            System.out.println("Take effect");
+            switch (color) {
+                case "red":
+                    panel.setEffect(panel.getPlayer(), "burn", 10, 2);
+                    break;
+                case "green":
+                    panel.setEffect(panel.getPlayer(), "healing", 10, 2);
+                    break;
+                default:
+                    panel.setEffect(panel.getPlayer(), "healing", 10, 2);
+            }
+        }
+    }
 }

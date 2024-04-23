@@ -110,7 +110,7 @@ public class Slave extends Monster {
                         break;
                 }
 
-                g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
+                g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * monsterSize, panel.tileSize * monsterSize, null);
                 return;
             }
 

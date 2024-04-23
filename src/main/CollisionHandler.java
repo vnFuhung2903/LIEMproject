@@ -20,30 +20,30 @@ public class CollisionHandler {
             case "left":
                 tileNum1 = panel.mapTile.getMapTileNum( (entityLeftCollision - entity.getSpeed()) / panel.tileSize,entityTopCollision / panel.tileSize);
                 tileNum2 = panel.mapTile.getMapTileNum( (entityLeftCollision - entity.getSpeed()) / panel.tileSize,entityBottomCollision / panel.tileSize);
-//                if(entityLeftCollision - entity.getSpeed() < 0 || tileNum1 != 1 || tileNum2 != 1) {
-//                    entity.detectCollision();
-//                }
+                if(entityLeftCollision - entity.getSpeed() < 0 || tileNum1 != 0 || tileNum2 != 0) {
+                    entity.detectCollision();
+                }
                 break;
             case "right":
                 tileNum1 = panel.mapTile.getMapTileNum( (entityRightCollision + entity.getSpeed()) / panel.tileSize,entityTopCollision / panel.tileSize);
                 tileNum2 = panel.mapTile.getMapTileNum( (entityRightCollision + entity.getSpeed()) / panel.tileSize,entityBottomCollision / panel.tileSize);
-//                if(tileNum1 != 1 || tileNum2 != 1) {
-//                    entity.detectCollision();
-//                }
+                if((entityBottomCollision + entity.getSpeed()) / panel.tileSize >= panel.mapTile.getMapWidth() || tileNum1 != 0 || tileNum2 != 0) {
+                    entity.detectCollision();
+                }
                 break;
             case "up":
                 tileNum1 = panel.mapTile.getMapTileNum( entityLeftCollision / panel.tileSize,(entityTopCollision - entity.getSpeed()) / panel.tileSize);
                 tileNum2 = panel.mapTile.getMapTileNum( entityRightCollision / panel.tileSize,(entityTopCollision - entity.getSpeed()) / panel.tileSize);
-//                if(entityTopCollision - entity.getSpeed() < 0 || tileNum1 != 1 || tileNum2 != 1) {
-//                    entity.detectCollision();
-//                }
+                if(entityTopCollision - entity.getSpeed() < 0 || tileNum1 != 0 || tileNum2 != 0) {
+                    entity.detectCollision();
+                }
                 break;
             case "down":
                 tileNum1 = panel.mapTile.getMapTileNum( entityLeftCollision / panel.tileSize,(entityBottomCollision + entity.getSpeed()) / panel.tileSize);
                 tileNum2 = panel.mapTile.getMapTileNum( entityRightCollision / panel.tileSize,(entityBottomCollision + entity.getSpeed()) / panel.tileSize);
-//                if(tileNum1 != 1 || tileNum2 != 1) {
-//                    entity.detectCollision();
-//                }
+                if((entityBottomCollision + entity.getSpeed()) / panel.tileSize >= panel.mapTile.getMapHeight() || tileNum1 != 0 || tileNum2 != 0) {
+                    entity.detectCollision();
+                }
                 break;
         }
     }
@@ -99,6 +99,16 @@ public class CollisionHandler {
                     break;
             }
         }
+    }
+
+    public boolean checkSpawn(int posX, int posY, int monsterSize) {
+        for(int i = 0; i < monsterSize; ++i)
+            for(int j = 0; j < monsterSize; ++j) {
+                int tileNum = panel.mapTile.getMapTileNum(posX + i, posY + j);
+                if(tileNum != 0)
+                    return false;
+            }
+        return true;
     }
 
     private boolean checkMiddlePos(int pos, int low, int high) {
