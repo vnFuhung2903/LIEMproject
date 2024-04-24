@@ -64,4 +64,8 @@ public abstract class Entity {
     public void checkHitBox() {}
     public void damage(int damagePerHit) {}
     public int getHp() { return hp; }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
 }

@@ -57,7 +57,6 @@ public class Item {
         if(posX > panel.getPlayer().getPosX() && posX < panel.getPlayer().getPosX() + panel.tileSize * 2 && posY > panel.getPlayer().getPosY() && posY <= panel.getPlayer().getPosY() + panel.tileSize * 2) {
             System.out.println("Take item");
             this.collectable = false;
-            panel.collectItem();
         }
     }
 

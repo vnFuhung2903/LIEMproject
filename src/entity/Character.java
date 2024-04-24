@@ -114,7 +114,4 @@ public class Character extends Entity {
 //            speed = 2;
 //        }
 //    }
-    public void checkSkillQ() {}
-
-    public void checkSkillE() {}
 }

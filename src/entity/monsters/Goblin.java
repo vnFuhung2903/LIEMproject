@@ -35,8 +35,8 @@ public class Goblin extends Monster {
         this.attackInterval = 10;
 
         this.triggerArea = new Rectangle(-4 * panel.tileSize, -4 * panel.tileSize, 9 * panel.tileSize, 9 * panel.tileSize);
-        this.collisionArea = new Rectangle(panel.tileSize / 2, panel.tileSize / 2, 0, panel.tileSize);
-        this.hitBoxArea = new Rectangle(0, 0, panel.tileSize * 3 / 2, panel.tileSize * 3 / 2);
+        this.collisionArea = new Rectangle(panel.tileSize / 2, panel.tileSize / 2, 0, panel.tileSize / 2);
+        this.hitBoxArea = new Rectangle(panel.tileSize / 2, panel.tileSize / 2, panel.tileSize, panel.tileSize);
         getMonsterImage();
     }
 
@@ -171,7 +171,7 @@ public class Goblin extends Monster {
 
     public void updateSprite() {
         if (++spriteTick > 10) {
-            if (++spriteIndex > 1) spriteIndex = 0;
+            if (++spriteIndex >= 3) spriteIndex = 0;
             spriteTick = 0;
         }
     }
@@ -179,7 +179,7 @@ public class Goblin extends Monster {
     public void updateAttackAnimation() {
         if (++attackTick >= attackInterval) {
             attackTick = 0;
-            if (++attackIndex > 5 ) {
+            if (++attackIndex >= 6) {
                 attackIndex = 0;
                 attacking = false;
             }

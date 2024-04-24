@@ -105,6 +105,13 @@ public class Slime extends Monster {
         }
     }
 
+    public void updateSprite() {
+        if (++spriteTick > 10) {
+            if (++spriteIndex >= 6) spriteIndex = 0;
+            spriteTick = 0;
+        }
+    }
+
     public void checkHitBox() {
 
         if(posX > panel.getPlayer().getPosX() && posX < panel.getPlayer().getPosX() + panel.tileSize * 2 && posY > panel.getPlayer().getPosY() && posY <= panel.getPlayer().getPosY() + panel.tileSize * 2) {
@@ -116,8 +123,9 @@ public class Slime extends Monster {
                 case "green":
                     panel.setEffect(panel.getPlayer(), "healing", 10, 2);
                     break;
-                default:
-                    panel.setEffect(panel.getPlayer(), "healing", 10, 2);
+                case "blue":
+                    panel.setEffect(panel.getPlayer(), "ice", 10, 2);
+                    break;
             }
         }
     }

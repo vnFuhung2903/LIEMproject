@@ -19,10 +19,11 @@ public class Witch extends Character {
     BufferedImage[] getHitDown;
     BufferedImage[] getHitLeft;
     BufferedImage[] getHitRight;
+    BufferedImage[] passiveBackground;
 
     WitchQ witchQ;
 
-    int getHitTick = 0, getHitInterval = 10, getHitIndex = 0;
+    int passiveInterval = 15, getHitInterval = 10, getHitIndex = 0, passiveIndex = 0;
 
     public Witch(Panel panel, int skillThread, KeyHandler keyHandler, MouseEventHandler mouseEventHandler) {
         super(panel, skillThread, keyHandler, mouseEventHandler);
@@ -31,11 +32,11 @@ public class Witch extends Character {
         this.hitBoxArea = new Rectangle(panel.tileSize / 2, panel.tileSize / 2, panel.tileSize, panel.tileSize);
 
         // Set up passive
-        witchPassives = new WitchPassive[3];
+        witchPassives = new WitchPassive[6];
         double angle = 0;
-        for(int i = 0; i < 3; ++i) {
+        for(int i = 0; i < 6; ++i) {
             witchPassives[i] = new WitchPassive(panel, 1, 10, this, angle);
-            angle += 2 * Math.PI / 3;
+            angle += 2 * Math.PI / 6;
         }
 
         // Set up skill Q
@@ -46,7 +47,8 @@ public class Witch extends Character {
     public void update() {
 
         checkHitBox();
-        for(int i = 0; i < 3; ++i) {
+        for(int i = 0; i < 6; ++i) {
+            updatePassiveAnimation();
             witchPassives[i].update();
         }
 
@@ -77,16 +79,16 @@ public class Witch extends Character {
         if(getHit) {
             switch (direction) {
                 case "up":
-                    currentFrameImg = getHitUp[attackIndex];
+                    currentFrameImg = getHitUp[getHitIndex];
                     break;
                 case "down":
-                    currentFrameImg = getHitDown[attackIndex];
+                    currentFrameImg = getHitDown[getHitIndex];
                     break;
                 case "left":
-                    currentFrameImg = getHitLeft[attackIndex];
+                    currentFrameImg = getHitLeft[getHitIndex];
                     break;
                 case "right":
-                    currentFrameImg = getHitRight[attackIndex];
+                    currentFrameImg = getHitRight[getHitIndex];
                     break;
             }
 
@@ -134,9 +136,11 @@ public class Witch extends Character {
             g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
         }
 
-        for(int i = 0; i < 3; ++i) {
+        for(int i = 0; i < 6; ++i) {
             witchPassives[i].draw(g2);
         }
+
+        g2.drawImage(passiveBackground[passiveIndex], screenX - panel.tileSize * 2 + panel.tileSize / 4, screenY - panel.tileSize * 2 + panel.tileSize / 4, panel.tileSize * 6 - panel.tileSize / 2, panel.tileSize * 6 - panel.tileSize / 2, null);
     }
 
     public void getPlayerImage() {
@@ -155,6 +159,8 @@ public class Witch extends Character {
             getHitDown = new BufferedImage[2];
             getHitLeft = new BufferedImage[2];
             getHitRight = new BufferedImage[2];
+
+            passiveBackground = new BufferedImage[6];
 
             for (int i =0; i < 6; ++i) {
                 String fileMoveUp = "assets/witch/witchMoveUp-0" + (i + 1) +".png";
@@ -188,6 +194,11 @@ public class Witch extends Character {
                 String fileGetHitRight = "assets/witch/witchGetHit/witchGetHitRight-0" + (i + 1) +".png";
                 getHitRight[i] = ImageIO.read(new File(fileGetHitRight));
             }
+
+            for(int i = 0; i < 6; ++i) {
+                passiveBackground[i] = ImageIO.read(new File("assets/witch/witchPassive/passive-0" + (i + 1) + ".png"));
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -205,11 +216,20 @@ public class Witch extends Character {
     }
 
     public void updateGetHitAnimation() {
-        if (++getHitTick >= getHitInterval) {
-            getHitTick = 0;
+        if (--getHitInterval <= 0) {
+            getHitInterval = 10;
             if (++getHitIndex > 1 ) {
                 getHitIndex = 0;
                 getHit = false;
+            }
+        }
+    }
+
+    public void updatePassiveAnimation() {
+        if (--passiveInterval <= 0) {
+            passiveInterval = 10;
+            if (++passiveIndex >= 6) {
+                passiveIndex = 0;
             }
         }
     }
@@ -221,7 +241,7 @@ public class Witch extends Character {
     }
 
     public void checkHitBox() {
-        for(int i = 0; i < 3; ++i) {
+        for(int i = 0; i < 6; ++i) {
             witchPassives[i].checkHitBox();
         }
         if(usingSkillQ) {

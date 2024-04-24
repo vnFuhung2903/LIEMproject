@@ -2,6 +2,8 @@ package main;
 
 import entity.*;
 
+import java.util.ArrayList;
+
 public class CollisionHandler {
     Panel panel;
 
@@ -54,7 +56,7 @@ public class CollisionHandler {
         int entityTopCollision = entity.getPosY() + entity.getCollisionArea().y;
         int entityBottomCollision = entityTopCollision + entity.getCollisionArea().height;
 
-        Monster[] monsters = panel.getMonsters();
+        ArrayList<Monster> monsters = panel.getMonsters();
 //        System.out.println(Arrays.toString(monsters));
         for(Monster monster : monsters) {
             if(monster == null) continue;

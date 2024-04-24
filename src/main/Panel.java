@@ -31,22 +31,19 @@ public class Panel extends JPanel implements Runnable {
     // Systems
     TileManage mapTile = new TileManage(this);
     Nightmode nightmode = new Nightmode(this);
+    SandTrap sandTrap;
+    SpiderCave spiderCave;
     KeyHandler keyHandler = new KeyHandler();
     MouseEventHandler mouseEventHandler = new MouseEventHandler();
     Thread gameThread;
     public CollisionHandler collisionHandler = new CollisionHandler(this);
-//    AssetSetter assetSetter = new AssetSetter(this);
 
     // Entities
     entity.Character player = new entity.characters.Witch(this, 10, keyHandler, mouseEventHandler);
-    int numMonsters = 10, numItems = 0, numEffects = 0;
-    Monster[] monsters = new Monster[numMonsters];
-    Item[] items = new Item[numItems];
-    Effect[] effects = new Effect[numEffects];
-    ArrayList<Entity> entityList = new ArrayList<>();
+    ArrayList<Monster> monsters = new ArrayList<>();
 //    ArrayList<Skill> skillList = new ArrayList<>();
-    ArrayList<Item> itemList = new ArrayList<>();
-    ArrayList<Effect> effectList = new ArrayList<>();
+    ArrayList<Item> items = new ArrayList<>();
+    ArrayList<Effect> effects = new ArrayList<>();
 
     public Panel() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -63,6 +60,7 @@ public class Panel extends JPanel implements Runnable {
     }
 
     public void setUpGame() {
+        setMap();
         setMonsters();
     }
 
@@ -92,18 +90,16 @@ public class Panel extends JPanel implements Runnable {
 
     public void update() {
 
-        ArrayList<Monster> monsterList = new ArrayList<>(Arrays.asList(monsters));
-        monsterList.removeIf(monster -> monster.getHp() <= 0);
-        numMonsters = monsterList.size();
-        monsters = monsterList.toArray(new Monster[numMonsters]);
-        monsterList.clear();
+        if(sandTrap != null) sandTrap.update();
 
+        monsters.removeIf(monster -> monster.getHp() <= 0);
         for(Monster monster : monsters) {
             monster.update();
         }
 
+        items.removeIf(item -> !item.isCollectable());
         for(Item item : items) {
-            if(item != null) {
+            if(item != null && item.isCollectable()) {
                 item.update();
             }
         }
@@ -131,25 +127,22 @@ public class Panel extends JPanel implements Runnable {
 
         // Draw map
         mapTile.draw(g2);
-
-        for (Monster monster : monsters) {
-            if (monster != null) {
-                entityList.add(monster);
-            }
-        }
+        sandTrap.draw(g2);
+        spiderCave.draw(g2);
 
 //        for (Skill skill : skillList) {
 //            if (skill != null) {
 //                skillList.add(skill);
 //            }
 //        }
-        entityList.add(player);
 
         // Sort entities in posY
-        entityList.sort(Comparator.comparingInt(Entity::getPosY));
+        ArrayList<Entity> entities = new ArrayList<>(monsters);
+        entities.add(player);
+        entities.sort(Comparator.comparingInt(Entity::getPosY));
 
         // Draw others
-        for (Entity entity : entityList) {
+        for (Entity entity : entities) {
             entity.draw(g2);
         }
 
@@ -163,24 +156,59 @@ public class Panel extends JPanel implements Runnable {
 
 //        nightmode.draw(g2);
 
-        entityList.clear();
         g2.dispose();
+    }
+
+    void setMap() {
+
+        // Create sand trap
+        boolean created = false;
+        while (!created) {
+            Random randomX = new Random();
+            Random randomY = new Random();
+            int x = randomX.nextInt(mapWidth);
+            int y = randomY.nextInt(mapHeight);
+
+            if (collisionHandler.checkSpawn(x, y, 4)) {
+                sandTrap = new SandTrap(this, x, y);
+                created = true;
+            }
+        }
+
+        // Create spider cave
+        created = false;
+        while (!created) {
+            Random randomX = new Random();
+            Random randomY = new Random();
+            int x = randomX.nextInt(mapWidth);
+            int y = randomY.nextInt(mapHeight);
+
+            if (collisionHandler.checkSpawn(x, y, 1)) {
+                spiderCave = new SpiderCave(this, x, y);
+                created = true;
+            }
+        }
     }
 
     void setMonsters() {
 
-        for(int i = 0; i < numMonsters; ++i) {
+        for(int i = 0; i < 2; ++i) {
             boolean created = false;
+
+            // Create up to: 50 slimes OR 50 spiders OR 20 slaves OR 20 goblins OR 5 hobs
+
             while (!created) {
                 Random randomX = new Random();
                 Random randomY = new Random();
-                int x = randomX.nextInt(mapWidth) + 1;
-                int y = randomY.nextInt(mapHeight) + 1;
+                int x = randomX.nextInt(mapWidth);
+                int y = randomY.nextInt(mapHeight);
 
-                if(collisionHandler.checkSpawn(x, y, 1)) {
-                    monsters[i] = new Slime(this, 1, 10);
-                    monsters[i].setPosX(x);
-                    monsters[i].setPosY(y);
+
+                if(collisionHandler.checkSpawn(x, y, 3)) {
+                    Hobgoblin monster =  new Hobgoblin(this, 5, 10);
+                    monster.setPosX(x);
+                    monster.setPosY(y);
+                    monsters.add(monster);
                     System.out.print(x);
                     System.out.println(y);
                     created = true;
@@ -190,20 +218,7 @@ public class Panel extends JPanel implements Runnable {
     }
 
     public void createItem(int id, int posX, int posY) {
-        itemList = new ArrayList<>(Arrays.asList(items));
-        itemList.add(new Item(this, 2, posX, posY));
-        numItems = itemList.size();
-        items = itemList.toArray(new Item[numItems]);
-        itemList.clear();
-    }
-
-    public void collectItem() {
-        itemList = new ArrayList<>(Arrays.asList(items));
-        itemList.removeIf(Objects::isNull);
-        itemList.removeIf(item -> !item.isCollectable());
-        numItems = itemList.size();
-        items = itemList.toArray(new Item[numItems]);
-        itemList.clear();
+        items.add(new Item(this, id, posX, posY));
     }
 
     public void setEffect(Entity entity, String name, int interval, int entitySize) {
@@ -212,17 +227,11 @@ public class Panel extends JPanel implements Runnable {
                 effect.extend(interval);
                 return;
             }
-            System.out.println(effect);
         }
-        effectList = new ArrayList<>(Arrays.asList(effects));
-        effectList.add(new Effect(this, entity, name, interval, entitySize));
-        numEffects = effectList.size();
-        effects = effectList.toArray(new Effect[numEffects]);
-        System.out.println(Arrays.toString(effects));
-        effectList.clear();
+        effects.add(new Effect(this, entity, name, interval, entitySize));
     }
 
-    public Monster[] getMonsters() { return monsters; }
+    public ArrayList<Monster> getMonsters() { return monsters; }
 
     public Character getPlayer() { return player; }
 }

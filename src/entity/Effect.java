@@ -25,9 +25,15 @@ public class Effect {
         switch (name) {
             case "burn":
                 maxImageNum = 7;
+                effectCounter = 15;
                 break;
             case "healing":
                 maxImageNum = 5;
+                effectCounter = 15;
+                break;
+            case "ice":
+                maxImageNum = 3;
+                effectCounter = 10;
                 break;
         }
         this.active = true;
@@ -64,7 +70,7 @@ public class Effect {
         posX = entity.getPosX();
         posY = entity.getPosY();
 
-        if(++effectCounter >= 20) {
+        if(--effectCounter <= 0) {
             effectCounter = 0;
             if (++effectTick >= effectInterval) {
                 effectTick = 0;

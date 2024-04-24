@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class WitchQ extends Skill {
 
@@ -78,7 +79,7 @@ public class WitchQ extends Skill {
     }
 
     public void checkHitBox() {
-        Monster[] monsters = panel.getMonsters();
+        ArrayList<Monster> monsters = panel.getMonsters();
 
         for(Monster monster : monsters) {
 

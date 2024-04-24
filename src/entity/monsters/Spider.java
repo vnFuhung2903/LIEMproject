@@ -125,6 +125,13 @@ public class Spider extends Monster {
         }
     }
 
+    public void updateSprite() {
+        if (++spriteTick > 10) {
+            if (++spriteIndex >= 6) spriteIndex = 0;
+            spriteTick = 0;
+        }
+    }
+
     public void checkHitBox() {
 
         if(posX > panel.getPlayer().getPosX() - panel.tileSize && posX < panel.getPlayer().getPosX() + panel.tileSize * 3 && posY > panel.getPlayer().getPosY() - panel.tileSize && posY <= panel.getPlayer().getPosY() + panel.tileSize * 3) {
