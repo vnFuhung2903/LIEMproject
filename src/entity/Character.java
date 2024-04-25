@@ -35,6 +35,8 @@ public class Character extends Entity {
 
     public void moveAnimation() {
 
+        if (stun) return;
+
         if (keyHandler.isMoving()) {
             if (keyHandler.upPressed){
                 direction = "up";

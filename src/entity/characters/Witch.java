@@ -52,6 +52,8 @@ public class Witch extends Character {
             witchPassives[i].update();
         }
 
+        if (stun) return;
+
         if(getHit) {
             updateGetHitAnimation();
             moveAnimation();
@@ -75,6 +77,8 @@ public class Witch extends Character {
         BufferedImage currentFrameImg = null;
 
         checkAttacking();
+
+        g2.drawImage(passiveBackground[passiveIndex], screenX - panel.tileSize * 2 + panel.tileSize / 4, screenY - panel.tileSize * 2 + panel.tileSize / 4, panel.tileSize * 6 - panel.tileSize / 2, panel.tileSize * 6 - panel.tileSize / 2, null);
 
         if(getHit) {
             switch (direction) {
@@ -140,7 +144,6 @@ public class Witch extends Character {
             witchPassives[i].draw(g2);
         }
 
-        g2.drawImage(passiveBackground[passiveIndex], screenX - panel.tileSize * 2 + panel.tileSize / 4, screenY - panel.tileSize * 2 + panel.tileSize / 4, panel.tileSize * 6 - panel.tileSize / 2, panel.tileSize * 6 - panel.tileSize / 2, null);
     }
 
     public void getPlayerImage() {
@@ -227,7 +230,7 @@ public class Witch extends Character {
 
     public void updatePassiveAnimation() {
         if (--passiveInterval <= 0) {
-            passiveInterval = 10;
+            passiveInterval = 100;
             if (++passiveIndex >= 6) {
                 passiveIndex = 0;
             }

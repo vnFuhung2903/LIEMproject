@@ -22,7 +22,7 @@ public class WitchPassive extends Skill {
     }
 
     public void update() {
-        int speed = 100;
+        int speed = 300;
         angle += ((System.currentTimeMillis() % 10000) / (10000.0 * speed) * 2 * Math.PI);
         screenX = (int) (panel.getPlayer().screenX + radius * Math.cos(angle)) + panel.tileSize / 2;
         screenY = (int) (panel.getPlayer().screenY + radius * Math.sin(angle)) + panel.tileSize / 2;
@@ -31,7 +31,7 @@ public class WitchPassive extends Skill {
     }
 
     void updateSprite() {
-        if (++spriteTick > 3) {
+        if (++spriteTick > 100) {
             if (++spriteIndex > 8) spriteIndex = 0;
             spriteTick = 0;
         }
@@ -67,10 +67,10 @@ public class WitchPassive extends Skill {
             posX = panel.getPlayer().getPosX() + screenX - panel.getPlayer().screenX;
             posY = panel.getPlayer().getPosY() + screenY - panel.getPlayer().screenY;
 
-            if(monsterLeftHitBox <= posX + hitBoxArea.x
-                && monsterRightHitBox >= posX + hitBoxArea.x + hitBoxArea.width
-                && monsterTopHitBox <= posY + hitBoxArea.y
-                && monsterBottomHitBox >= posY  + hitBoxArea.y + hitBoxArea.height) {
+            if(monsterLeftHitBox - panel.tileSize / 2 <= posX + hitBoxArea.x
+                && monsterRightHitBox + panel.tileSize / 2 >= posX + hitBoxArea.x + hitBoxArea.width
+                && monsterTopHitBox - panel.tileSize / 2 <= posY + hitBoxArea.y
+                && monsterBottomHitBox + panel.tileSize / 2 >= posY  + hitBoxArea.y + hitBoxArea.height) {
                 System.out.println("Passive hit");
                 monster.damage(1);
             }

@@ -64,6 +64,9 @@ public class Effect {
                 case "healing":
                     heal(entity);
                     break;
+                case "ice":
+                    stun(entity);
+                    break;
             }
         }
 
@@ -102,6 +105,7 @@ public class Effect {
     public void heal(Entity entity) {
         entity.hp += 1;
     }
+    public void stun(Entity entity) { entity.setStun(); }
     public void  extend(int interval) {
         effectInterval += interval;
     }

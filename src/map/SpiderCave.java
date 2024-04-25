@@ -11,11 +11,14 @@ public class SpiderCave {
     Panel panel;
     int posX, posY;
     Tile tile;
+    Rectangle territoryArea;
+
     public SpiderCave(Panel panel, int posX, int posY) {
         this.panel = panel;
         this.posX = posX;
         this.posY = posY;
         this.tile = new Tile();
+        this.territoryArea = new Rectangle(-panel.tileSize * 4, panel.tileSize * 4, panel.tileSize * 9, panel.tileSize * 9);
         getImage();
     }
 
@@ -46,5 +49,9 @@ public class SpiderCave {
 
     public int getPosY() {
         return posY;
+    }
+
+    public Rectangle getTerritoryArea() {
+        return territoryArea;
     }
 }

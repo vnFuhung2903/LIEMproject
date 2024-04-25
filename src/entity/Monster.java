@@ -13,7 +13,7 @@ public class Monster extends Entity {
     protected boolean triggering = false;
     public Monster(Panel panel, int speed, int skillThread) {
         super(panel, speed, skillThread);
-        this.hp = 1;
+        this.hp = 200;
     }
 
     public void setAction() {}

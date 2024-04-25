@@ -2,6 +2,7 @@ package entity.monsters;
 
 import entity.Monster;
 import main.Panel;
+import map.SpiderCave;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -11,7 +12,9 @@ import java.io.IOException;
 import java.util.Random;
 
 public class Spider extends Monster {
-    public Spider(Panel panel, int speed, int skillThread) {
+
+    SpiderCave cave;
+    public Spider(Panel panel, int speed, int skillThread, SpiderCave spiderCave) {
         super(panel, speed, skillThread);
 
         Random randomColor = new Random();
@@ -32,6 +35,7 @@ public class Spider extends Monster {
         }
 
         this.monsterSize = 1;
+        this.cave = spiderCave;
 
         this.triggerArea = new Rectangle(-2 * panel.tileSize, -2 * panel.tileSize, 5 * panel.tileSize, 5 * panel.tileSize);
         this.collisionArea = new Rectangle(panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4);
@@ -93,6 +97,38 @@ public class Spider extends Monster {
         }
     }
 
+    public void setRandomDirection() {
+
+        do {
+            Random random = new Random();
+            int i = random.nextInt(100) + 1;
+
+            if (i <= 25) {
+                direction = "up";
+            } else if (i <= 50) {
+                direction = "down";
+            } else if (i <= 75) {
+                direction = "left";
+            } else {
+                direction = "right";
+            }
+        } while (abandonCave());
+    }
+
+    boolean abandonCave() {
+        switch (direction) {
+            case "left":
+                return posX - speed < cave.getPosX() + cave.getTerritoryArea().x;
+            case "right":
+                return posX + speed > cave.getPosX() + cave.getTerritoryArea().x + cave.getTerritoryArea().width;
+            case "top":
+                return posY - speed < cave.getPosY() + cave.getTerritoryArea().y;
+            case "bottom":
+                return posY + speed > cave.getPosY() + cave.getTerritoryArea().y + cave.getTerritoryArea().height;
+        }
+        return false;
+    }
+
     public void setAction() {
         if (++actionLockCounter == 50) {
             actionLockCounter = 0;
@@ -107,13 +143,13 @@ public class Spider extends Monster {
                     collisionDetected = false;
                     direction = distanceY < 0 ? "down" : "up";
                     panel.collisionHandler.checkMapCollision(this);
-                    if (!collisionDetected)
+                    if (!collisionDetected && !abandonCave())
                         return;
                 } else {
                     collisionDetected = false;
                     direction = distanceX < 0 ? "right" : "left";
                     panel.collisionHandler.checkMapCollision(this);
-                    if (!collisionDetected)
+                    if (!collisionDetected && !abandonCave())
                         return;
                 }
 

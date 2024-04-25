@@ -10,7 +10,7 @@ public abstract class Entity {
 
     protected Panel panel;
     protected int posX, posY, speed, moveCounter = 0, actionLockCounter = 0, skillThread, hp;
-    protected boolean attacking = false;
+    protected boolean attacking = false, stun = false;
     protected boolean flash = false;
     protected KeyHandler keyHandler;
     MouseEventHandler mouseHandler;
@@ -64,8 +64,14 @@ public abstract class Entity {
     public void checkHitBox() {}
     public void damage(int damagePerHit) {}
     public int getHp() { return hp; }
-
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+    public boolean isStun() {
+        return stun;
+    }
+
+    public void setStun() {
+        this.stun = true;
     }
 }

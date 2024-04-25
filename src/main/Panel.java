@@ -126,8 +126,8 @@ public class Panel extends JPanel implements Runnable {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 
         // Draw map
-        mapTile.draw(g2);
         sandTrap.draw(g2);
+        mapTile.draw(g2);
         spiderCave.draw(g2);
 
 //        for (Skill skill : skillList) {
@@ -152,6 +152,7 @@ public class Panel extends JPanel implements Runnable {
 
         for(Effect effect : effects) {
             effect.draw(g2);
+            System.out.println(effect);
         }
 
 //        nightmode.draw(g2);
@@ -178,34 +179,137 @@ public class Panel extends JPanel implements Runnable {
         // Create spider cave
         created = false;
         while (!created) {
-            Random randomX = new Random();
-            Random randomY = new Random();
-            int x = randomX.nextInt(mapWidth);
-            int y = randomY.nextInt(mapHeight);
+//            Random randomX = new Random();
+//            Random randomY = new Random();
+//            int x = randomX.nextInt(mapWidth);
+//            int y = randomY.nextInt(mapHeight);
+
+            int x = mapWidth / 2;
+            int y = mapHeight / 2;
+
+//            int x = player.getPosX();
+//            int y = player.getPosY();
 
             if (collisionHandler.checkSpawn(x, y, 1)) {
                 spiderCave = new SpiderCave(this, x, y);
                 created = true;
+
+//                for(int i = 0; i < 4; i++) {
+//                    Spider monster =  new Spider(this, 5, 10, spiderCave);
+//                    monster.setPosX(x + i + 1);
+//                    monster.setPosY(y + i + 1);
+//                    monsters.add(monster);
+//                }
             }
         }
     }
 
     void setMonsters() {
 
-        for(int i = 0; i < 2; ++i) {
+        for(int i = 0; i < 10; ++i) {
             boolean created = false;
 
-            // Create up to: 50 slimes OR 50 spiders OR 20 slaves OR 20 goblins OR 5 hobs
+            // Create up to: 50 slimes OR 50 spiders OR 20 slaves OR 50 goblins OR 5 hobs
 
             while (!created) {
-                Random randomX = new Random();
-                Random randomY = new Random();
-                int x = randomX.nextInt(mapWidth);
-                int y = randomY.nextInt(mapHeight);
+//                Random randomX = new Random();
+//                Random randomY = new Random();
+//                int x = randomX.nextInt(mapWidth);
+//                int y = randomY.nextInt(mapHeight);
 
+                int x = mapWidth / 2;
+                int y = mapHeight / 2;
+
+                if(collisionHandler.checkSpawn(x, y, 3)) {
+                    Slime monster =  new Slime(this, 1, 10);
+                    monster.setPosX(x);
+                    monster.setPosY(y);
+                    monsters.add(monster);
+                    System.out.print(x);
+                    System.out.println(y);
+                    created = true;
+                }
+            }
+        }
+
+        for(int i = 0; i < 10; ++i) {
+            boolean created = false;
+
+            // Create up to: 50 slimes OR 50 spiders OR 20 slaves OR 50 goblins OR 5 hobs
+
+            while (!created) {
+
+                int x = mapWidth / 2;
+                int y = mapHeight / 2;
+
+                if(collisionHandler.checkSpawn(x, y, 3)) {
+                    Spider monster =  new Spider(this, 5, 10, spiderCave);
+                    monster.setPosX(x);
+                    monster.setPosY(y);
+                    monsters.add(monster);
+                    System.out.print(x);
+                    System.out.println(y);
+                    created = true;
+                }
+            }
+        }
+
+        for(int i = 0; i < 1; ++i) {
+            boolean created = false;
+
+            // Create up to: 50 slimes OR 50 spiders OR 20 slaves OR 50 goblins OR 5 hobs
+
+            while (!created) {
+
+                int x = mapWidth / 2;
+                int y = mapHeight / 2;
+
+                if(collisionHandler.checkSpawn(x, y, 3)) {
+                    Goblin monster =  new Goblin(this, 5, 10);
+                    monster.setPosX(x);
+                    monster.setPosY(y);
+                    monsters.add(monster);
+                    System.out.print(x);
+                    System.out.println(y);
+                    created = true;
+                }
+            }
+        }
+
+        for(int i = 0; i < 1; ++i) {
+            boolean created = false;
+
+            // Create up to: 50 slimes OR 50 spiders OR 20 slaves OR 50 goblins OR 5 hobs
+
+            while (!created) {
+
+                int x = mapWidth / 2;
+                int y = mapHeight / 2;
 
                 if(collisionHandler.checkSpawn(x, y, 3)) {
                     Hobgoblin monster =  new Hobgoblin(this, 5, 10);
+                    monster.setPosX(x);
+                    monster.setPosY(y);
+                    monsters.add(monster);
+                    System.out.print(x);
+                    System.out.println(y);
+                    created = true;
+                }
+            }
+        }
+
+        for(int i = 0; i < 1; ++i) {
+            boolean created = false;
+
+            // Create up to: 50 slimes OR 50 spiders OR 20 slaves OR 50 goblins OR 5 hobs
+
+            while (!created) {
+
+                int x = mapWidth / 2;
+                int y = mapHeight / 2;
+
+                if(collisionHandler.checkSpawn(x, y, 3)) {
+                    Slave monster =  new Slave(this, 5, 10);
                     monster.setPosX(x);
                     monster.setPosY(y);
                     monsters.add(monster);

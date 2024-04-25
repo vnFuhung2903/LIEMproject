@@ -37,7 +37,7 @@ public class Slime extends Monster {
 
         this.monsterSize = 1;
         this.triggerArea = null;
-        this.hp = 1;
+        this.hp = 100;
         this.collisionArea = new Rectangle(panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4);
         this.hitBoxArea = new Rectangle(0, 0, panel.tileSize, panel.tileSize);
         getMonsterImage();
@@ -114,16 +114,18 @@ public class Slime extends Monster {
 
     public void checkHitBox() {
 
-        if(posX > panel.getPlayer().getPosX() && posX < panel.getPlayer().getPosX() + panel.tileSize * 2 && posY > panel.getPlayer().getPosY() && posY <= panel.getPlayer().getPosY() + panel.tileSize * 2) {
-            System.out.println("Take effect");
+        if(posX >= panel.getPlayer().getPosX() - panel.tileSize && posX <= panel.getPlayer().getPosX() + panel.tileSize * 3 && posY >= panel.getPlayer().getPosY() - panel.tileSize && posY <= panel.getPlayer().getPosY() + panel.tileSize * 3) {
             switch (color) {
                 case "red":
+                    System.out.println("Take burn");
                     panel.setEffect(panel.getPlayer(), "burn", 10, 2);
                     break;
                 case "green":
+                    System.out.println("Take heal");
                     panel.setEffect(panel.getPlayer(), "healing", 10, 2);
                     break;
                 case "blue":
+                    System.out.println("Take ice");
                     panel.setEffect(panel.getPlayer(), "ice", 10, 2);
                     break;
             }
