@@ -40,35 +40,9 @@ public class Spider extends Monster {
         this.triggerArea = new Rectangle(-2 * panel.tileSize, -2 * panel.tileSize, 5 * panel.tileSize, 5 * panel.tileSize);
         this.collisionArea = new Rectangle(panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4);
         this.hitBoxArea = new Rectangle(0, 0, panel.tileSize, panel.tileSize);
-        getMonsterImage();
-    }
-
-    public void getMonsterImage() {
-
-        try {
-            moveUp = new BufferedImage[6];
-            moveDown = new BufferedImage[6];
-            moveLeft = new BufferedImage[6];
-            moveRight = new BufferedImage[6];
-
-            for (int i = 0; i < 6;i++) {
-
-                String fileMoveUp = "assets/spider/spiderMoveUp-0" + (i + 1) +".png";
-                moveUp[i] = ImageIO.read(new File(fileMoveUp));
-                String fileMoveDown = "assets/spider/spiderMoveDown-0" + (i + 1) + ".png";
-                moveDown[i] = ImageIO.read(new File(fileMoveDown));
-                String fileMoveLeft = "assets/spider/spiderMoveLeft-0" + (i + 1) +".png";
-                moveLeft[i] = ImageIO.read(new File(fileMoveLeft));
-                String fileMoveRight = "assets/spider/spiderMoveRight-0" + (i + 1) +".png";
-                moveRight[i] = ImageIO.read(new File(fileMoveRight));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void draw(Graphics2D g2) {
-        BufferedImage currentFrameImg = null;
 
         int screenX = posX - panel.getPlayer().getPosX() + panel.getPlayer().screenX;
         int screenY = posY - panel.getPlayer().getPosY() + panel.getPlayer().screenY;
@@ -78,22 +52,7 @@ public class Spider extends Monster {
                 posY + panel.tileSize >= panel.getPlayer().getPosY() - panel.getPlayer().screenY &&
                 posY - panel.tileSize <= panel.getPlayer().getPosY() + panel.getPlayer().screenY
         ) {
-            switch (direction) {
-                case "up":
-                    currentFrameImg = moveUp[spriteIndex];
-                    break;
-                case "down":
-                    currentFrameImg = moveDown[spriteIndex];
-                    break;
-                case "left":
-                    currentFrameImg = moveLeft[spriteIndex];
-                    break;
-                case "right":
-                    currentFrameImg = moveRight[spriteIndex];
-                    break;
-            }
-
-            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * monsterSize, panel.tileSize * monsterSize, null);
+            panel.getMonsterAsset().getSpiderAssets().draw(this, screenX, screenY, spriteIndex, g2);
         }
     }
 

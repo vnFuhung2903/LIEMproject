@@ -11,6 +11,14 @@ public class Character extends Entity {
     final public int screenY;
     protected Skill skillQ, skillE;
     protected boolean usingSkillQ, usingSkillE, getHit;
+    protected BufferedImage[] moveUp;
+    protected BufferedImage[] moveDown;
+    protected BufferedImage[] moveLeft;
+    protected BufferedImage[] moveRight;
+    protected BufferedImage[] attackUp;
+    protected BufferedImage[] attackDown;
+    protected BufferedImage[] attackLeft;
+    protected BufferedImage[] attackRight;
 
     public Character(Panel panel, int skillThread, KeyHandler keyHandler, MouseEventHandler mouseEventHandler) {
 

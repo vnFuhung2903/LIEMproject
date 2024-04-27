@@ -15,16 +15,6 @@ public abstract class Entity {
     protected KeyHandler keyHandler;
     MouseEventHandler mouseHandler;
 
-    // For Graphic
-    protected BufferedImage[] moveUp;
-    protected BufferedImage[] moveDown;
-    protected BufferedImage[] moveLeft;
-    protected BufferedImage[] moveRight;
-    protected BufferedImage[] attackUp;
-    protected BufferedImage[] attackDown;
-    protected BufferedImage[] attackLeft;
-    protected BufferedImage[] attackRight;
-
     // For collision and hit box
     protected  boolean collisionDetected;
     protected Rectangle collisionArea;
@@ -70,7 +60,6 @@ public abstract class Entity {
     public boolean isStun() {
         return stun;
     }
-
     public void setStun() {
         this.stun = true;
     }

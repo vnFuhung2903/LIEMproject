@@ -37,53 +37,9 @@ public class Slave extends Monster {
         this.triggerArea = new Rectangle(-3 * panel.tileSize, -3 * panel.tileSize, 8 * panel.tileSize, 8 * panel.tileSize);
         this.collisionArea = new Rectangle(panel.tileSize, panel.tileSize, 0, panel.tileSize / 2);
         this.hitBoxArea = new Rectangle(panel.tileSize / 2, panel.tileSize / 2, panel.tileSize, panel.tileSize);
-        getMonsterImage();
-    }
-
-    public void getMonsterImage() {
-
-        try {
-            moveUp = new BufferedImage[2];
-            moveDown = new BufferedImage[2];
-            moveLeft = new BufferedImage[2];
-            moveRight = new BufferedImage[2];
-
-            attackUp = new BufferedImage[6];
-            attackDown = new BufferedImage[6];
-            attackLeft = new BufferedImage[6];
-            attackRight = new BufferedImage[6];
-
-            for (int i = 0; i < 2;i++) {
-
-                String fileMoveUp = "assets/slave/slaveMoveUp-0" + (i + 1) +".png";
-                moveUp[i] = ImageIO.read(new File(fileMoveUp));
-                String fileMoveDown = "assets/slave/slaveMoveDown-0" + (i + 1) + ".png";
-                moveDown[i] = ImageIO.read(new File(fileMoveDown));
-                String fileMoveLeft = "assets/slave/slaveMoveLeft-0" + (i + 1) +".png";
-                moveLeft[i] = ImageIO.read(new File(fileMoveLeft));
-                String fileMoveRight = "assets/slave/slaveMoveRight-0" + (i + 1) +".png";
-                moveRight[i] = ImageIO.read(new File(fileMoveRight));
-            }
-
-            for (int i = 0; i < 6;i++) {
-
-                String fileAttackUp = "assets/slave/slaveAttackUp-0" + (i + 1) +".png";
-                attackUp[i] = ImageIO.read(new File(fileAttackUp));
-                String fileAttackDown = "assets/slave/slaveAttackDown-0" + (i + 1) + ".png";
-                attackDown[i] = ImageIO.read(new File(fileAttackDown));
-                String fileAttackLeft = "assets/slave/slaveAttackLeft-0" + (i + 1) +".png";
-                attackLeft[i] = ImageIO.read(new File(fileAttackLeft));
-                String fileAttackRight = "assets/slave/slaveAttackRight-0" + (i + 1) +".png";
-                attackRight[i] = ImageIO.read(new File(fileAttackRight));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void draw(Graphics2D g2) {
-
-        BufferedImage currentFrameImg = null;
 
         int screenX = posX - panel.getPlayer().getPosX() + panel.getPlayer().screenX;
         int screenY = posY - panel.getPlayer().getPosY() + panel.getPlayer().screenY;
@@ -94,42 +50,11 @@ public class Slave extends Monster {
                 posY - panel.tileSize <= panel.getPlayer().getPosY() + panel.getPlayer().screenY
         ) {
 
-            if(attacking) {
-                switch (direction) {
-                    case "up":
-                        currentFrameImg = attackUp[attackIndex];
-                        break;
-                    case "down":
-                        currentFrameImg = attackDown[attackIndex];
-                        break;
-                    case "left":
-                        currentFrameImg = attackLeft[attackIndex];
-                        break;
-                    case "right":
-                        currentFrameImg = attackRight[attackIndex];
-                        break;
-                }
-
-                g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * monsterSize, panel.tileSize * monsterSize, null);
+            if (attacking) {
+                panel.getMonsterAsset().getSlaveAssets().draw(this, screenX, screenY, attackIndex, true, g2);
                 return;
             }
-
-            switch (direction) {
-                case "up":
-                    currentFrameImg = moveUp[spriteIndex];
-                    break;
-                case "down":
-                    currentFrameImg = moveDown[spriteIndex];
-                    break;
-                case "left":
-                    currentFrameImg = moveLeft[spriteIndex];
-                    break;
-                case "right":
-                    currentFrameImg = moveRight[spriteIndex];
-                    break;
-            }
-
-            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * monsterSize, panel.tileSize * monsterSize, null);
+            panel.getMonsterAsset().getSlaveAssets().draw(this, screenX, screenY, spriteIndex, false, g2);
         }
 
     }

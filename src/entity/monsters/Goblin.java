@@ -37,53 +37,9 @@ public class Goblin extends Monster {
         this.triggerArea = new Rectangle(-4 * panel.tileSize, -4 * panel.tileSize, 9 * panel.tileSize, 9 * panel.tileSize);
         this.collisionArea = new Rectangle(panel.tileSize / 2, panel.tileSize / 2, 0, panel.tileSize / 2);
         this.hitBoxArea = new Rectangle(panel.tileSize / 2, panel.tileSize / 2, panel.tileSize, panel.tileSize);
-        getMonsterImage();
-    }
-
-    public void getMonsterImage() {
-
-        try {
-            moveUp = new BufferedImage[3];
-            moveDown = new BufferedImage[3];
-            moveLeft = new BufferedImage[3];
-            moveRight = new BufferedImage[3];
-
-            attackUp = new BufferedImage[6];
-            attackDown = new BufferedImage[6];
-            attackLeft = new BufferedImage[6];
-            attackRight = new BufferedImage[6];
-
-            for (int i = 0; i < 3;i++) {
-
-                String fileMoveUp = "assets/goblin/goblinMoveUp-0" + (i + 1) +".png";
-                moveUp[i] = ImageIO.read(new File(fileMoveUp));
-                String fileMoveDown = "assets/goblin/goblinMoveDown-0" + (i + 1) + ".png";
-                moveDown[i] = ImageIO.read(new File(fileMoveDown));
-                String fileMoveLeft = "assets/goblin/goblinMoveLeft-0" + (i + 1) +".png";
-                moveLeft[i] = ImageIO.read(new File(fileMoveLeft));
-                String fileMoveRight = "assets/goblin/goblinMoveRight-0" + (i + 1) +".png";
-                moveRight[i] = ImageIO.read(new File(fileMoveRight));
-            }
-
-            for (int i = 0; i < 6;i++) {
-
-                String fileAttackUp = "assets/goblin/goblinAttackUp-0" + (i + 1) +".png";
-                attackUp[i] = ImageIO.read(new File(fileAttackUp));
-                String fileAttackDown = "assets/goblin/goblinAttackDown-0" + (i + 1) + ".png";
-                attackDown[i] = ImageIO.read(new File(fileAttackDown));
-                String fileAttackLeft = "assets/goblin/goblinAttackLeft-0" + (i + 1) +".png";
-                attackLeft[i] = ImageIO.read(new File(fileAttackLeft));
-                String fileAttackRight = "assets/goblin/goblinAttackRight-0" + (i + 1) +".png";
-                attackRight[i] = ImageIO.read(new File(fileAttackRight));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void draw(Graphics2D g2) {
-
-        BufferedImage currentFrameImg = null;
 
         int screenX = posX - panel.getPlayer().getPosX() + panel.getPlayer().screenX;
         int screenY = posY - panel.getPlayer().getPosY() + panel.getPlayer().screenY;
@@ -95,41 +51,10 @@ public class Goblin extends Monster {
         ) {
 
             if(attacking) {
-                switch (direction) {
-                    case "up":
-                        currentFrameImg = attackUp[attackIndex];
-                        break;
-                    case "down":
-                        currentFrameImg = attackDown[attackIndex];
-                        break;
-                    case "left":
-                        currentFrameImg = attackLeft[attackIndex];
-                        break;
-                    case "right":
-                        currentFrameImg = attackRight[attackIndex];
-                        break;
-                }
-
-                g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * monsterSize * 3 / 2, panel.tileSize * monsterSize * 3 / 2, null);
+                panel.getMonsterAsset().getGoblinAssets().draw(this, screenX, screenY, attackIndex, true, g2);
                 return;
             }
-
-            switch (direction) {
-                case "up":
-                    currentFrameImg = moveUp[spriteIndex];
-                    break;
-                case "down":
-                    currentFrameImg = moveDown[spriteIndex];
-                    break;
-                case "left":
-                    currentFrameImg = moveLeft[spriteIndex];
-                    break;
-                case "right":
-                    currentFrameImg = moveRight[spriteIndex];
-                    break;
-            }
-
-            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * monsterSize * 3 / 2, panel.tileSize * monsterSize * 3 / 2, null);
+            panel.getMonsterAsset().getGoblinAssets().draw(this, screenX, screenY, spriteIndex, false, g2);
         }
 
     }

@@ -18,7 +18,7 @@ public class Slime extends Monster {
         this.name = "Slime";
 
         Random randomColor = new Random();
-        int colorIndex = randomColor.nextInt(5);
+        int colorIndex = randomColor.nextInt(1000);
         switch (colorIndex % 4) {
             case 0:
                 color = "Blue";
@@ -40,36 +40,9 @@ public class Slime extends Monster {
         this.hp = 100;
         this.collisionArea = new Rectangle(panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4, panel.tileSize / 4);
         this.hitBoxArea = new Rectangle(0, 0, panel.tileSize, panel.tileSize);
-        getMonsterImage();
-    }
-
-    public void getMonsterImage() {
-
-        try {
-            moveUp = new BufferedImage[6];
-            moveDown = new BufferedImage[6];
-            moveLeft = new BufferedImage[6];
-            moveRight = new BufferedImage[6];
-
-            for (int i = 0; i < 6;i++) {
-
-                String fileMoveUp = "assets/slimes/slime" + color + "MoveUp-0" + (i + 1) +".png";
-                moveUp[i] = ImageIO.read(new File(fileMoveUp));
-                String fileMoveDown = "assets/slimes/slime" + color + "MoveDown-0" + (i + 1) + ".png";
-                moveDown[i] = ImageIO.read(new File(fileMoveDown));
-                String fileMoveLeft = "assets/slimes/slime" + color + "MoveLeft-0" + (i + 1) +".png";
-                moveLeft[i] = ImageIO.read(new File(fileMoveLeft));
-                String fileMoveRight = "assets/slimes/slime" + color + "MoveRight-0" + (i + 1) +".png";
-                moveRight[i] = ImageIO.read(new File(fileMoveRight));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println(color);
-        }
     }
 
     public void draw(Graphics2D g2) {
-        BufferedImage currentFrameImg = null;
 
         int screenX = posX - panel.getPlayer().getPosX() + panel.getPlayer().screenX;
         int screenY = posY - panel.getPlayer().getPosY() + panel.getPlayer().screenY;
@@ -79,22 +52,7 @@ public class Slime extends Monster {
                 posY + panel.tileSize >= panel.getPlayer().getPosY() - panel.getPlayer().screenY &&
                 posY - panel.tileSize <= panel.getPlayer().getPosY() + panel.getPlayer().screenY
         ) {
-            switch (direction) {
-                case "up":
-                    currentFrameImg = moveUp[spriteIndex];
-                    break;
-                case "down":
-                    currentFrameImg = moveDown[spriteIndex];
-                    break;
-                case "left":
-                    currentFrameImg = moveLeft[spriteIndex];
-                    break;
-                case "right":
-                    currentFrameImg = moveRight[spriteIndex];
-                    break;
-            }
-
-            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * monsterSize, panel.tileSize * monsterSize, null);
+            panel.getMonsterAsset().getSlimeAssets().draw(this, screenX, screenY, spriteIndex, g2);
         }
     }
 
@@ -130,5 +88,9 @@ public class Slime extends Monster {
                     break;
             }
         }
+    }
+
+    public String getColor() {
+        return color;
     }
 }
