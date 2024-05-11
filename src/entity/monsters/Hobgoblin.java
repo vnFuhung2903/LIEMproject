@@ -129,24 +129,54 @@ public class Hobgoblin extends Monster {
         if(!attacking)      return;
         if(attackIndex < 4) return;
 
-        if(posX >= panel.getPlayer().getPosX() && posX <= panel.getPlayer().getPosX() + panel.tileSize && posY >= panel.getPlayer().getPosY() - panel.tileSize / 2 && posY <= panel.getPlayer().getPosY() + panel.tileSize / 2) {
-            System.out.println("Hobgoblin attack");
-            panel.getPlayer().damage(1);
-        }
 
-        if(posX <= panel.getPlayer().getPosX() && posX >= panel.getPlayer().getPosX() - panel.tileSize && posY >= panel.getPlayer().getPosY() - panel.tileSize / 2 && posY <= panel.getPlayer().getPosY() + panel.tileSize / 2) {
-            System.out.println("Hobgoblin attack");
-            panel.getPlayer().damage(1);
-        }
+        Rectangle playerHitBoxArea = new Rectangle(panel.getPlayer().getPosX() + panel.getPlayer().getHitBoxArea().x,
+                panel.getPlayer().getPosY() + panel.getPlayer().getHitBoxArea().y,
+                panel.getPlayer().getHitBoxArea().width,
+                panel.getPlayer().getHitBoxArea().height);
 
-        if(posX >= panel.getPlayer().getPosX() - panel.tileSize / 2 && posX <= panel.getPlayer().getPosX() + panel.tileSize / 2 && posY <= panel.getPlayer().getPosY() && posY >= panel.getPlayer().getPosY() - panel.tileSize) {
-            System.out.println("Hobgoblin attack");
-            panel.getPlayer().damage(1);
-        }
-
-        if(posX >= panel.getPlayer().getPosX() - panel.tileSize / 2 && posX <= panel.getPlayer().getPosX() + panel.tileSize / 2 && posY >= panel.getPlayer().getPosY() && posY <= panel.getPlayer().getPosY() + panel.tileSize) {
-            System.out.println("Hobgoblin attack");
-            panel.getPlayer().damage(1);
+        Rectangle attackArea = new Rectangle(0,0,0,0);
+        switch (direction){
+            case "up":
+                attackArea.x = posX;
+                attackArea.y = posY - panel.tileSize/2;
+                attackArea.width = panel.tileSize*2;
+                attackArea.height = panel.tileSize;
+                if(attackArea.intersects(playerHitBoxArea)){
+                    System.out.println("Hobgoblin attack");
+                    panel.getPlayer().damage(1);
+                }
+                break;
+            case "down":
+                attackArea.x = posX;
+                attackArea.y = posY + panel.tileSize;
+                attackArea.width = panel.tileSize*2;
+                attackArea.height = panel.tileSize;
+                if(attackArea.intersects(playerHitBoxArea)){
+                    System.out.println("Hobgoblin attack");
+                    panel.getPlayer().damage(1);
+                }
+                break;
+            case "right":
+                attackArea.x = posX + panel.tileSize;
+                attackArea.y = posY;
+                attackArea.width = panel.tileSize;
+                attackArea.height = panel.tileSize*2;
+                if(attackArea.intersects(playerHitBoxArea)){
+                    System.out.println("Hobgoblin attack");
+                    panel.getPlayer().damage(1);
+                }
+                break;
+            case "left":
+                attackArea.x = posX - panel.tileSize;
+                attackArea.y = posY;
+                attackArea.width = panel.tileSize;
+                attackArea.height = panel.tileSize*2;
+                if(attackArea.intersects(playerHitBoxArea)){
+                    System.out.println("Hobgoblin attack");
+                    panel.getPlayer().damage(1);
+                }
+                break;
         }
     }
 }

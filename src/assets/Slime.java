@@ -47,7 +47,7 @@ public class Slime {
     public void draw(entity.monsters.Slime slime, int screenX, int screenY, int index, Graphics2D g2) {
         BufferedImage currentFrameImg = null;
         int id = encodeColor(slime.getColor());
-        System.out.println(slime.getColor());
+//        System.out.println(slime.getColor());
 
         switch (slime.getDirection()) {
             case "up":

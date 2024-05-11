@@ -41,7 +41,9 @@ public class Monster extends Entity {
         if(attacking) {
             updateAttackAnimation();
         }
-        move();
+        else{
+            move();
+        };
     }
 
     public void move() {

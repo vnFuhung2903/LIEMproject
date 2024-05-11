@@ -71,21 +71,31 @@ public class Slime extends Monster {
     }
 
     public void checkHitBox() {
+        Rectangle playerHitBoxArea = new Rectangle(panel.getPlayer().getPosX() + panel.getPlayer().getHitBoxArea().x,
+                panel.getPlayer().getPosY() + panel.getPlayer().getHitBoxArea().y,
+                panel.getPlayer().getHitBoxArea().width,
+                panel.getPlayer().getHitBoxArea().height);
 
-        if(posX >= panel.getPlayer().getPosX() - panel.tileSize && posX <= panel.getPlayer().getPosX() + panel.tileSize * 3 && posY >= panel.getPlayer().getPosY() - panel.tileSize && posY <= panel.getPlayer().getPosY() + panel.tileSize * 3) {
+        Rectangle attackArea = new Rectangle(posX,posY,panel.tileSize/2,panel.tileSize/2);
+        if(attackArea.intersects(playerHitBoxArea)) {
             switch (color) {
-                case "red":
+                case "Red":
                     System.out.println("Take burn");
-                    panel.setEffect(panel.getPlayer(), "burn", 10, 2);
+//                    panel.setEffect(panel.getPlayer(), "burn", 10, 2);
                     break;
-                case "green":
+                case "Green":
                     System.out.println("Take heal");
-                    panel.setEffect(panel.getPlayer(), "healing", 10, 2);
+//                    panel.setEffect(panel.getPlayer(), "healing", 10, 2);
                     break;
-                case "blue":
+                case "Blue":
                     System.out.println("Take ice");
-                    panel.setEffect(panel.getPlayer(), "ice", 10, 2);
+//                    panel.setEffect(panel.getPlayer(), "ice", 10, 2);
                     break;
+                case "Yellow":
+                    System.out.println("Yellow");
+                    break;
+                default :
+                    System.out.println("ko co gi");
             }
         }
     }

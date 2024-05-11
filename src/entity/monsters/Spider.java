@@ -128,8 +128,13 @@ public class Spider extends Monster {
     }
 
     public void checkHitBox() {
+        Rectangle playerHitBoxArea = new Rectangle(panel.getPlayer().getPosX() + panel.getPlayer().getHitBoxArea().x,
+                panel.getPlayer().getPosY() + panel.getPlayer().getHitBoxArea().y,
+                panel.getPlayer().getHitBoxArea().width,
+                panel.getPlayer().getHitBoxArea().height);
 
-        if(posX > panel.getPlayer().getPosX() - panel.tileSize && posX < panel.getPlayer().getPosX() + panel.tileSize * 3 && posY > panel.getPlayer().getPosY() - panel.tileSize && posY <= panel.getPlayer().getPosY() + panel.tileSize * 3) {
+        Rectangle attackArea = new Rectangle(posX,posY,panel.tileSize/2,panel.tileSize/2);
+        if(attackArea.intersects(playerHitBoxArea)) {
             System.out.println("Spider attack");
             panel.getPlayer().damage(1);
         }

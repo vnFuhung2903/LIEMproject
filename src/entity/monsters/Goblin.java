@@ -131,24 +131,45 @@ public class Goblin extends Monster {
         if(!attacking)      return;
         if(attackIndex < 4) return;
 
-        if(posX >= panel.getPlayer().getPosX() && posX <= panel.getPlayer().getPosX() + panel.tileSize && posY >= panel.getPlayer().getPosY() - panel.tileSize / 2 && posY <= panel.getPlayer().getPosY() + panel.tileSize / 2) {
-            System.out.println("goblin attack");
-            panel.getPlayer().damage(1);
-        }
+        Rectangle playerHitBoxArea = new Rectangle(panel.getPlayer().getPosX() + panel.getPlayer().getHitBoxArea().x,
+                panel.getPlayer().getPosY() + panel.getPlayer().getHitBoxArea().y,
+                panel.getPlayer().getHitBoxArea().width,
+                panel.getPlayer().getHitBoxArea().height);
 
-        if(posX <= panel.getPlayer().getPosX() && posX >= panel.getPlayer().getPosX() - panel.tileSize && posY >= panel.getPlayer().getPosY() - panel.tileSize / 2 && posY <= panel.getPlayer().getPosY() + panel.tileSize / 2) {
-            System.out.println("goblin attack");
-            panel.getPlayer().damage(1);
-        }
-
-        if(posX >= panel.getPlayer().getPosX() - panel.tileSize / 2 && posX <= panel.getPlayer().getPosX() + panel.tileSize / 2 && posY <= panel.getPlayer().getPosY() && posY >= panel.getPlayer().getPosY() - panel.tileSize) {
-            System.out.println("goblin attack");
-            panel.getPlayer().damage(1);
-        }
-
-        if(posX >= panel.getPlayer().getPosX() - panel.tileSize / 2 && posX <= panel.getPlayer().getPosX() + panel.tileSize / 2 && posY >= panel.getPlayer().getPosY() && posY <= panel.getPlayer().getPosY() + panel.tileSize) {
-            System.out.println("goblin attack");
-            panel.getPlayer().damage(1);
+        Rectangle attackArea = new Rectangle(0,0,panel.tileSize,panel.tileSize);
+        switch (direction){
+            case "up":
+                attackArea.x = posX;
+                attackArea.y = posY - panel.tileSize;
+                if(attackArea.intersects(playerHitBoxArea)){
+                    System.out.println("Goblin attack");
+                    panel.getPlayer().damage(1);
+                }
+                break;
+            case "down":
+                attackArea.x = posX;
+                attackArea.y = posY + panel.tileSize;
+                if(attackArea.intersects(playerHitBoxArea)){
+                    System.out.println("Goblin attack");
+                    panel.getPlayer().damage(1);
+                }
+                break;
+            case "right":
+                attackArea.x = posX + panel.tileSize;
+                attackArea.y = posY;
+                if(attackArea.intersects(playerHitBoxArea)){
+                    System.out.println("Goblin attack");
+                    panel.getPlayer().damage(1);
+                }
+                break;
+            case "left":
+                attackArea.x = posX - panel.tileSize;
+                attackArea.y = posY;
+                if(attackArea.intersects(playerHitBoxArea)){
+                    System.out.println("Goblin attack");
+                    panel.getPlayer().damage(1);
+                }
+                break;
         }
     }
 }
