@@ -1,7 +1,6 @@
 package entity;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 import main.*;
 import main.Panel;
@@ -13,13 +12,11 @@ public abstract class Entity {
     protected boolean attacking = false, stun = false;
     protected boolean flash = false;
     protected KeyHandler keyHandler;
-    MouseEventHandler mouseHandler;
 
     // For collision and hit box
     protected  boolean collisionDetected;
     protected Rectangle collisionArea;
     protected Rectangle hitBoxArea;
-
     protected String direction = "down";
     protected int spriteTick, spriteIndex, attackIndex, attackTick, attackInterval;
 
