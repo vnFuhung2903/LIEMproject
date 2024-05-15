@@ -1,4 +1,4 @@
-package entity.skills;
+package entity.skills.witch;
 
 import entity.*;
 import main.Panel;
@@ -17,7 +17,7 @@ public class WitchQ extends Skill {
         getSkillImage();
     }
 
-    public void getSkillImage() {
+    void getSkillImage() {
         try {
             skillUp = new BufferedImage[3];
             skillDown = new BufferedImage[3];
@@ -25,16 +25,15 @@ public class WitchQ extends Skill {
             skillRight = new BufferedImage[3];
 
             for (int i = 0; i < 3; ++i) {
-                String fileAttackUp = "assets/witch/witchQ/witchQUp-0" + (i + 1) + ".png";
+                String fileAttackUp = "assets/witch/witchQEffect/witchQEffectUp-0" + (i + 1) + ".png";
                 skillUp[i] = ImageIO.read(new File(fileAttackUp));
-                String fileAttackDown = "assets/witch/witchQ/witchQDown-0" + (i + 1) + ".png";
+                String fileAttackDown = "assets/witch/witchQEffect/witchQEffectDown-0" + (i + 1) + ".png";
                 skillDown[i] = ImageIO.read(new File(fileAttackDown));
-                String fileAttackLeft = "assets/witch/witchQ/witchQLeft-0" + (i + 1) + ".png";
+                String fileAttackLeft = "assets/witch/witchQEffect/witchQEffectLeft-0" + (i + 1) + ".png";
                 skillLeft[i] = ImageIO.read(new File(fileAttackLeft));
-                String fileAttackRight = "assets/witch/witchQ/witchQRight-0" + (i + 1) + ".png";
+                String fileAttackRight = "assets/witch/witchQEffect/witchQEffectRight-0" + (i + 1) + ".png";
                 skillRight[i] = ImageIO.read(new File(fileAttackRight));
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
