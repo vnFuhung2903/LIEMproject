@@ -76,19 +76,15 @@ public class Slime extends Monster {
         if(attackArea.intersects(playerHitBoxArea)) {
             switch (color) {
                 case "Red":
-                    System.out.println("Take burn");
-//                    panel.setEffect(panel.getPlayer(), "burn", 10, 2);
+                    panel.setEffect(panel.getPlayer(), "burn", 5, 2);
                     break;
                 case "Green":
-                    System.out.println("Take heal");
-//                    panel.setEffect(panel.getPlayer(), "healing", 10, 2);
+                    panel.setEffect(panel.getPlayer(), "healing", 5, 2);
                     break;
                 case "Blue":
-                    System.out.println("Take ice");
-//                    panel.setEffect(panel.getPlayer(), "ice", 10, 2);
+                    panel.setEffect(panel.getPlayer(), "ice", 5, 2);
                     break;
                 case "Yellow":
-                    System.out.println("Yellow");
                     break;
                 default :
                     System.out.println("ko co gi");

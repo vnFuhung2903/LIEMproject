@@ -62,13 +62,11 @@ public class Witch extends Character {
             witchPassives[i].update();
         }
 
-        if (stun) return;
-
-        if(getHit) {
-            updateGetHitAnimation();
-            moveAnimation();
-            return;
-        }
+//        if(getHit) {
+//            updateGetHitAnimation();
+//            moveAnimation();
+//            return;
+//        }
 
         if(usingSkillQ) witchQ.update();
         if(usingSkillE) witchE.update();
@@ -105,26 +103,27 @@ public class Witch extends Character {
             }
         }
 
-        if(getHit) {
-            switch (direction) {
-                case "up":
-                    currentFrameImg = getHitUp[getHitIndex];
-                    break;
-                case "down":
-                    currentFrameImg = getHitDown[getHitIndex];
-                    break;
-                case "left":
-                    currentFrameImg = getHitLeft[getHitIndex];
-                    break;
-                case "right":
-                    currentFrameImg = getHitRight[getHitIndex];
-                    break;
-            }
+//        if(getHit) {
+//            switch (direction) {
+//                case "up":
+//                    currentFrameImg = getHitUp[getHitIndex];
+//                    break;
+//                case "down":
+//                    currentFrameImg = getHitDown[getHitIndex];
+//                    break;
+//                case "left":
+//                    currentFrameImg = getHitLeft[getHitIndex];
+//                    break;
+//                case "right":
+//                    currentFrameImg = getHitRight[getHitIndex];
+//                    break;
+//            }
+//
+//            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
+//        }
 
-            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
-        }
-
-        else if (attacking) {
+//        else
+            if (attacking) {
             switch (direction) {
                 case "up":
                     currentFrameImg = attackUp[attackIndex];
