@@ -66,7 +66,6 @@ public class WitchPassive extends Skill {
 //
 //            posX = panel.getPlayer().getPosX() + screenX - panel.getPlayer().screenX;
 //            posY = panel.getPlayer().getPosY() + screenY - panel.getPlayer().screenY;
-//
 //            if(monsterLeftHitBox - panel.tileSize / 2 <= posX + hitBoxArea.x
 //                && monsterRightHitBox + panel.tileSize / 2 >= posX + hitBoxArea.x + hitBoxArea.width
 //                && monsterTopHitBox - panel.tileSize / 2 <= posY + hitBoxArea.y

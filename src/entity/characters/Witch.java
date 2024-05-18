@@ -166,13 +166,13 @@ public class Witch extends Character {
             passiveBackground = new BufferedImage[6];
 
             for (int i =0; i < 6; ++i) {
-                String fileMoveUp = "assets/witch/witchMoveUp-0" + (i + 1) +".png";
+                String fileMoveUp = "assets/witch/witchMove/witchMoveUp-0" + (i + 1) +".png";
                 moveUp[i] = ImageIO.read(new File(fileMoveUp));
-                String fileMoveDown = "assets/witch/witchMoveDown-0" + (i + 1) + ".png";
+                String fileMoveDown = "assets/witch/witchMove/witchMoveDown-0" + (i + 1) + ".png";
                 moveDown[i] = ImageIO.read(new File(fileMoveDown));
-                String fileMoveLeft = "assets/witch/witchMoveLeft-0" + (i + 1) +".png";
+                String fileMoveLeft = "assets/witch/witchMove/witchMoveLeft-0" + (i + 1) +".png";
                 moveLeft[i] = ImageIO.read(new File(fileMoveLeft));
-                String fileMoveRight = "assets/witch/witchMoveRight-0" + (i + 1) +".png";
+                String fileMoveRight = "assets/witch/witchMove/witchMoveRight-0" + (i + 1) +".png";
                 moveRight[i] = ImageIO.read(new File(fileMoveRight));
             }
 
