@@ -1,10 +1,11 @@
 package entity.characters;
 
 import entity.Character;
+import entity.skills.witch.WitchE;
 import main.*;
 import main.Panel;
-import entity.skills.WitchPassive;
-import entity.skills.WitchQ;
+import entity.skills.witch.WitchPassive;
+import entity.skills.witch.WitchQ;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -22,8 +23,10 @@ public class Witch extends Character {
     BufferedImage[] passiveBackground;
 
     WitchQ witchQ;
+    WitchE witchE;
 
     int passiveInterval = 15, getHitInterval = 10, getHitIndex = 0, passiveIndex = 0;
+    boolean preparingQ, preparingE;
 
     public Witch(Panel panel, int skillThread, KeyHandler keyHandler, MouseEventHandler mouseEventHandler) {
         super(panel, skillThread, keyHandler, mouseEventHandler);
@@ -39,34 +42,49 @@ public class Witch extends Character {
             angle += 2 * Math.PI / 6;
         }
 
-        // Set up skill Q
+        // Set up skill
         witchQ = new WitchQ(panel, 1, 10, this);
         this.skillQ = witchQ;
+
+        witchE = new WitchE(panel, 1, this);
+        this.skillE = witchE;
     }
 
     public void update() {
 
         checkHitBox();
+
+        if(!skillE.isCasted())
+            usingSkillE = false;
+
         for(int i = 0; i < 6; ++i) {
             updatePassiveAnimation();
             witchPassives[i].update();
         }
 
-        if (stun) return;
-
-        if(getHit) {
-            updateGetHitAnimation();
-            moveAnimation();
-            return;
-        }
+//        if(getHit) {
+//            updateGetHitAnimation();
+//            moveAnimation();
+//            return;
+//        }
 
         if(usingSkillQ) witchQ.update();
+        if(usingSkillE) witchE.update();
 
         if (attacking) {
+
             updateAttackAnimation();
-            if(attackIndex >= 5 && !witchQ.isCasted()) {
+            if(attackIndex >= 5 && preparingQ) {
                 witchQ.setSkill();
                 usingSkillQ = true;
+                preparingQ = false;
+            }
+
+            if(preparingE) {
+//                witchE.setSkill(mouseHandler.getX() - screenX + posX, mouseHandler.getY() - screenY + posY);
+                witchE.setSkill(posX, posY);
+                usingSkillE = true;
+                preparingE = false;
             }
         }
         else moveAnimation();
@@ -77,29 +95,35 @@ public class Witch extends Character {
         BufferedImage currentFrameImg = null;
 
         checkAttacking();
+        if(!usingSkillE) {
+            g2.drawImage(passiveBackground[passiveIndex], screenX - panel.tileSize * 2 + panel.tileSize / 4, screenY - panel.tileSize * 2 + panel.tileSize / 4, panel.tileSize * 6 - panel.tileSize / 2, panel.tileSize * 6 - panel.tileSize / 2, null);
 
-        g2.drawImage(passiveBackground[passiveIndex], screenX - panel.tileSize * 2 + panel.tileSize / 4, screenY - panel.tileSize * 2 + panel.tileSize / 4, panel.tileSize * 6 - panel.tileSize / 2, panel.tileSize * 6 - panel.tileSize / 2, null);
-
-        if(getHit) {
-            switch (direction) {
-                case "up":
-                    currentFrameImg = getHitUp[getHitIndex];
-                    break;
-                case "down":
-                    currentFrameImg = getHitDown[getHitIndex];
-                    break;
-                case "left":
-                    currentFrameImg = getHitLeft[getHitIndex];
-                    break;
-                case "right":
-                    currentFrameImg = getHitRight[getHitIndex];
-                    break;
+            for (int i = 0; i < 6; ++i) {
+                witchPassives[i].draw(g2);
             }
-
-            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
         }
 
-        else if (attacking) {
+//        if(getHit) {
+//            switch (direction) {
+//                case "up":
+//                    currentFrameImg = getHitUp[getHitIndex];
+//                    break;
+//                case "down":
+//                    currentFrameImg = getHitDown[getHitIndex];
+//                    break;
+//                case "left":
+//                    currentFrameImg = getHitLeft[getHitIndex];
+//                    break;
+//                case "right":
+//                    currentFrameImg = getHitRight[getHitIndex];
+//                    break;
+//            }
+//
+//            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
+//        }
+
+//        else
+            if (attacking) {
             switch (direction) {
                 case "up":
                     currentFrameImg = attackUp[attackIndex];
@@ -118,6 +142,7 @@ public class Witch extends Character {
             g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
 
             if(usingSkillQ) witchQ.draw(g2);
+            if(usingSkillE) witchE.draw(g2);
         }
 
         else
@@ -139,11 +164,6 @@ public class Witch extends Character {
 
             g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
         }
-
-        for(int i = 0; i < 6; ++i) {
-            witchPassives[i].draw(g2);
-        }
-
     }
 
     public void getPlayerImage() {
@@ -177,13 +197,13 @@ public class Witch extends Character {
             }
 
             for(int i = 0; i < 8; ++i) {
-                String fileAttackUp = "assets/witch/witchAttack/witchAttackUp-0" + (i + 1) +".png";
+                String fileAttackUp = "assets/witch/witchQ/witchQUp-0" + (i + 1) +".png";
                 attackUp[i] = ImageIO.read(new File(fileAttackUp));
-                String fileAttackDown = "assets/witch/witchAttack/witchAttackDown-0" + (i + 1) + ".png";
+                String fileAttackDown = "assets/witch/witchQ/witchQDown-0" + (i + 1) + ".png";
                 attackDown[i] = ImageIO.read(new File(fileAttackDown));
-                String fileAttackLeft = "assets/witch/witchAttack/witchAttackLeft-0" + (i + 1) +".png";
+                String fileAttackLeft = "assets/witch/witchQ/witchQLeft-0" + (i + 1) +".png";
                 attackLeft[i] = ImageIO.read(new File(fileAttackLeft));
-                String fileAttackRight = "assets/witch/witchAttack/witchAttackRight-0" + (i + 1) +".png";
+                String fileAttackRight = "assets/witch/witchQ/witchQRight-0" + (i + 1) +".png";
                 attackRight[i] = ImageIO.read(new File(fileAttackRight));
             }
 
@@ -240,6 +260,12 @@ public class Witch extends Character {
     public void checkAttacking() {
         if(keyHandler.isUsingSkillQ() && !witchQ.isCasted()) {
             attacking = true;
+            preparingQ = true;
+        }
+
+        if(keyHandler.isUsingSkillE() && !witchE.isCasted()) {
+            attacking = true;
+            preparingE = true;
         }
     }
 

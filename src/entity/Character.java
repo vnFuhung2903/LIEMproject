@@ -24,7 +24,6 @@ public class Character extends Entity {
 
         super(panel, 5, skillThread);
         this.keyHandler = keyHandler;
-        this.mouseHandler = mouseEventHandler;
         this.attacking = false;
         direction = "down";
 

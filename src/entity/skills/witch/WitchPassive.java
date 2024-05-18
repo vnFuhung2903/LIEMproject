@@ -1,4 +1,4 @@
-package entity.skills;
+package entity.skills.witch;
 
 import entity.*;
 import main.Panel;
@@ -37,7 +37,7 @@ public class WitchPassive extends Skill {
         }
     }
 
-    public void getSkillImage() {
+    void getSkillImage() {
 
         passiveImage = new BufferedImage[10];
         try {

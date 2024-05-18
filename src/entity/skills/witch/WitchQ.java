@@ -1,4 +1,4 @@
-package entity.skills;
+package entity.skills.witch;
 
 import entity.*;
 import main.Panel;
@@ -17,7 +17,7 @@ public class WitchQ extends Skill {
         getSkillImage();
     }
 
-    public void getSkillImage() {
+    void getSkillImage() {
         try {
             skillUp = new BufferedImage[3];
             skillDown = new BufferedImage[3];
@@ -34,7 +34,6 @@ public class WitchQ extends Skill {
                 String fileAttackRight = "assets/witch/witchQEffect/witchQEffectRight-0" + (i + 1) + ".png";
                 skillRight[i] = ImageIO.read(new File(fileAttackRight));
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }

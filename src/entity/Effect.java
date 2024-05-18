@@ -56,33 +56,31 @@ public class Effect {
 
     public void update() {
 
-        if(effectIndex == maxImageNum) {
-            switch (name) {
-                case "burn":
-                    burn(entity);
-                    break;
-                case "healing":
-                    heal(entity);
-                    break;
-                case "ice":
-                    stun(entity);
-                    break;
-            }
+        switch (name) {
+            case "burn":
+                burn(entity);
+                break;
+            case "healing":
+                heal(entity);
+                break;
+            case "ice":
+                stun(entity);
+                break;
         }
 
         posX = entity.getPosX();
         posY = entity.getPosY();
 
-        if(--effectCounter <= 0) {
-            effectCounter = 0;
+//        if(--effectCounter <= 0) {
+//            effectCounter = 0;
             if (++effectTick >= effectInterval) {
                 effectTick = 0;
-                if (++effectIndex > maxImageNum) {
+                if (++effectIndex >= maxImageNum) {
                     effectIndex = 0;
                     active = false;
                 }
             }
-        }
+//        }
     }
 
     public void draw(Graphics2D g2) {
