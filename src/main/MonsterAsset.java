@@ -2,6 +2,7 @@ package main;
 
 import assets.*;
 
+
 public class MonsterAsset {
     Panel panel;
     Hobgoblin hobgoblinAsset;
@@ -9,6 +10,8 @@ public class MonsterAsset {
     Slime slimeAssets;
     Spider spiderAssets;
     Slave slaveAssets;
+    Ghost ghostAssets;
+    Skeleton skeletonAssets;
 
     public MonsterAsset(Panel panel) {
         this.panel = panel;
@@ -17,6 +20,8 @@ public class MonsterAsset {
         slimeAssets = new Slime(panel);
         spiderAssets = new Spider(panel);
         slaveAssets = new Slave(panel);
+        ghostAssets = new Ghost(panel);
+        skeletonAssets = new Skeleton(panel);
     }
 
     public Hobgoblin getHobgoblinAsset() {
@@ -38,4 +43,6 @@ public class MonsterAsset {
     public Slave getSlaveAssets() {
         return slaveAssets;
     }
+    public Ghost getGhostAssets() {return ghostAssets;}
+    public Skeleton getSkeletonAssets() {return skeletonAssets;}
 }

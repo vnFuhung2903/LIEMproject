@@ -204,7 +204,23 @@ public class Panel extends JPanel implements Runnable {
             }
         }
     }
+    public void setMonstersGhost (int x,int y){
+        for(int i = 0; i < 1; ++i) {
+            boolean created = false;
 
+            while (!created) {
+                if(collisionHandler.checkSpawn(x, y, 1)) {
+                    Slave monster = new Slave(this, 1, 10);
+                    monster.setPosX(x);
+                    monster.setPosY(y);
+                    monsters.add(monster);
+                    System.out.print(x);
+                    System.out.println(y);
+                    created = true;
+                }
+            }
+        }
+    }
     void setMonsters() {
 
         for(int i = 0; i < 1; ++i) {
@@ -220,13 +236,13 @@ public class Panel extends JPanel implements Runnable {
                 int y = mapHeight / 2;
 
                 if(collisionHandler.checkSpawn(x, y, 1)) {
-                    Slime monster = new Slime(this, 1, 10);
+                    Skeleton monster = new Skeleton(this, 1, 10);
                     monster.setPosX(x);
                     monster.setPosY(y);
                     monsters.add(monster);
                     System.out.print(x);
                     System.out.println(y);
-                    if(!Objects.equals(monster.getColor(), "Yellow")) created = true;
+                    created = true;
                 }
             }
         }
