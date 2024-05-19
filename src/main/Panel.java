@@ -13,7 +13,7 @@ public class Panel extends JPanel implements Runnable {
 
     // SCREEN SETTINGS
     final int originalTileSize = 16; //16*16 tile
-    final int scale = 3;
+    final int scale = 4;
     final public int tileSize = originalTileSize * scale ; // 48*48 tile
     final public int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
     final public int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -223,8 +223,10 @@ public class Panel extends JPanel implements Runnable {
     }
     void setMonsters() {
 
-        for(int i = 0; i < 1; ++i) {
+        for(int i = 0; i < 4; ++i) {
             boolean created = false;
+
+            // Create up to: 50 slimes OR 50 spiders OR 20 slaves OR 50 goblins OR 5 hobs
 
             while (!created) {
 //                Random randomX = new Random();
@@ -236,7 +238,7 @@ public class Panel extends JPanel implements Runnable {
                 int y = mapHeight / 2;
 
                 if(collisionHandler.checkSpawn(x, y, 1)) {
-                    Skeleton monster = new Skeleton(this, 1, 10);
+                    Slime monster = new Slime(this, 1, 10);
                     monster.setPosX(x);
                     monster.setPosY(y);
                     monsters.add(monster);
