@@ -69,16 +69,6 @@ public class Ghost {
                 String fileAttackRight = "assets/boss-ghost/ghostE/ghostERight-0" + (i + 1) +".png";
                 eRight[i] = ImageIO.read(new File(fileAttackRight));
             }
-//            for (int i = 0; i < 3;i++) {
-//                String fileAttackUp = "assets/boss-ghost/ghostQ/ghostQUp-0" + (i + 1) +".png";
-//                qUp[i] = ImageIO.read(new File(fileAttackUp));
-//                String fileAttackDown = "assets/boss-ghost/ghostQ/ghostQDown-0" + (i + 1) + ".png";
-//                qDown[i] = ImageIO.read(new File(fileAttackDown));
-//                String fileAttackLeft = "assets/boss-ghost/ghostQ/ghostQLeft-0" + (i + 1) +".png";
-//                qLeft[i] = ImageIO.read(new File(fileAttackLeft));
-//                String fileAttackRight = "assets/boss-ghost/ghostQ/ghostQRight-0" + (i + 1) +".png";
-//                qRight[i] = ImageIO.read(new File(fileAttackRight));
-//            }
             for(int i=0;i<1;i++){
                 String fileAttackUp = "assets/boss-ghost/ghost-01.png";
                 invisible[i] = ImageIO.read(new File(fileAttackUp));
@@ -93,46 +83,9 @@ public class Ghost {
 
 //        g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 4, panel.tileSize * 4, null);
     }
-    public void draw2(entity.monsters.Ghost ghost, int screenX, int screenY, int index, boolean checkQ, Graphics2D g2){
-        BufferedImage currentFrameImg = null;
-        if(checkQ){
-            switch (ghost.getDirection()) {
-                case "up":
-                    currentFrameImg =qUp[index];
-                    break;
-                case "down":
-                    currentFrameImg = qDown[index];
-                    break;
-                case "left":
-                    currentFrameImg =qLeft[index];
-                    break;
-                case "right":
-                    currentFrameImg = qRight[index];
-                    break;
-            }
-            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 4, panel.tileSize * 4, null);
-        }
-    }
     public void draw1(entity.monsters.Ghost ghost, int screenX, int screenY, int index, boolean attacking, Graphics2D g2) {
         BufferedImage currentFrameImg = null;
-//        if(checkQ){
-//            switch (ghost.getDirection()) {
-//                case "up":
-//                    currentFrameImg =qUp[index];
-//                    break;
-//                case "down":
-//                    currentFrameImg = qDown[index];
-//                    break;
-//                case "left":
-//                    currentFrameImg =qLeft[index];
-//                    break;
-//                case "right":
-//                    currentFrameImg = qRight[index];
-//                    break;
-//            }
-//            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 4, panel.tileSize * 4, null);
-//            return;
-//        }
+
         if(attacking) {
             switch (ghost.getDirection()) {
                 case "up":
