@@ -11,6 +11,9 @@ public class Monster extends Entity {
     protected int monsterSize, attackIndex, attackTick = 0, attackInterval;
     protected Rectangle triggerArea;
     protected boolean triggering = false;
+    protected boolean attackQ;
+    protected boolean readySkillE= true,readySkillQ = true,randomE = false,randomQ= false;
+    protected int counterE = 0,counterQ = 0,counterImageQ = 0,countE = 0;
     public Monster(Panel panel, int speed, int skillThread) {
         super(panel, speed, skillThread);
         this.hp = 200;
@@ -43,7 +46,7 @@ public class Monster extends Entity {
         }
         else{
             move();
-        };
+        }
     }
 
     public void move() {
