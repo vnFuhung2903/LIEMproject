@@ -55,12 +55,33 @@ public class Skeleton extends Monster {
                 posY + panel.tileSize >= panel.getPlayer().getPosY() - panel.getPlayer().screenY &&
                 posY - panel.tileSize <= panel.getPlayer().getPosY() + panel.getPlayer().screenY
         ) {
-
-            if (attacking) {
-                panel.getMonsterAsset().getSkeletonAssets().draw(this,screenX,screenY,attackIndex,true,g2);
+            if(skillE() && readySkillE){
+                if(++counterE <150){
+                    panel.getMonsterAsset().getSkeletonAssets().drawE(this,screenX,screenY,spriteIndex,true,g2);
+                    hitBoxArea.width =0;
+                    hitBoxArea.height = 0;
+                    System.out.println(hp);
+                }
+                if(counterE>=150){
+                    hp +=30;
+                    counterE = 0;
+                    readySkillE = false;
+                    hitBoxArea.width = panel.tileSize*4;
+                    hitBoxArea.height = panel.tileSize *4;
+                }
+                return;
+            }
+//            if (attacking) {
+//                panel.getMonsterAsset().getSkeletonAssets().draw(this,screenX,screenY,attackIndex,true,g2);
+//                return;
+//            }
+            cooldownE();
+            if(checkAttackingQ()){
+                panel.getMonsterAsset().getSkeletonAssets().drawQ(this,screenX,screenY,attackIndex,true,g2);
                 return;
             }
             panel.getMonsterAsset().getSkeletonAssets().draw(this,screenX,screenY,spriteIndex,false,g2);
+            System.out.println(hp);
         }
 
     }
@@ -100,7 +121,7 @@ public class Skeleton extends Monster {
 
     public void updateSprite() {
         if (++spriteTick > 10) {
-            if (++spriteIndex >= 3) spriteIndex = 0;
+            if (++spriteIndex >= 6) spriteIndex = 0;
             spriteTick = 0;
         }
     }
@@ -114,7 +135,26 @@ public class Skeleton extends Monster {
             }
         }
     }
-
+    public boolean skillE(){
+        if(getHp() <100){
+            return true;
+        }
+        return false;
+    }
+    public void cooldownE(){
+        if(readySkillE == false){
+            countE++;
+            if(countE > 500){
+                readySkillE = true;
+                countE = 0;
+            }
+        }
+    }
+//    public void RandomSkill(){
+//        Random random = new Random();
+//        int rand = random.nextInt(100);
+//        if
+//    }
     public void checkAttacking() {
         Rectangle checkAtack = new Rectangle(0,0,panel.tileSize,panel.tileSize);
         Rectangle playerArea = new Rectangle(panel.getPlayer().getPosX(),panel.getPlayer().getPosY(),panel.tileSize, panel.tileSize);
@@ -156,6 +196,49 @@ public class Skeleton extends Monster {
                 }
                 break;
         }
+    }
+    public boolean checkAttackingQ() {
+        Rectangle checkAtack = new Rectangle(0,0,panel.tileSize,panel.tileSize);
+        Rectangle playerArea = new Rectangle(panel.getPlayer().getPosX(),panel.getPlayer().getPosY(),panel.tileSize, panel.tileSize);
+        switch (direction) {
+            case "up":
+                checkAtack.x = posX + panel.tileSize;
+                checkAtack.y = posY - panel.tileSize;
+                checkAtack.width = panel.tileSize*2;
+                checkAtack.height = panel.tileSize*2;
+                if (checkAtack.intersects(playerArea)) {
+                    return true;
+                }
+                break;
+            case "down":
+                checkAtack.x = posX + panel.tileSize;
+                checkAtack.y = posY + panel.tileSize * 3;
+                checkAtack.width = panel.tileSize*2;
+                checkAtack.height = panel.tileSize*2;
+                if (checkAtack.intersects(playerArea)) {
+                    return true;
+                }
+                break;
+            case "left":
+                checkAtack.x = posX - panel.tileSize;
+                checkAtack.y = posY + panel.tileSize;
+                checkAtack.width = panel.tileSize * 2;
+                checkAtack.height = panel.tileSize*2;
+                if (checkAtack.intersects(playerArea)) {
+                    return true;
+                }
+                break;
+            case "right":
+                checkAtack.x = posX + panel.tileSize *3;
+                checkAtack.y = posY + panel.tileSize;
+                checkAtack.width = panel.tileSize*2;
+                checkAtack.height = panel.tileSize*2;
+                if (checkAtack.intersects(playerArea)) {
+                    return true;
+                }
+                break;
+        }
+        return false;
     }
     public void checkHitBox() {
 
@@ -212,7 +295,6 @@ public class Skeleton extends Monster {
                 break;
         }
     }
-
 }
 
 
