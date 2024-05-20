@@ -12,11 +12,11 @@ public class Effect {
     Panel panel;
     String name;
     Entity entity;
-    int posX, posY, effectInterval, effectTick = 0, effectCounter = 0, effectIndex = 0, maxImageNum, entitySize = 2;
+    int posX, posY, effectInterval, effectTick = 0, effectCounter = 0, effectIndex = 0, maxImageNum, entitySize = 1, effectTime,effectTimeAnimation;
     boolean active;
     BufferedImage[] Image;
 
-    public Effect(Panel panel, Entity entity, String name, int interval, int entitySize) {
+    public Effect(Panel panel, Entity entity, String name, int time, int entitySize) {
         this.panel = panel;
         this.entity = entity;
         this.name = name;
@@ -25,20 +25,26 @@ public class Effect {
         switch (name) {
             case "burn":
                 maxImageNum = 7;
-                effectCounter = 15;
+                effectCounter = 1;
+                break;
+            case "poison":
+                maxImageNum = 7;
+                effectCounter = 1;
                 break;
             case "healing":
                 maxImageNum = 5;
-                effectCounter = 15;
+                effectCounter = 1;
                 break;
             case "ice":
                 maxImageNum = 3;
-                effectCounter = 10;
+                effectCounter = 1;
                 break;
+
+
         }
         this.active = true;
         this.entitySize = entitySize;
-        this.effectInterval = interval;
+        this.effectTime = time;
         getItemImage();
     }
 
@@ -66,21 +72,68 @@ public class Effect {
             case "ice":
                 stun(entity);
                 break;
+            case "poison":
+                poison(entity);
+                break;
         }
 
         posX = entity.getPosX();
         posY = entity.getPosY();
-
-//        if(--effectCounter <= 0) {
-//            effectCounter = 0;
-            if (++effectTick >= effectInterval) {
-                effectTick = 0;
-                if (++effectIndex >= maxImageNum) {
-                    effectIndex = 0;
-                    active = false;
+        switch (name) {
+            case "burn":
+                effectTimeAnimation = 5;
+                if (++effectTick >= effectTimeAnimation) {
+                    effectTick = 0;
+                    if (++effectIndex >= maxImageNum) {
+                        effectIndex = 0;
+                        if(--effectTime == 0)  {
+                            active = false;
+                            effectTime = 5;
+                        }
+                    }
                 }
-            }
-//        }
+                break;
+            case "healing":
+                effectTimeAnimation = 12;
+                if (++effectTick >= effectTimeAnimation) {
+                    effectTick = 0;
+                    if (++effectIndex >= maxImageNum) {
+                        effectIndex = 0;
+                        if(--effectTime == 0)  {
+                            active = false;
+                            effectTime = 5;
+                        }
+                    }
+                }
+                break;
+            case "poison":
+                effectTimeAnimation = 10;
+                if (++effectTick >= effectTimeAnimation) {
+                    effectTick = 0;
+                    if (++effectIndex >= maxImageNum) {
+                        effectIndex = 0;
+                        if(--effectTime == 0)  {
+                            active = false;
+                            effectTime = 5;
+                        }
+                    }
+                }
+                break;
+            case "ice":
+                effectTimeAnimation = 5;
+                if (++effectTick >= effectTimeAnimation) {
+                    effectTick = 0;
+                    if (++effectIndex >= maxImageNum) {
+                        effectIndex = maxImageNum;
+                        if(--effectTime == 0)  {
+                            active = false;
+                            effectTime = 5;
+                        }
+                    }
+                }
+                break;
+        }
+
     }
 
     public void draw(Graphics2D g2) {
@@ -98,14 +151,17 @@ public class Effect {
     }
 
     public void burn(Entity entity) {
+        entity.hp -= 10;
+    }
+    public void poison(Entity entity) {
         entity.hp -= 1;
     }
     public void heal(Entity entity) {
         entity.hp += 1;
     }
     public void stun(Entity entity) { entity.setStun(); }
-    public void  extend(int interval) {
-        effectInterval += interval;
+    public void  extend(int time) {
+        effectInterval += time;
     }
 
     public boolean isActive() {

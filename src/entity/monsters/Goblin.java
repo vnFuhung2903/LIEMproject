@@ -91,7 +91,7 @@ public class Goblin extends Monster {
     }
 
     public void updateSprite() {
-        if (++spriteTick > 10) {
+        if (++spriteTick > 7) {
             if (++spriteIndex >= 3) spriteIndex = 0;
             spriteTick = 0;
         }

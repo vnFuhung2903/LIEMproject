@@ -1,18 +1,8 @@
 package entity.monsters;
-import entity.Entity;
 import entity.Monster;
-import main.CollisionHandler;
 import main.Panel;
-import org.w3c.dom.xpath.XPathNamespace;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Random;
-import javax.swing.JPanel;
 
 public class Ghost extends Monster {
 
@@ -55,7 +45,7 @@ public class Ghost extends Monster {
                 posY + panel.tileSize >= panel.getPlayer().getPosY() - panel.getPlayer().screenY &&
                 posY - panel.tileSize <= panel.getPlayer().getPosY() + panel.getPlayer().screenY
         ) {
-            if (attacking &&readySkillE) {
+            if (attacking && readySkillE) {
                 panel.getMonsterAsset().getGhostAssets().draw1(this, screenX, screenY, attackIndex, true,g2);
                 usingE();
 
@@ -63,8 +53,8 @@ public class Ghost extends Monster {
                 randomQ = false;
                 randomE = false;
             }
-                cooldownE();
-                panel.getMonsterAsset().getGhostAssets().draw1(this, screenX, screenY, spriteIndex, false, g2);
+            cooldownE();
+            panel.getMonsterAsset().getGhostAssets().draw1(this, screenX, screenY, spriteIndex, false, g2);
         }
 
     }
@@ -74,7 +64,6 @@ public class Ghost extends Monster {
         checkTriggerPlayer();
         if (++actionLockCounter == 50) {
             actionLockCounter = 0;
-
             if (triggering) {
 
                 int distanceX = posX - panel.getPlayer().getPosX();
@@ -179,16 +168,14 @@ public class Ghost extends Monster {
                 break;
         }
     }
-//   public void random(){
+    //   public void random(){
 //        Random rand = new Random();
 //        int random = rand.nextInt(100);
 //        if(random<30) randomQ = true;
 //        else randomE = true;
 //   }
-   public boolean checkQ(int hp){
+    public boolean checkQ(int hp){
         if(hp< 100) return true;
         return false;
-   }
+    }
 }
-
-

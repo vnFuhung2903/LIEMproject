@@ -121,7 +121,7 @@ public class Witch extends Character {
 //
 //            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
 //        }
-
+//
 //        else
             if (attacking) {
             switch (direction) {

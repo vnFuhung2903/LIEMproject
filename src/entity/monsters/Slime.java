@@ -15,15 +15,15 @@ public class Slime extends Monster {
 
         Random randomColor = new Random();
         int colorIndex = randomColor.nextInt(1000);
-        switch (colorIndex % 4) {
+        switch (colorIndex % 3) {
             case 0:
-                color = "Blue";
+                color = "Red";
                 break;
             case 1:
                 color = "Green";
                 break;
             case 2:
-                color = "Red";
+                color = "Blue";
                 break;
             case 3:
                 color = "Yellow";
@@ -72,7 +72,7 @@ public class Slime extends Monster {
                 panel.getPlayer().getHitBoxArea().width,
                 panel.getPlayer().getHitBoxArea().height);
 
-        Rectangle attackArea = new Rectangle(posX,posY,panel.tileSize/2,panel.tileSize/2);
+        Rectangle attackArea = new Rectangle(posX,posY,panel.tileSize,panel.tileSize);
         if(attackArea.intersects(playerHitBoxArea)) {
             switch (color) {
                 case "Red":

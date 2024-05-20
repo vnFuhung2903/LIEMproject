@@ -77,12 +77,7 @@ public class Ghost {
             e.printStackTrace();
         }
     }
-    public void draw3(entity.monsters.Ghost ghost, int screenX, int screenY, boolean checkQ, Graphics2D g2){
-        BufferedImage currentFrameImg = null;
 
-
-//        g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 4, panel.tileSize * 4, null);
-    }
     public void draw1(entity.monsters.Ghost ghost, int screenX, int screenY, int index, boolean attacking, Graphics2D g2) {
         BufferedImage currentFrameImg = null;
 

@@ -22,13 +22,13 @@ public class WitchE extends Skill {
     void getSkillImage() {
         try {
             skillDown = new BufferedImage[8];
-            Effect = new BufferedImage[6];
+            Effect = new BufferedImage[7];
 
             for (int i = 0; i < 8; ++i) {
                 skillDown[i] = ImageIO.read(new File("assets/witch/witchE/witchE-0" + (i + 1) + ".png"));
             }
-            for (int i = 0; i < 6; ++i) {
-                Effect[i] = ImageIO.read(new File("assets/witch/witchE/witchEffectE-0" + (i + 1) + ".png"));
+            for (int i = 0; i < 7; ++i) {
+                Effect[i] = ImageIO.read(new File("assets/witch/witchE/witchEEffect-0" + (i + 1) + ".png"));
             }
         } catch (IOException e) {
             e.printStackTrace();

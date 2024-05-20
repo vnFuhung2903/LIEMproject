@@ -223,7 +223,7 @@ public class Panel extends JPanel implements Runnable {
     }
     void setMonsters() {
 
-        for(int i = 0; i < 4; ++i) {
+        for(int i = 0; i < 1; ++i) {
             boolean created = false;
 
             // Create up to: 50 slimes OR 50 spiders OR 20 slaves OR 50 goblins OR 5 hobs
@@ -238,7 +238,7 @@ public class Panel extends JPanel implements Runnable {
                 int y = mapHeight / 2;
 
                 if(collisionHandler.checkSpawn(x, y, 1)) {
-                    Slime monster = new Slime(this, 1, 10);
+                    Slime monster = new Slime (this, 1, 10);
                     monster.setPosX(x);
                     monster.setPosY(y);
                     monsters.add(monster);
@@ -276,14 +276,14 @@ public class Panel extends JPanel implements Runnable {
         items.add(new Item(this, idx, posX, posY));
     }
 
-    public void setEffect(Entity entity, String name, int interval, int entitySize) {
+    public void setEffect(Entity entity, String name, int time, int entitySize) {
         for(Effect effect : effects) {
             if(effect.getEntity() == entity && Objects.equals(effect.getName(), name)) {
-                effect.extend(interval);
+                effect.extend(time);
                 return;
             }
         }
-        effects.add(new Effect(this, entity, name, interval, entitySize));
+        effects.add(new Effect(this, entity, name, time, entitySize));
     }
 
     public ArrayList<Monster> getMonsters() { return monsters; }

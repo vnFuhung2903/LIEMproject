@@ -63,7 +63,7 @@ public class Slime {
                 currentFrameImg = moveRight[id][index];
                 break;
         }
-        g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize, panel.tileSize, null);
+        g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize*2, panel.tileSize*2, null);
     }
     
     int encodeColor(String color) {
