@@ -20,7 +20,7 @@ public class MonsterAsset {
         slimeAssets = new Slime(panel);
         spiderAssets = new Spider(panel);
         slaveAssets = new Slave(panel);
-//        ghostAssets = new Ghost(panel);
+        ghostAssets = new Ghost(panel);
         skeletonAssets = new Skeleton(panel);
     }
 
