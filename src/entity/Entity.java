@@ -18,7 +18,7 @@ public abstract class Entity {
     protected Rectangle collisionArea;
     protected Rectangle hitBoxArea;
     protected String direction = "down";
-    protected int spriteTick, spriteIndex, attackIndex, attackTick, attackInterval;
+    protected int spriteTick, spriteIndex, attackIndex, attackTick, attackInterval,spriteTickQSke,attackQIndex;
 
     public Entity(Panel panel, int speed, int skillThread) {
         this.panel = panel;

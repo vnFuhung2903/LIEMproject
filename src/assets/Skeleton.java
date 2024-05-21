@@ -26,10 +26,7 @@ public class Skeleton {
     BufferedImage[] rDown;
     BufferedImage[] rLeft;
     BufferedImage[] rRight;
-    BufferedImage [] skillQUp;
-    BufferedImage [] skillQDown;
-    BufferedImage [] skillQLeft;
-    BufferedImage [] skillQRight;
+    BufferedImage [] skillQ;
 
 
     public Skeleton(Panel panel) {
@@ -58,12 +55,7 @@ public class Skeleton {
             rLeft = new BufferedImage[6];
             rRight = new BufferedImage[6];
 
-            skillQUp = new BufferedImage[3];
-            skillQDown = new BufferedImage[3];
-            skillQLeft = new BufferedImage[3];
-            skillQRight = new BufferedImage[3];
-
-
+            skillQ= new BufferedImage[4];
 
             for (int i = 0; i < 6;i++) {
                 String fileMoveUp = "assets/boss-skeleton/move/skeletonMoveUp-0" + (i + 1) +".png";
@@ -106,23 +98,30 @@ public class Skeleton {
                 String fileAttackRight = "assets/boss-skeleton/skeletonR/skeletonRRight-0" + (i + 1) +".png";
                 rRight[i] = ImageIO.read(new File(fileAttackRight));
             }
-            for (int i=0;i<3;i++){
-                String fileQEffectUp = "asset/witch/witchQEffect/witchQEffectUp-0" + (i+1) + ".png";
-                skillQUp[i] = ImageIO.read(new File(fileQEffectUp));
-                String fileQEffectDown = "asset/witch/witchQEffect/witchQEffectDown-0" + (i+1) + ".png";
-                skillQDown[i] = ImageIO.read(new File(fileQEffectDown));
-                String fileQEffectLeft = "asset/witch/witchQEffect/witchQEffectDown-0" + (i+1) + ".png";
-                skillQLeft[i] = ImageIO.read(new File(fileQEffectLeft));
-                String fileQEffectRight = "asset/witch/witchQEffect/witchQEffectDown-0" + (i+1) + ".png";
-                skillQRight[i] = ImageIO.read(new File(fileQEffectRight));
+            for (int i=0; i<4; i++){
+                String fileQEffect = "assets/boss-skeleton/skeletonQEffect/skeletonQEffect-0" + (i+1) + ".png";
+                skillQ[i] = ImageIO.read(new File(fileQEffect));
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void drawQEffect(Graphics2D g2){
-
+    public void drawQEffect(entity.monsters.Skeleton skeleton, int screenX, int screenY, int index, Graphics2D g2){
+        switch (skeleton.getDirection()){
+            case "up":
+                g2.drawImage(skillQ[index], screenX, screenY-panel.tileSize*4, panel.tileSize * 4, panel.tileSize * 4, null);
+                break;
+            case "down" :
+                g2.drawImage(skillQ[index], screenX, screenY+panel.tileSize*4, panel.tileSize * 4, panel.tileSize * 4, null);
+                break;
+            case "left" :
+                g2.drawImage(skillQ[index], screenX - panel.tileSize*4, screenY, panel.tileSize * 4, panel.tileSize * 4, null);
+                break;
+            case "right":
+                g2.drawImage(skillQ[index], screenX + panel.tileSize*4, screenY, panel.tileSize * 4, panel.tileSize * 4, null);
+                break;
+        }
     }
     public void drawE(entity.monsters.Skeleton skeleton, int screenX, int screenY, int index, boolean checkE, Graphics2D g2){
         BufferedImage currentFrameImg = null;
