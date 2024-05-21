@@ -60,7 +60,7 @@ public class Skeleton extends Monster {
                     panel.getMonsterAsset().getSkeletonAssets().drawE(this,screenX,screenY,spriteIndex,true,g2);
                     hitBoxArea.width =0;
                     hitBoxArea.height = 0;
-                    System.out.println(hp);
+//                    System.out.println(hp);
                 }
                 if(counterE>=150){
                     hp +=30;
@@ -71,17 +71,20 @@ public class Skeleton extends Monster {
                 }
                 return;
             }
-//            if (attacking) {
-//                panel.getMonsterAsset().getSkeletonAssets().draw(this,screenX,screenY,attackIndex,true,g2);
-//                return;
-//            }
             cooldownE();
-            if(checkAttackingQ()){
-                panel.getMonsterAsset().getSkeletonAssets().drawQ(this,screenX,screenY,attackIndex,true,g2);
+            if (attacking) {
+                panel.getMonsterAsset().getSkeletonAssets().draw(this,screenX,screenY,attackIndex,true,g2);
                 return;
             }
+
+            if(attackQ){
+                    panel.getMonsterAsset().getSkeletonAssets().drawQ(this,screenX,screenY,spriteTickQSke,true,g2);
+                    panel.getMonsterAsset().getSkeletonAssets().drawQEffect(this,screenX,screenY,attackQIndex,g2);
+                return;
+            }
+
             panel.getMonsterAsset().getSkeletonAssets().draw(this,screenX,screenY,spriteIndex,false,g2);
-            System.out.println(hp);
+//            System.out.println(hp);
         }
 
     }
@@ -118,11 +121,45 @@ public class Skeleton extends Monster {
             setRandomDirection();
         }
     }
+    @Override
+    public void update(){
+        checkAttacking();
+        checkAttackingQ();
+        if(attackQ){
+            updateAttackAnimationQ();
+            updateAttackAnimationQEffect();
+            checkHitBoxQ();
+        }
+        else if(attacking){
+            updateAttackAnimation();
+            checkHitBox();
+        }
+        else {
+            move();
+        }
+    }
 
     public void updateSprite() {
         if (++spriteTick > 10) {
             if (++spriteIndex >= 6) spriteIndex = 0;
             spriteTick = 0;
+        }
+    }
+    public void updateAttackAnimationQEffect(){
+        if(--skillThread < 0){
+            if(++attackQIndex > 3){
+                attackQIndex =0;
+                attackQ = false;
+            }
+            skillThread = 10;
+        }
+    }
+    public void updateAttackAnimationQ(){
+        if(++attackTickQ >= attackInterval){
+            attackTickQ = 0;
+            if(++spriteTickQSke >=6){
+                spriteTickQSke =0;
+            }
         }
     }
 
@@ -150,11 +187,37 @@ public class Skeleton extends Monster {
             }
         }
     }
-//    public void RandomSkill(){
-//        Random random = new Random();
-//        int rand = random.nextInt(100);
-//        if
-//    }
+    public void cooldownQ(){
+        if(readySkillQ == false){
+            counterQ++;
+            if(counterQ > 100 ){
+                readySkillQ = true;
+                counterQ = 0;
+            }
+        }
+    }
+    public void cooldownR(){
+        if(readySkillR == false){
+            counterR++;
+            if(counterR > 200){
+                readySkillR = true;
+                counterR =0;
+            }
+        }
+    }
+
+    public void randomSkill(){
+        Random random = new Random();
+        int rand = random.nextInt(100);
+        if(rand<30){
+            randomQ =true;
+            randomR = false;
+        }
+        else{
+            randomQ = false;
+            randomR = true;
+        }
+    }
     public void checkAttacking() {
         Rectangle checkAtack = new Rectangle(0,0,panel.tileSize,panel.tileSize);
         Rectangle playerArea = new Rectangle(panel.getPlayer().getPosX(),panel.getPlayer().getPosY(),panel.tileSize, panel.tileSize);
@@ -164,40 +227,48 @@ public class Skeleton extends Monster {
                 checkAtack.y = posY - panel.tileSize;
                 checkAtack.width = panel.tileSize*2;
                 checkAtack.height = panel.tileSize*1;
-                if (checkAtack.intersects(playerArea)) {
+                if (checkAtack.intersects(playerArea) && !attackQ && readySkillR) {
                     attacking = true;
+                    readySkillR = false;
                 }
+                cooldownR();
                 break;
             case "down":
                 checkAtack.x = posX + panel.tileSize/2;
                 checkAtack.y = posY + panel.tileSize * 3;
                 checkAtack.width = panel.tileSize*2;
                 checkAtack.height = panel.tileSize*1;
-                if (checkAtack.intersects(playerArea)) {
+                if (checkAtack.intersects(playerArea) && !attackQ && readySkillR) {
                     attacking = true;
+                    readySkillR = false;
                 }
+                cooldownR();
                 break;
             case "left":
                 checkAtack.x = posX - panel.tileSize;
                 checkAtack.y = posY + panel.tileSize/2;
                 checkAtack.width = panel.tileSize * 1;
                 checkAtack.height = panel.tileSize*2;
-                if (checkAtack.intersects(playerArea)) {
+                if (checkAtack.intersects(playerArea) && !attackQ && readySkillR) {
                     attacking = true;
+                    readySkillR = false;
                 }
+                cooldownR();
                 break;
             case "right":
                 checkAtack.x = posX + panel.tileSize *3;
                 checkAtack.y = posY + panel.tileSize/2;
                 checkAtack.width = panel.tileSize*1;
                 checkAtack.height = panel.tileSize*2;
-                if (checkAtack.intersects(playerArea)) {
+                if (checkAtack.intersects(playerArea) && !attackQ && readySkillR) {
                     attacking = true;
+                    readySkillR = false;
                 }
+                cooldownR();
                 break;
         }
     }
-    public boolean checkAttackingQ() {
+    public void checkAttackingQ() {
         Rectangle checkAtack = new Rectangle(0,0,panel.tileSize,panel.tileSize);
         Rectangle playerArea = new Rectangle(panel.getPlayer().getPosX(),panel.getPlayer().getPosY(),panel.tileSize, panel.tileSize);
         switch (direction) {
@@ -206,43 +277,50 @@ public class Skeleton extends Monster {
                 checkAtack.y = posY - panel.tileSize;
                 checkAtack.width = panel.tileSize*2;
                 checkAtack.height = panel.tileSize*2;
-                if (checkAtack.intersects(playerArea)) {
-                    return true;
+                if (checkAtack.intersects(playerArea) && !attacking && readySkillQ) {
+                    attackQ = true;
+                    readySkillQ = false;
                 }
+                cooldownQ();
                 break;
             case "down":
                 checkAtack.x = posX + panel.tileSize;
                 checkAtack.y = posY + panel.tileSize * 3;
                 checkAtack.width = panel.tileSize*2;
                 checkAtack.height = panel.tileSize*2;
-                if (checkAtack.intersects(playerArea)) {
-                    return true;
+                if (checkAtack.intersects(playerArea) && !attacking && readySkillQ) {
+                    attackQ = true;
+                    readySkillQ = false;
                 }
+                cooldownQ();
                 break;
             case "left":
                 checkAtack.x = posX - panel.tileSize;
                 checkAtack.y = posY + panel.tileSize;
                 checkAtack.width = panel.tileSize * 2;
                 checkAtack.height = panel.tileSize*2;
-                if (checkAtack.intersects(playerArea)) {
-                    return true;
+                if (checkAtack.intersects(playerArea) && !attacking && readySkillQ) {
+                    attackQ = true;
+                    readySkillQ = false;
                 }
+                cooldownQ();
                 break;
             case "right":
                 checkAtack.x = posX + panel.tileSize *3;
                 checkAtack.y = posY + panel.tileSize;
                 checkAtack.width = panel.tileSize*2;
                 checkAtack.height = panel.tileSize*2;
-                if (checkAtack.intersects(playerArea)) {
-                    return true;
+                if (checkAtack.intersects(playerArea) && !attacking && readySkillQ) {
+                    attackQ = true;
+                    readySkillQ = false;
                 }
+                cooldownQ();
                 break;
         }
-        return false;
     }
     public void checkHitBox() {
 
-        if(!attacking) return;
+        if(!attacking && !readySkillR && !randomR) return;
         if(attackIndex < 4) return;
 
 
@@ -295,6 +373,57 @@ public class Skeleton extends Monster {
                 break;
         }
     }
+
+    public void checkHitBoxQ(){
+        if(!attackQ&& !readySkillQ && !readySkillQ) return;
+        if(spriteTickQSke < 3) return;
+        Rectangle playerHitBoxArea = new Rectangle(panel.getPlayer().getPosX() + panel.getPlayer().getHitBoxArea().x,
+                panel.getPlayer().getPosY() + panel.getPlayer().getHitBoxArea().y,
+                panel.getPlayer().getHitBoxArea().width,
+                panel.getPlayer().getHitBoxArea().height);
+
+        Rectangle attackArea = new Rectangle(0,0,0,0);
+        switch (direction){
+            case "up":
+                attackArea.x = posX + panel.tileSize /2 ;
+                attackArea.y = posY - panel.tileSize *3;
+                attackArea.width = panel.tileSize*3;
+                attackArea.height = panel.tileSize*3;
+                if(attackArea.intersects(playerHitBoxArea)){
+                    System.out.println("SkeletonQ attack");
+                    panel.getPlayer().damage(1);
+                }
+                break;
+            case "down":
+                attackArea.x = posX + panel.tileSize/2;
+                attackArea.y = posY + panel.tileSize * 4;
+                attackArea.width = panel.tileSize*3;
+                attackArea.height = panel.tileSize*3;
+                if(attackArea.intersects(playerHitBoxArea)){
+                    System.out.println("SkeletonQ attack");
+                    panel.getPlayer().damage(1);
+                }
+                break;
+            case "right":
+                attackArea.x = posX + panel.tileSize *4;
+                attackArea.y = posY + panel.tileSize/2;
+                attackArea.width = panel.tileSize*3;
+                attackArea.height = panel.tileSize*3;
+                if(attackArea.intersects(playerHitBoxArea)){
+                    System.out.println("SkeletonQ attack");
+                    panel.getPlayer().damage(1);
+                }
+                break;
+            case "left":
+                attackArea.x = posX - panel.tileSize*3;
+                attackArea.y = posY + panel.tileSize/2;
+                attackArea.width = panel.tileSize * 3;
+                attackArea.height = panel.tileSize*3;
+                if(attackArea.intersects(playerHitBoxArea)){
+                    System.out.println("SkeletonQ attack");
+                    panel.getPlayer().damage(1);
+                }
+                break;
+        }
+    }
 }
-
-
