@@ -1,6 +1,7 @@
 package entity.characters;
 
 import entity.Character;
+import entity.Monster;
 import entity.skills.witch.WitchE;
 import main.*;
 import main.Panel;
@@ -12,6 +13,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Witch extends Character {
 
@@ -23,10 +25,9 @@ public class Witch extends Character {
     BufferedImage[] passiveBackground;
 
     WitchQ witchQ;
-    WitchE witchE;
 
     int passiveInterval = 15, getHitInterval = 10, getHitIndex = 0, passiveIndex = 0;
-    boolean preparingQ, preparingE;
+    boolean preparingQ;
 
     public Witch(Panel panel, int skillThread, KeyHandler keyHandler, MouseEventHandler mouseEventHandler) {
         super(panel, skillThread, keyHandler, mouseEventHandler);
@@ -45,17 +46,11 @@ public class Witch extends Character {
         // Set up skill
         witchQ = new WitchQ(panel, 1, 10, this);
         this.skillQ = witchQ;
-
-        witchE = new WitchE(panel, 1, this);
-        this.skillE = witchE;
     }
 
     public void update() {
 
         checkHitBox();
-
-        if(!skillE.isCasted())
-            usingSkillE = false;
 
         for(int i = 0; i < 6; ++i) {
             updatePassiveAnimation();
@@ -69,7 +64,7 @@ public class Witch extends Character {
 //        }
 
         if(usingSkillQ) witchQ.update();
-        if(usingSkillE) witchE.update();
+//        if(usingSkillE) witchE.update();
 
         if (attacking) {
 
@@ -80,11 +75,14 @@ public class Witch extends Character {
                 preparingQ = false;
             }
 
-            if(preparingE) {
-//                witchE.setSkill(mouseHandler.getX() - screenX + posX, mouseHandler.getY() - screenY + posY);
-                witchE.setSkill(posX, posY);
-                usingSkillE = true;
-                preparingE = false;
+            if(usingSkillE) {
+                ArrayList<Monster> monsters = panel.getMonsters();
+                for(Monster monster : monsters) {
+//                    if(monster.getPosX() >= posX - panel.tileSize * 10 && monster.getPosY() >= posY - panel.tileSize)
+                        WitchE witchE = new WitchE(panel, 10, this, monster);
+                        panel.setSkill(witchE);
+                }
+                usingSkillE = false;
             }
         }
         else moveAnimation();
@@ -95,14 +93,11 @@ public class Witch extends Character {
         BufferedImage currentFrameImg = null;
 
         checkAttacking();
-        if(!usingSkillE) {
-            g2.drawImage(passiveBackground[passiveIndex], screenX - panel.tileSize * 2 + panel.tileSize / 4, screenY - panel.tileSize * 2 + panel.tileSize / 4, panel.tileSize * 6 - panel.tileSize / 2, panel.tileSize * 6 - panel.tileSize / 2, null);
+        g2.drawImage(passiveBackground[passiveIndex], screenX - panel.tileSize * 2 + panel.tileSize / 4, screenY - panel.tileSize * 2 + panel.tileSize / 4, panel.tileSize * 6 - panel.tileSize / 2, panel.tileSize * 6 - panel.tileSize / 2, null);
 
-            for (int i = 0; i < 6; ++i) {
-                witchPassives[i].draw(g2);
-            }
+        for (int i = 0; i < 6; ++i) {
+            witchPassives[i].draw(g2);
         }
-
 //        if(getHit) {
 //            switch (direction) {
 //                case "up":
@@ -142,7 +137,7 @@ public class Witch extends Character {
             g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
 
             if(usingSkillQ) witchQ.draw(g2);
-            if(usingSkillE) witchE.draw(g2);
+//            if(usingSkillE) witchE.draw(g2);
         }
 
         else
@@ -263,9 +258,9 @@ public class Witch extends Character {
             preparingQ = true;
         }
 
-        if(keyHandler.isUsingSkillE() && !witchE.isCasted()) {
+        if(keyHandler.isUsingSkillE()) {
             attacking = true;
-            preparingE = true;
+            usingSkillE = true;
         }
     }
 

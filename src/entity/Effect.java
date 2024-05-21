@@ -12,7 +12,7 @@ public class Effect {
     Panel panel;
     String name;
     Entity entity;
-    int posX, posY, effectInterval, effectTick = 0, effectCounter = 0, effectIndex = 0, maxImageNum, entitySize = 1, effectTime,effectTimeAnimation;
+    int posX, posY, effectInterval, effectTick = 0, effectIndex = 0, maxImageNum, entitySize = 1, effectTime,effectTimeAnimation;
     boolean active;
     BufferedImage[] Image;
 
@@ -25,19 +25,19 @@ public class Effect {
         switch (name) {
             case "burn":
                 maxImageNum = 7;
-                effectCounter = 1;
+                effectTimeAnimation = 5;
                 break;
             case "poison":
                 maxImageNum = 7;
-                effectCounter = 1;
+                effectTimeAnimation = 10;
                 break;
             case "healing":
                 maxImageNum = 5;
-                effectCounter = 1;
+                effectTimeAnimation = 12;
                 break;
             case "ice":
                 maxImageNum = 3;
-                effectCounter = 1;
+                effectTimeAnimation = 5;
                 break;
 
 
@@ -79,61 +79,16 @@ public class Effect {
 
         posX = entity.getPosX();
         posY = entity.getPosY();
-        switch (name) {
-            case "burn":
-                effectTimeAnimation = 5;
-                if (++effectTick >= effectTimeAnimation) {
-                    effectTick = 0;
-                    if (++effectIndex >= maxImageNum) {
-                        effectIndex = 0;
-                        if(--effectTime == 0)  {
-                            active = false;
-                            effectTime = 5;
-                        }
-                    }
+        if (++effectTick >= effectTimeAnimation) {
+            effectTick = 0;
+            if (++effectIndex >= maxImageNum) {
+                effectIndex = 0;
+                if(--effectTime == 0)  {
+                    active = false;
+                    effectTime = 5;
                 }
-                break;
-            case "healing":
-                effectTimeAnimation = 12;
-                if (++effectTick >= effectTimeAnimation) {
-                    effectTick = 0;
-                    if (++effectIndex >= maxImageNum) {
-                        effectIndex = 0;
-                        if(--effectTime == 0)  {
-                            active = false;
-                            effectTime = 5;
-                        }
-                    }
-                }
-                break;
-            case "poison":
-                effectTimeAnimation = 10;
-                if (++effectTick >= effectTimeAnimation) {
-                    effectTick = 0;
-                    if (++effectIndex >= maxImageNum) {
-                        effectIndex = 0;
-                        if(--effectTime == 0)  {
-                            active = false;
-                            effectTime = 5;
-                        }
-                    }
-                }
-                break;
-            case "ice":
-                effectTimeAnimation = 5;
-                if (++effectTick >= effectTimeAnimation) {
-                    effectTick = 0;
-                    if (++effectIndex >= maxImageNum) {
-                        effectIndex = maxImageNum;
-                        if(--effectTime == 0)  {
-                            active = false;
-                            effectTime = 5;
-                        }
-                    }
-                }
-                break;
+            }
         }
-
     }
 
     public void draw(Graphics2D g2) {

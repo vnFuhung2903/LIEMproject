@@ -41,7 +41,7 @@ public class Panel extends JPanel implements Runnable {
     // Entities
     entity.Character player = new entity.characters.Witch(this, 10, keyHandler, mouseEventHandler);
     ArrayList<Monster> monsters = new ArrayList<>();
-//    ArrayList<Skill> skillList = new ArrayList<>();
+    ArrayList<Skill> skillList = new ArrayList<>();
     ArrayList<Item> items = new ArrayList<>();
     ArrayList<Effect> effects = new ArrayList<>();
     MonsterAsset monsterAsset = new MonsterAsset(this);
@@ -112,6 +112,13 @@ public class Panel extends JPanel implements Runnable {
             }
         }
 
+        skillList.removeIf(skill -> !skill.isCasted());
+        for(Skill skill : skillList) {
+            if(skill != null) {
+                skill.update();
+            }
+        }
+
         player.update();
 //        for (Skill skill : skillList) {
 //            if (skill != null) {
@@ -132,12 +139,6 @@ public class Panel extends JPanel implements Runnable {
         mapTile.draw(g2);
         spiderCave.draw(g2);
 
-//        for (Skill skill : skillList) {
-//            if (skill != null) {
-//                skillList.add(skill);
-//            }
-//        }
-
         // Sort entities in posY
         ArrayList<Entity> entities = new ArrayList<>(monsters);
         entities.add(player);
@@ -154,6 +155,10 @@ public class Panel extends JPanel implements Runnable {
 
         for(Effect effect : effects) {
             effect.draw(g2);
+        }
+
+        for(Skill skill : skillList) {
+            skill.draw(g2);
         }
 
 //        nightmode.draw(g2);
@@ -223,7 +228,7 @@ public class Panel extends JPanel implements Runnable {
     }
     void setMonsters() {
 
-        for(int i = 0; i < 1; ++i) {
+        for(int i = 0; i < 5; ++i) {
             boolean created = false;
 
             // Create up to: 50 slimes OR 50 spiders OR 20 slaves OR 50 goblins OR 5 hobs
@@ -238,7 +243,7 @@ public class Panel extends JPanel implements Runnable {
                 int y = mapHeight / 2;
 
                 if(collisionHandler.checkSpawn(x, y, 1)) {
-                    Slime monster = new Slime (this, 1, 10);
+                    Goblin monster = new Goblin (this, 1, 10);
                     monster.setPosX(x);
                     monster.setPosY(y);
                     monsters.add(monster);
@@ -279,11 +284,15 @@ public class Panel extends JPanel implements Runnable {
     public void setEffect(Entity entity, String name, int time, int entitySize) {
         for(Effect effect : effects) {
             if(effect.getEntity() == entity && Objects.equals(effect.getName(), name)) {
-                effect.extend(time);
+//                effect.extend(time);
                 return;
             }
         }
         effects.add(new Effect(this, entity, name, time, entitySize));
+    }
+
+    public void setSkill(Skill skill) {
+        skillList.add(skill);
     }
 
     public ArrayList<Monster> getMonsters() { return monsters; }
