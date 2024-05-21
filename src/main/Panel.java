@@ -228,7 +228,7 @@ public class Panel extends JPanel implements Runnable {
     }
     void setMonsters() {
 
-        for(int i = 0; i < 5; ++i) {
+        for(int i = 0; i < 1; ++i) {
             boolean created = false;
 
             // Create up to: 50 slimes OR 50 spiders OR 20 slaves OR 50 goblins OR 5 hobs
@@ -243,7 +243,7 @@ public class Panel extends JPanel implements Runnable {
                 int y = mapHeight / 2;
 
                 if(collisionHandler.checkSpawn(x, y, 1)) {
-                    Goblin monster = new Goblin (this, 1, 10);
+                    Skeleton monster = new Skeleton (this, 1, 10);
                     monster.setPosX(x);
                     monster.setPosY(y);
                     monsters.add(monster);

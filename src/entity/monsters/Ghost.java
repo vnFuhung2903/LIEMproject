@@ -50,10 +50,8 @@ public class Ghost extends Monster {
                 usingE();
 
                 readySkillE = false;
-                randomQ = false;
-                randomE = false;
             }
-            cooldownE();
+//            cooldownE();
             panel.getMonsterAsset().getGhostAssets().draw1(this, screenX, screenY, spriteIndex, false, g2);
         }
 
@@ -107,15 +105,15 @@ public class Ghost extends Monster {
             }
         }
     }
-    public void cooldownE(){
-        if(readySkillE == false) {
-            counterE++;
-            if (counterE > 1000) {
-                readySkillE = true;
-                counterE = 0;
-            }
-        }
-    }
+//    public void cooldownE(){
+//        if(readySkillE == false) {
+//            counterE++;
+//            if (counterE > 1000) {
+//                readySkillE = true;
+//                counterE = 0;
+//            }
+//        }
+//    }
     @Override
     public void update(){
         checkAttacking();
