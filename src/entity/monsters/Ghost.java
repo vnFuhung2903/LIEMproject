@@ -47,7 +47,7 @@ public class Ghost extends Monster {
         ) {
             if (attacking && readySkillE) {
                 panel.getMonsterAsset().getGhostAssets().draw1(this, screenX, screenY, attackIndex, true,g2);
-                usingE();
+//                usingE();
 
                 readySkillE = false;
                 randomQ = false;

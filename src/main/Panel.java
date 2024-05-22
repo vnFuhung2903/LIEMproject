@@ -27,15 +27,26 @@ public class Panel extends JPanel implements Runnable {
 
     // FPS
     double FPS = 60;
-
+    // GAME STATE
+    public int gameState;
+    public int startState=0;
+    public final int  playState = 1;
+    public final int pauseState = 2;
+    public final int guideState = 3;
+    public final int start = 0;
+    public final int guide = 1;
+    public final int setting = 2;
+    public final int quit = 0;
+    public int pointerState = 0;
     // Systems
     TileManage mapTile = new TileManage(this);
     Nightmode nightmode = new Nightmode(this);
     SandTrap sandTrap;
     SpiderCave spiderCave;
-    KeyHandler keyHandler = new KeyHandler();
+    KeyHandler keyHandler = new KeyHandler(this);
     MouseEventHandler mouseEventHandler = new MouseEventHandler();
     Thread gameThread;
+    UI ui = new UI(this);
     public CollisionHandler collisionHandler = new CollisionHandler(this);
 
     // Entities
@@ -61,6 +72,7 @@ public class Panel extends JPanel implements Runnable {
     }
 
     public void setUpGame() {
+        gameState = startState;
         setMap();
         setMonsters();
     }
@@ -90,7 +102,9 @@ public class Panel extends JPanel implements Runnable {
     }
 
     public void update() {
-
+        if(gameState == pauseState || gameState == startState || gameState == guideState) {
+            return;
+        }
         if(sandTrap != null) sandTrap.update();
 
         monsters.removeIf(monster -> monster.getHp() <= 0);
@@ -134,10 +148,16 @@ public class Panel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 
+        if(gameState == startState || gameState == guideState) {
+            ui.draw(g2);
+            return;
+        }
+
+
         // Draw map
-        sandTrap.draw(g2);
-        mapTile.draw(g2);
-        spiderCave.draw(g2);
+//        sandTrap.draw(g2);
+//        mapTile.draw(g2);
+//        spiderCave.draw(g2);
 
         // Sort entities in posY
         ArrayList<Entity> entities = new ArrayList<>(monsters);
@@ -161,6 +181,9 @@ public class Panel extends JPanel implements Runnable {
             skill.draw(g2);
         }
 
+        if(gameState == pauseState) {
+            ui.draw(g2);
+        }
 //        nightmode.draw(g2);
 
         g2.dispose();
@@ -228,7 +251,7 @@ public class Panel extends JPanel implements Runnable {
     }
     void setMonsters() {
 
-        for(int i = 0; i < 5; ++i) {
+        for(int i = 0; i < 1; ++i) {
             boolean created = false;
 
             // Create up to: 50 slimes OR 50 spiders OR 20 slaves OR 50 goblins OR 5 hobs

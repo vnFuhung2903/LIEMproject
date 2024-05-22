@@ -14,7 +14,7 @@ public class Monster extends Entity {
     protected boolean attackQ = false;
     protected boolean readySkillE= true,readySkillQ = true,readySkillR = true,randomE = false,randomQ= false,randomR = false;
     protected int counterE = 0,counterQ = 0,counterR=0,countE = 0;
-    protected boolean readySkill1= true, readySkill2 = true, random1 = false, randomQ= false;
+//    protected boolean readySkill1= true, readySkill2 = true, random1 = false, randomQ = false;
     protected int counter1 = 0, count1 = 0;
     public Monster(Panel panel, int speed, int skillThread) {
         super(panel, speed, skillThread);

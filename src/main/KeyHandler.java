@@ -4,8 +4,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
+    Panel panel;
     public boolean upPressed, downPressed, leftPressed, rightPressed;
     boolean spacePressed, QPressed, EPressed, flashPressed;
+    public KeyHandler(Panel panel) {
+        this.panel = panel;
+    }
 
     public boolean isMoving() {
         return upPressed || downPressed || leftPressed || rightPressed;
@@ -20,19 +24,21 @@ public class KeyHandler implements KeyListener {
         int code = e.getKeyCode();
         switch (code) {
             case KeyEvent.VK_W:
-            case KeyEvent.VK_UP:
                 upPressed = true;
                 break;
+            case KeyEvent.VK_UP:
+                if(--panel.pointerState < 0)  panel.pointerState = 2;
+                break;
             case KeyEvent.VK_S:
-            case KeyEvent.VK_DOWN:
                 downPressed = true;
                 break;
+            case KeyEvent.VK_DOWN:
+               if(++panel.pointerState > 2)  panel.pointerState = 0;
+                break;
             case KeyEvent.VK_A:
-            case KeyEvent.VK_LEFT:
                 leftPressed = true;
                 break;
             case KeyEvent.VK_D:
-            case KeyEvent.VK_RIGHT:
                 rightPressed = true;
                 break;
             case KeyEvent.VK_SPACE:
@@ -47,6 +53,25 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_K:
                 flashPressed = true;
                 break;
+            case KeyEvent.VK_P:
+                if(panel.gameState==panel.playState) {
+                    panel.gameState = panel.pauseState;
+                }
+                else if(panel.gameState==panel.pauseState) {
+                    panel.gameState = panel.playState;
+                }
+                break;
+            case KeyEvent.VK_ENTER:
+                if(panel.gameState==panel.startState && panel.pointerState == panel.start) {
+                    panel.gameState = panel.playState;
+                }
+                else if(panel.gameState==panel.startState && panel.pointerState == panel.guide) {
+                    panel.gameState = panel.guideState;
+                }
+                else if(panel.gameState==panel.guideState ) {
+                    panel.gameState = panel.playState;
+                }
+                break;
         }
     }
 
@@ -55,19 +80,15 @@ public class KeyHandler implements KeyListener {
         int code = e.getKeyCode();
         switch (code) {
             case KeyEvent.VK_W:
-            case KeyEvent.VK_UP:
                 upPressed = false;
                 break;
             case KeyEvent.VK_S:
-            case KeyEvent.VK_DOWN:
                 downPressed = false;
                 break;
             case KeyEvent.VK_A:
-            case KeyEvent.VK_LEFT:
                 leftPressed = false;
                 break;
             case KeyEvent.VK_D:
-            case KeyEvent.VK_RIGHT:
                 rightPressed = false;
                 break;
             case KeyEvent.VK_SPACE:

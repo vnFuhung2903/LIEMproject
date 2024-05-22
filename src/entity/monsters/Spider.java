@@ -133,6 +133,7 @@ public class Spider extends Monster {
         if(attackArea.intersects(playerHitBoxArea)) {
             System.out.println("Spider attack");
             panel.setEffect(panel.getPlayer(), "poison", 5, 2);
+
             panel.getPlayer().damage(1);
         }
     }

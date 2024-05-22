@@ -16,7 +16,7 @@ public class WitchE extends Skill {
 
     Monster monster;
     public WitchE(Panel panel, int speed, Entity entity, Monster monster) {
-        super(panel, speed, 15, entity);
+        super(panel, speed, 10, entity);
         casted = true;
         spriteIndex = 0;
         this.monster = monster;
@@ -45,7 +45,7 @@ public class WitchE extends Skill {
 
     void updateAnimation() {
         if (--skillThread <= 0) {
-            skillThread = 15;
+            skillThread = 10;
             if (++spriteIndex >= 7)
             {
                 spriteIndex = 0;

@@ -60,4 +60,5 @@ public abstract class Entity {
     public void setStun() {
         this.stun = true;
     }
+
 }

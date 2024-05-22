@@ -88,7 +88,7 @@ public class Slime {
             case 2:
                 return "Blue";
             default:
-                return "Yellow";
+                return "Poison";
         }
     }
 }
