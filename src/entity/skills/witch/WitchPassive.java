@@ -31,20 +31,20 @@ public class WitchPassive extends Skill {
     }
 
     void updateSprite() {
-        if (++spriteTick > 100) {
-            if (++spriteIndex > 8) spriteIndex = 0;
+        if (++spriteTick > 20) {
+            if (++spriteIndex > 2) spriteIndex = 0;
             spriteTick = 0;
         }
     }
 
     void getSkillImage() {
 
-        passiveImage = new BufferedImage[10];
+        passiveImage = new BufferedImage[3];
         try {
-            for (int i = 0; i < 9; ++i) {
+            for (int i = 0; i < 3; ++i) {
                 passiveImage[i] = ImageIO.read(new File("assets/witch/witchPassive/witchPassive-0" + (i + 1) + ".png"));
             }
-            passiveImage[9] = ImageIO.read(new File("assets/witch/witchPassive/witchPassive-10.png"));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,8 +54,8 @@ public class WitchPassive extends Skill {
         g2.drawImage(passiveImage[spriteIndex], screenX, screenY, panel.tileSize, panel.tileSize, null);
     }
 
-//    public void checkHitBox() {
-//
+    public void checkHitBox() {
+
 //        for(Monster monster : panel.getMonsters()) {
 //
 //            Rectangle monsterHitBoxArea = monster.getHitBoxArea();
@@ -74,5 +74,5 @@ public class WitchPassive extends Skill {
 //                monster.damage(1);
 //            }
 //        }
-//    }
+    }
 }

@@ -40,7 +40,6 @@ public class Effect {
                 effectTimeAnimation = 5;
                 break;
 
-
         }
         this.active = true;
         this.entitySize = entitySize;

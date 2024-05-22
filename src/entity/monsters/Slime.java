@@ -22,11 +22,11 @@ public class Slime extends Monster {
             case 1:
                 color = "Green";
                 break;
-            case 2:
+            case 3:
                 color = "Blue";
                 break;
-            case 3:
-                color = "Yellow";
+            case 2:
+                color = "Poison";
                 break;
         }
         setRandomDirection();
@@ -80,7 +80,8 @@ public class Slime extends Monster {
                 case "Blue":
                     panel.setEffect(panel.getPlayer(), "ice", 5, 2);
                     break;
-                case "Yellow":
+                case "Poison":
+                    panel.setEffect(panel.getPlayer(), "poison", 5, 2);
                     break;
                 default :
                     System.out.println("ko co gi");
