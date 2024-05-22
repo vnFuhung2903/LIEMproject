@@ -104,6 +104,10 @@ public class CollisionHandler {
     }
 
     public boolean checkSpawn(int posX, int posY, int monsterSize) {
+        int tileX = posX / panel.tileSize;
+        int tileY = posY / panel.tileSize;
+        posX = tileX * panel.tileSize;
+        posY = tileY * panel.tileSize;
         for(int i = 0; i < monsterSize; ++i)
             for(int j = 0; j < monsterSize; ++j) {
                 int tileNum = panel.mapTile.getMapTileNum(posX + i, posY + j);

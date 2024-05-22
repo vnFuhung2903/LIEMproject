@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class Ghost extends Monster {
 
+    int counterE = 0;
     public Ghost(Panel panel, int speed, int skillThread) {
         super(panel, speed, skillThread);
 
@@ -40,18 +41,12 @@ public class Ghost extends Monster {
         int screenX = posX - panel.getPlayer().getPosX() + panel.getPlayer().screenX;
         int screenY = posY - panel.getPlayer().getPosY() + panel.getPlayer().screenY;
 
-        if (posX + panel.tileSize >= panel.getPlayer().getPosX() - panel.getPlayer().screenX &&
-                posX - panel.tileSize <= panel.getPlayer().getPosX() + panel.getPlayer().screenX &&
-                posY + panel.tileSize >= panel.getPlayer().getPosY() - panel.getPlayer().screenY &&
-                posY - panel.tileSize <= panel.getPlayer().getPosY() + panel.getPlayer().screenY
-        ) {
+        if (onScreen(4,screenX,screenY)) {
             if (attacking && readySkillE) {
                 panel.getMonsterAsset().getGhostAssets().draw1(this, screenX, screenY, attackIndex, true,g2);
 //                usingE();
 
                 readySkillE = false;
-                randomQ = false;
-                randomE = false;
             }
             cooldownE();
             panel.getMonsterAsset().getGhostAssets().draw1(this, screenX, screenY, spriteIndex, false, g2);
@@ -129,9 +124,9 @@ public class Ghost extends Monster {
     }
 
     public void checkAttacking() {
-        Rectangle checkAtack = new Rectangle(posX - panel.tileSize/2,posY -panel.tileSize/2,panel.tileSize*5,panel.tileSize*5);
+        Rectangle checkAttacking = new Rectangle(posX - panel.tileSize / 2,posY -panel.tileSize/2,panel.tileSize*5,panel.tileSize*5);
         Rectangle playerArea = new Rectangle(panel.getPlayer().getPosX(),panel.getPlayer().getPosY(),panel.tileSize, panel.tileSize);
-        if(checkAtack.intersects(playerArea)){
+        if(checkAttacking.intersects(playerArea)) {
             attacking = true;
         }
     }
@@ -167,15 +162,5 @@ public class Ghost extends Monster {
                 }
                 break;
         }
-    }
-    //   public void random(){
-//        Random rand = new Random();
-//        int random = rand.nextInt(100);
-//        if(random<30) randomQ = true;
-//        else randomE = true;
-//   }
-    public boolean checkQ(int hp){
-        if(hp< 100) return true;
-        return false;
     }
 }

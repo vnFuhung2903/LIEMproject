@@ -13,6 +13,7 @@ public class MonsterAsset {
     Ghost ghostAssets;
     Skeleton skeletonAssets;
     WitchE witchEAssets;
+    SkeletonSlash skeletonSlashAssets;
 
     public MonsterAsset(Panel panel) {
         this.panel = panel;
@@ -24,6 +25,7 @@ public class MonsterAsset {
         ghostAssets = new Ghost(panel);
         skeletonAssets = new Skeleton(panel);
         witchEAssets = new WitchE(panel);
+        skeletonSlashAssets = new SkeletonSlash(panel);
     }
 
     public Hobgoblin getHobgoblinAsset() {
@@ -50,5 +52,9 @@ public class MonsterAsset {
 
     public WitchE getWitchEAssets() {
         return witchEAssets;
+    }
+
+    public SkeletonSlash getSkeletonSlashAssets() {
+        return skeletonSlashAssets;
     }
 }

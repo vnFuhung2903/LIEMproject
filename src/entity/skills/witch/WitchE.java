@@ -5,12 +5,7 @@ import entity.Monster;
 import entity.Skill;
 import main.Panel;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Random;
 
 public class WitchE extends Skill {
 
@@ -29,8 +24,12 @@ public class WitchE extends Skill {
         super.draw(g2);
         int screenX = posX - panel.getPlayer().getPosX() + panel.getPlayer().screenX;
         int screenY = posY - panel.getPlayer().getPosY() + panel.getPlayer().screenY;
-
-        panel.getMonsterAsset().getWitchEAssets().draw(screenX - panel.tileSize, screenY - panel.tileSize, spriteIndex, monster.getMonsterSize(), g2);
+        if (posX + panel.tileSize >= panel.getPlayer().getPosX() - panel.getPlayer().screenX &&
+                posX - panel.tileSize <= panel.getPlayer().getPosX() + panel.getPlayer().screenX &&
+                posY + panel.tileSize >= panel.getPlayer().getPosY() - panel.getPlayer().screenY &&
+                posY - panel.tileSize <= panel.getPlayer().getPosY() + panel.getPlayer().screenY
+        )
+            panel.getMonsterAsset().getWitchEAssets().draw(screenX - panel.tileSize, screenY - panel.tileSize, spriteIndex, monster.getMonsterSize(), g2);
     }
 
     public void update() {

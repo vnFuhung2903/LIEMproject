@@ -15,6 +15,5 @@ public class Main {
         // not spesify the location of the window: it means the window be display at the center of the screen
         window.setVisible(true); //can see the window
         panel.startThread();
-
     }
 }

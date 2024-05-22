@@ -232,21 +232,14 @@ public class Panel extends JPanel implements Runnable {
             }
         }
     }
-    public void setMonstersGhost (int x,int y){
-        for(int i = 0; i < 1; ++i) {
-            boolean created = false;
-
-            while (!created) {
-                if(collisionHandler.checkSpawn(x, y, 1)) {
-                    Slave monster = new Slave(this, 1, 10);
-                    monster.setPosX(x);
-                    monster.setPosY(y);
-                    monsters.add(monster);
-                    System.out.print(x);
-                    System.out.println(y);
-                    created = true;
-                }
-            }
+    public void setMonstersGhost (int x,int y) {
+        if(collisionHandler.checkSpawn(x, y, 2)) {
+            Slave monster = new Slave(this, 2, 10);
+            monster.setPosX(x);
+            monster.setPosY(y);
+            monsters.add(monster);
+            System.out.print(x);
+            System.out.println(y);
         }
     }
     void setMonsters() {
@@ -266,7 +259,7 @@ public class Panel extends JPanel implements Runnable {
                 int y = mapHeight / 2;
 
                 if(collisionHandler.checkSpawn(x, y, 1)) {
-                    Goblin monster = new Goblin (this, 1, 10);
+                    Ghost monster = new Ghost(this, 1, 10);
                     monster.setPosX(x);
                     monster.setPosY(y);
                     monsters.add(monster);

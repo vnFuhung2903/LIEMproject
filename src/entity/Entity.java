@@ -8,7 +8,7 @@ import main.Panel;
 public abstract class Entity {
 
     protected Panel panel;
-    protected int posX, posY, speed, moveCounter = 0, actionLockCounter = 0, skillThread, hp;
+    protected int posX, posY, speed, moveCounter = 0, actionLockCounter = 0, skillThread, hp, maxHp;
     protected boolean attacking = false, stun = false;
     protected boolean flash = false;
     protected KeyHandler keyHandler;
@@ -56,6 +56,13 @@ public abstract class Entity {
     }
     public boolean isStun() {
         return stun;
+    }
+    public boolean onScreen(int size, int screenX,int screenY) {
+        if(screenX + size* panel.tileSize <= 0 || screenY + size*panel.tileSize <=0) return false;
+        if(screenX + size*panel.tileSize <= 0 || screenY >=Toolkit.getDefaultToolkit().getScreenSize().height) return false;
+        if(screenX >= Toolkit.getDefaultToolkit().getScreenSize().width || screenY + size * panel.tileSize<= 0) return false;
+        if(screenX >=Toolkit.getDefaultToolkit().getScreenSize().width || screenY >= Toolkit.getDefaultToolkit().getScreenSize().height ) return false;
+        return true;
     }
     public void setStun() {
         this.stun = true;
