@@ -39,7 +39,7 @@ public class Skeleton extends Monster {
         attacking = 0;
         maxHp = hp;
 
-        this.triggerArea = new Rectangle(-4 * panel.tileSize, -4 * panel.tileSize, 9 * panel.tileSize, 9 * panel.tileSize);
+        this.triggerArea = new Rectangle(-4 * panel.tileSize, -4 * panel.tileSize, 12 * panel.tileSize, 12 * panel.tileSize);
         this.collisionArea = new Rectangle(panel.tileSize / 2, panel.tileSize / 2, 0, panel.tileSize / 2);
         this.hitBoxArea = new Rectangle(panel.tileSize, panel.tileSize, panel.tileSize * 4, panel.tileSize * 4);
 
@@ -136,7 +136,6 @@ public class Skeleton extends Monster {
                     attacking = 0;
             }
         }
-        attacking = 1;
 
         if(invincible) {
             speed = 15;

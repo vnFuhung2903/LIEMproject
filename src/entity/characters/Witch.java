@@ -78,9 +78,15 @@ public class Witch extends Character {
             if(usingSkillE) {
                 ArrayList<Monster> monsters = panel.getMonsters();
                 for(Monster monster : monsters) {
-//                    if(monster.getPosX() >= posX - panel.tileSize * 10 && monster.getPosY() >= posY - panel.tileSize)
+                    Rectangle checkE = new Rectangle(panel.getPlayer().getPosX()-4*panel.tileSize,
+                            panel.getPlayer().getPosY()-panel.tileSize*4,
+                            panel.tileSize*10,panel.tileSize*10);
+                    Rectangle monsterArea = new Rectangle(monster.getPosX(),monster.getPosY(),
+                            monster.getMonsterSize()*panel.tileSize,monster.getMonsterSize()*panel.tileSize);
+                    if(monster.getPosX() >= posX - panel.tileSize * 10 && monster.getPosY() >= posY - panel.tileSize*10) {
                         WitchE witchE = new WitchE(panel, 10, this, monster);
                         panel.setSkill(witchE);
+                    }
                 }
                 usingSkillE = false;
             }
