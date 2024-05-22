@@ -53,16 +53,55 @@ public class Slash extends Skill {
         checkHitBox();
     }
 
-    public void checkHitBox() {}
+    public void checkHitBox() {
+        Rectangle hitboxArea = new Rectangle(posX,posY,0,0);
+        Rectangle playerArea = new Rectangle(panel.getPlayer().getPosX() + panel.getPlayer().getHitBoxArea().x,
+                panel.getPlayer().getPosY()+panel.getPlayer().getHitBoxArea().y,
+                panel.tileSize,panel.tileSize);
+        switch (getDirection()){
+            case "up" :
+                hitboxArea.y = posY + panel.tileSize;
+                hitboxArea.width = panel.tileSize * 4;
+                hitboxArea.height = panel.tileSize * 2;
+                if(hitboxArea.intersects(playerArea)){
+                    System.out.println("splash attack");
+                    panel.getPlayer().damage(1);
+                }
+                break;
+            case  "down":
+                hitboxArea.y = posY + panel.tileSize;
+                hitboxArea.width = panel.tileSize * 4;
+                hitboxArea.height = panel.tileSize * 2;
+                if(hitboxArea.intersects(playerArea)){
+                    System.out.println("splash attack");
+                    panel.getPlayer().damage(1);
+                }
+                break;
+            case "left":
+                hitboxArea.x = posX + panel.tileSize;
+                hitboxArea.width = panel.tileSize * 2;
+                hitboxArea.height = panel.tileSize * 4;
+                if(hitboxArea.intersects(playerArea)){
+                    System.out.println("splash attack");
+                    panel.getPlayer().damage(1);
+                }
+                break;
+            case "right":
+                hitboxArea.x = posX + panel.tileSize;
+                hitboxArea.width = panel.tileSize * 2;
+                hitboxArea.height = panel.tileSize * 4;
+                if(hitboxArea.intersects(playerArea)){
+                    System.out.println("splash attack");
+                    panel.getPlayer().damage(1);
+                }
+                break;
+        }
+    }
     public void draw(Graphics2D g2) {
         super.draw(g2);
         int screenX = posX - panel.getPlayer().getPosX() + panel.getPlayer().screenX;
         int screenY = posY - panel.getPlayer().getPosY() + panel.getPlayer().screenY;
-        if (posX + panel.tileSize >= panel.getPlayer().getPosX() - panel.getPlayer().screenX &&
-                posX - panel.tileSize <= panel.getPlayer().getPosX() + panel.getPlayer().screenX &&
-                posY + panel.tileSize >= panel.getPlayer().getPosY() - panel.getPlayer().screenY &&
-                posY - panel.tileSize <= panel.getPlayer().getPosY() + panel.getPlayer().screenY
-        )
+        if (onScreen(4,screenX,screenY))
             panel.getMonsterAsset().getSkeletonSlashAssets().draw(screenX, screenY, direction, g2);
     }
 }

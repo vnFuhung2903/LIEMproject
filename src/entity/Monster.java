@@ -8,10 +8,10 @@ import main.Panel;
 public class Monster extends Entity {
 
     protected String name;
-    protected int monsterSize, attackIndex, attackTick = 0,attackTickQ = 0, attackInterval;
+    protected int monsterSize, attackIndex, attackTick = 0,attackTickQ=0, attackInterval;
     protected Rectangle triggerArea;
     protected boolean triggering = false;
-    protected boolean readySkillE = true, readySkillQ = true, readySkillR = true;
+    protected boolean readySkillE= true,readySkillQ = true,readySkillR = true;
     public Monster(Panel panel, int speed, int skillThread) {
         super(panel, speed, skillThread);
         this.hp = 200;

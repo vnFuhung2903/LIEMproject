@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.Random;
 
 public class Skeleton extends Monster {
-    
+
     boolean invincible = false;
     protected int counterQ = 0, counterR = 0, counterInvincible = 0, invincibleCD, attacking;
 
@@ -50,11 +50,7 @@ public class Skeleton extends Monster {
         int screenX = posX - panel.getPlayer().getPosX() + panel.getPlayer().screenX;
         int screenY = posY - panel.getPlayer().getPosY() + panel.getPlayer().screenY;
 
-        if (posX + panel.tileSize >= panel.getPlayer().getPosX() - panel.getPlayer().screenX &&
-                posX - panel.tileSize <= panel.getPlayer().getPosX() + panel.getPlayer().screenX &&
-                posY + panel.tileSize >= panel.getPlayer().getPosY() - panel.getPlayer().screenY &&
-                posY - panel.tileSize <= panel.getPlayer().getPosY() + panel.getPlayer().screenY
-        ) {
+        if (onScreen(4,screenX,screenY)) {
             if(invincible) {
                 panel.getMonsterAsset().getSkeletonAssets().drawE(this,screenX,screenY,spriteIndex,true,g2);
                 return;
@@ -140,6 +136,7 @@ public class Skeleton extends Monster {
                     attacking = 0;
             }
         }
+        attacking = 1;
 
         if(invincible) {
             speed = 15;
@@ -235,7 +232,7 @@ public class Skeleton extends Monster {
     }
     public void cooldownR(){
         if(!readySkillR && (attacking & 1) == 0) {
-            if(++counterR > 200) {
+            if(++counterR > 300) {
                 readySkillR = true;
                 System.out.println("cdR");
                 counterR = 0;
@@ -254,21 +251,19 @@ public class Skeleton extends Monster {
     }
 
     public void checkAttacking() {
-        Rectangle checkAttacking = new Rectangle(0, 0, panel.tileSize, panel.tileSize);
+        Rectangle checkAttacking = new Rectangle(0, 0, panel.tileSize*5, panel.tileSize*5);
         Rectangle playerArea = new Rectangle(panel.getPlayer().getPosX(), panel.getPlayer().getPosY(), panel.tileSize, panel.tileSize);
         switch (direction) {
             case "up":
-                checkAttacking.x = posX + panel.tileSize / 2;
-                checkAttacking.y = posY - panel.tileSize;
-                checkAttacking.width = panel.tileSize * 2;
-                checkAttacking.height = panel.tileSize;
+                checkAttacking.x = posX - panel.tileSize / 2;
+                checkAttacking.y = posY;
                 if (checkAttacking.intersects(playerArea) && (attacking & 1) == 0 && counterR == 0) {
                     attacking |= 1;
                 }
                 break;
             case "down":
-                checkAttacking.x = posX + panel.tileSize / 2;
-                checkAttacking.y = posY + panel.tileSize * 3;
+                checkAttacking.x = posX - panel.tileSize / 2;
+                checkAttacking.y = posY + panel.tileSize * 4;
                 checkAttacking.width = panel.tileSize * 2;
                 checkAttacking.height = panel.tileSize;
                 if (checkAttacking.intersects(playerArea) && (attacking & 1) == 0 && counterR == 0) {
@@ -277,18 +272,14 @@ public class Skeleton extends Monster {
                 break;
             case "left":
                 checkAttacking.x = posX - panel.tileSize;
-                checkAttacking.y = posY + panel.tileSize / 2;
-                checkAttacking.width = panel.tileSize;
-                checkAttacking.height = panel.tileSize * 2;
+                checkAttacking.y = posY - panel.tileSize / 2;
                 if (checkAttacking.intersects(playerArea) && (attacking & 1) == 0 && counterR == 0) {
                     attacking |= 1;
                 }
                 break;
             case "right":
-                checkAttacking.x = posX + panel.tileSize * 3;
-                checkAttacking.y = posY + panel.tileSize / 2;
-                checkAttacking.width = panel.tileSize;
-                checkAttacking.height = panel.tileSize * 2;
+                checkAttacking.x = posX + panel.tileSize * 4;
+                checkAttacking.y = posY - panel.tileSize / 2;
                 if (checkAttacking.intersects(playerArea) && (attacking & 1) == 0 && counterR == 0) {
                     attacking |= 1;
                 }
@@ -355,7 +346,7 @@ public class Skeleton extends Monster {
                 attackArea.x = posX + panel.tileSize/2;
                 attackArea.y = posY - panel.tileSize;
                 attackArea.width = panel.tileSize*3;
-                attackArea.height = panel.tileSize*2;
+                attackArea.height = panel.tileSize*3;
                 if(attackArea.intersects(playerHitBoxArea)){
                     panel.getPlayer().damage(1);
                 }
@@ -364,7 +355,7 @@ public class Skeleton extends Monster {
                 attackArea.x = posX + panel.tileSize / 2;
                 attackArea.y = posY + panel.tileSize * 3;
                 attackArea.width = panel.tileSize * 3;
-                attackArea.height = panel.tileSize * 2;
+                attackArea.height = panel.tileSize * 3;
                 if(attackArea.intersects(playerHitBoxArea)){
                     panel.getPlayer().damage(1);
                 }
@@ -372,7 +363,7 @@ public class Skeleton extends Monster {
             case "right":
                 attackArea.x = posX + panel.tileSize * 3;
                 attackArea.y = posY + panel.tileSize / 2;
-                attackArea.width = panel.tileSize * 2;
+                attackArea.width = panel.tileSize * 3;
                 attackArea.height = panel.tileSize * 3;
                 if(attackArea.intersects(playerHitBoxArea)){
                     panel.getPlayer().damage(1);
@@ -381,7 +372,7 @@ public class Skeleton extends Monster {
             case "left":
                 attackArea.x = posX - panel.tileSize;
                 attackArea.y = posY + panel.tileSize/2;
-                attackArea.width = panel.tileSize * 2;
+                attackArea.width = panel.tileSize * 3;
                 attackArea.height = panel.tileSize*3;
                 if(attackArea.intersects(playerHitBoxArea)){
                     panel.getPlayer().damage(1);
@@ -393,7 +384,7 @@ public class Skeleton extends Monster {
     public void checkHitBoxQ(){
         if((attacking & 2) == 0) return;
         if(spriteTickQSke < 3) return;
-        
+
         Rectangle playerHitBoxArea = new Rectangle(panel.getPlayer().getPosX() + panel.getPlayer().getHitBoxArea().x,
                 panel.getPlayer().getPosY() + panel.getPlayer().getHitBoxArea().y,
                 panel.getPlayer().getHitBoxArea().width,

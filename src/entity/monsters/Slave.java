@@ -40,11 +40,7 @@ public class Slave extends Monster {
         int screenX = posX - panel.getPlayer().getPosX() + panel.getPlayer().screenX;
         int screenY = posY - panel.getPlayer().getPosY() + panel.getPlayer().screenY;
 
-        if (posX + panel.tileSize >= panel.getPlayer().getPosX() - panel.getPlayer().screenX &&
-                posX - panel.tileSize <= panel.getPlayer().getPosX() + panel.getPlayer().screenX &&
-                posY + panel.tileSize >= panel.getPlayer().getPosY() - panel.getPlayer().screenY &&
-                posY - panel.tileSize <= panel.getPlayer().getPosY() + panel.getPlayer().screenY
-        ) {
+        if (onScreen(2,screenX,screenY)) {
 
             if (attacking) {
                 panel.getMonsterAsset().getSlaveAssets().draw(this, screenX, screenY, attackIndex, true, g2);
