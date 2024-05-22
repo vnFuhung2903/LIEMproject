@@ -155,9 +155,9 @@ public class Panel extends JPanel implements Runnable {
 
 
         // Draw map
-//        sandTrap.draw(g2);
-//        mapTile.draw(g2);
-//        spiderCave.draw(g2);
+        sandTrap.draw(g2);
+        mapTile.draw(g2);
+        spiderCave.draw(g2);
 
         // Sort entities in posY
         ArrayList<Entity> entities = new ArrayList<>(monsters);
@@ -259,7 +259,7 @@ public class Panel extends JPanel implements Runnable {
                 int y = mapHeight / 2;
 
                 if(collisionHandler.checkSpawn(x, y, 1)) {
-                    Ghost monster = new Ghost(this, 1, 10);
+                    Skeleton monster = new Skeleton(this, 1, 10);
                     monster.setPosX(x);
                     monster.setPosY(y);
                     monsters.add(monster);

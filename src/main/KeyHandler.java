@@ -71,6 +71,9 @@ public class KeyHandler implements KeyListener {
                 else if(panel.gameState==panel.guideState ) {
                     panel.gameState = panel.playState;
                 }
+                else if(panel.gameState==panel.playState && panel.pointerState == panel.quit) {
+                    panel.gameState = panel.startState;
+                }
                 break;
         }
     }
