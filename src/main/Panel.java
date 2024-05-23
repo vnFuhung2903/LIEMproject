@@ -21,6 +21,9 @@ public class Panel extends JPanel implements Runnable {
 
 
     // MAP SETTINGS
+
+
+    public int timeNight = 1000;
     final public int maxMapCol = 250;
     final public int maxMapRow = 250;
     final public int mapWidth = tileSize * maxMapRow;
@@ -36,9 +39,15 @@ public class Panel extends JPanel implements Runnable {
     public final int guideState = 3;
     public final int start = 0;
     public final int guide = 1;
-    public final int setting = 2;
     public final int quit = 0;
+    public final int mute = 2;
+    public int maxState = 1;
     public int pointerState = 0;
+
+    // UI
+    public boolean night = false;
+    public boolean openItem = false;
+    public int pointerItem = 0;
     // Systems
     TileManage mapTile = new TileManage(this);
     Nightmode nightmode = new Nightmode(this);
@@ -47,7 +56,7 @@ public class Panel extends JPanel implements Runnable {
     KeyHandler keyHandler = new KeyHandler(this);
     MouseEventHandler mouseEventHandler = new MouseEventHandler();
     Thread gameThread;
-//    UI ui = new UI(this);
+    UI ui = new UI(this);
     public CollisionHandler collisionHandler = new CollisionHandler(this);
 
     // Entities
@@ -105,9 +114,10 @@ public class Panel extends JPanel implements Runnable {
     }
 
     public void update() {
-//        if(gameState == pauseState || gameState == startState || gameState == guideState) {
-//            return;
-//        }
+        checkNight();
+        if(gameState == pauseState || gameState == startState || gameState == guideState) {
+            return;
+        }
         if(sandTrap != null) sandTrap.update();
         boss.update();
         monsters.removeIf(monster -> monster.getHp() <= 0);
@@ -143,16 +153,23 @@ public class Panel extends JPanel implements Runnable {
 
         player.update();
     }
-
+    void checkNight(){
+       if(--timeNight < 0 ){
+           if(night) night = false;
+           else night = true;
+           timeNight = 1000;
+       }
+    }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 
-//        if(gameState == startState || gameState == guideState) {
-//            ui.draw(g2);
-//            return;
-//        }
+        if(gameState == startState || gameState == guideState) {
+            ui.draw(g2);
+            g2.dispose();
+            return;
+        }
 
 
         // Draw map
@@ -187,10 +204,11 @@ public class Panel extends JPanel implements Runnable {
             skill.draw(g2);
         }
 
-//        if(gameState == pauseState) {
-//            ui.draw(g2);
-//        }
+        if(gameState == pauseState || gameState == playState) {
+            ui.draw(g2);
+        }
 //        nightmode.draw(g2);
+
 
         g2.dispose();
     }

@@ -27,13 +27,13 @@ public class KeyHandler implements KeyListener {
                 upPressed = true;
                 break;
             case KeyEvent.VK_UP:
-                if(--panel.pointerState < 0)  panel.pointerState = 2;
+                if(--panel.pointerState < 0)  panel.pointerState = panel.maxState;
                 break;
             case KeyEvent.VK_S:
                 downPressed = true;
                 break;
             case KeyEvent.VK_DOWN:
-               if(++panel.pointerState > 2)  panel.pointerState = 0;
+               if(++panel.pointerState > panel.maxState)  panel.pointerState = 0;
                 break;
             case KeyEvent.VK_A:
                 leftPressed = true;
@@ -53,6 +53,16 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_K:
                 flashPressed = true;
                 break;
+            case KeyEvent.VK_I:
+                if(panel.openItem) panel.openItem = false;
+                else panel.openItem = true;
+                break;
+            case KeyEvent.VK_RIGHT:
+                if(--panel.pointerItem<0) panel.pointerItem = 3;
+                break;
+            case KeyEvent.VK_LEFT:
+                if(++panel.pointerItem>3) panel.pointerItem = 0;
+                break;
             case KeyEvent.VK_P:
                 if(panel.gameState==panel.playState) {
                     panel.gameState = panel.pauseState;
@@ -64,12 +74,23 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_ENTER:
                 if(panel.gameState==panel.startState && panel.pointerState == panel.start) {
                     panel.gameState = panel.playState;
+                    panel.maxState = 2;
                 }
-                else if(panel.gameState==panel.startState && panel.pointerState == panel.guide) {
+                else if(panel.gameState==panel.startState  && panel.pointerState == panel.guide) {
                     panel.gameState = panel.guideState;
                 }
-                else if(panel.gameState==panel.guideState ) {
+                else if(panel.gameState == panel.guideState ) {
                     panel.gameState = panel.playState;
+                }
+                else if(panel.pointerState == panel.guide ) {
+                    panel.gameState = panel.guideState;
+                }
+                else if(panel.pointerState == panel.quit && panel.gameState == panel.pauseState) {
+                    panel.maxState = 1;
+                    panel.gameState = panel.startState;
+                }
+                else if(panel.openItem) {
+                    System.out.println("use Item " + (panel.pointerItem + 1));
                 }
                 break;
         }

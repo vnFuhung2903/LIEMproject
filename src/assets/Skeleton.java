@@ -28,7 +28,6 @@ public class Skeleton {
     BufferedImage[] rRight;
     BufferedImage [] skillQ;
 
-
     public Skeleton(Panel panel) {
         this.panel = panel;
         getImage();
@@ -45,10 +44,10 @@ public class Skeleton {
             eLeft = new BufferedImage[6];
             eRight = new BufferedImage[6];
 
-            qUp = new BufferedImage[6];
-            qDown = new BufferedImage[6];
-            qLeft = new BufferedImage[6];
-            qRight = new BufferedImage[6];
+            qUp = new BufferedImage[8];
+            qDown = new BufferedImage[8];
+            qLeft = new BufferedImage[8];
+            qRight = new BufferedImage[8];
 
             rUp = new BufferedImage[6];
             rDown = new BufferedImage[6];
@@ -78,7 +77,7 @@ public class Skeleton {
                 String fileAttackERight = "assets/boss-skeleton/skeletonE/skeletonERight-0" + (i + 1) +".png";
                 eRight[i] = ImageIO.read(new File(fileAttackERight));
             }
-            for (int i = 0; i < 6;i++) {
+            for (int i = 0; i < 8;i++) {
                 String fileAttackQUp = "assets/boss-skeleton/skeletonQ/skeletonQUp-0" + (i + 1) +".png";
                 qUp[i] = ImageIO.read(new File(fileAttackQUp));
                 String fileAttackQDown = "assets/boss-skeleton/skeletonQ/skeletonQDown-0" + (i + 1) + ".png";
