@@ -69,10 +69,7 @@ public class Ghost {
                 String fileAttackRight = "assets/boss-ghost/ghostE/ghostERight-0" + (i + 1) +".png";
                 eRight[i] = ImageIO.read(new File(fileAttackRight));
             }
-            for(int i=0;i<1;i++){
-                String fileAttackUp = "assets/boss-ghost/ghost-01.png";
-                invisible[i] = ImageIO.read(new File(fileAttackUp));
-            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

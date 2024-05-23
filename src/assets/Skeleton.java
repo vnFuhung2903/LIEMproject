@@ -34,7 +34,6 @@ public class Skeleton {
         getImage();
     }
     public void getImage() {
-        if (1==1)return;
         try {
             moveUp = new BufferedImage[6];
             moveDown = new BufferedImage[6];

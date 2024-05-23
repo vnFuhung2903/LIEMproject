@@ -58,14 +58,12 @@ public abstract class Entity {
         return stun;
     }
     public boolean onScreen(int size, int screenX,int screenY) {
-        if(screenX + size* panel.tileSize <= 0 || screenY + size*panel.tileSize <=0) return false;
-        if(screenX + size*panel.tileSize <= 0 || screenY >=Toolkit.getDefaultToolkit().getScreenSize().height) return false;
-        if(screenX >= Toolkit.getDefaultToolkit().getScreenSize().width || screenY + size * panel.tileSize<= 0) return false;
-        if(screenX >=Toolkit.getDefaultToolkit().getScreenSize().width || screenY >= Toolkit.getDefaultToolkit().getScreenSize().height ) return false;
-        return true;
+        if(screenX >= Toolkit.getDefaultToolkit().getScreenSize().width || screenY >=Toolkit.getDefaultToolkit().getScreenSize().height) return false;
+        return screenX + size * panel.tileSize > 0 && screenY + size * panel.tileSize > 0;
     }
     public void setStun() {
         this.stun = true;
     }
+    public void setNotStun() { this.stun = false; }
 
 }

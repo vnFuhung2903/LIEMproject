@@ -7,6 +7,7 @@ import java.util.*;
 import entity.*;
 import entity.Character;
 import entity.monsters.*;
+import entity.skills.witch.WitchQStun;
 import map.*;
 
 public class Panel extends JPanel implements Runnable {
@@ -46,7 +47,7 @@ public class Panel extends JPanel implements Runnable {
     KeyHandler keyHandler = new KeyHandler(this);
     MouseEventHandler mouseEventHandler = new MouseEventHandler();
     Thread gameThread;
-    UI ui = new UI(this);
+//    UI ui = new UI(this);
     public CollisionHandler collisionHandler = new CollisionHandler(this);
 
     // Entities
@@ -55,7 +56,9 @@ public class Panel extends JPanel implements Runnable {
     ArrayList<Skill> skillList = new ArrayList<>();
     ArrayList<Item> items = new ArrayList<>();
     ArrayList<Effect> effects = new ArrayList<>();
-    MonsterAsset monsterAsset = new MonsterAsset(this);
+    Asset asset = new Asset(this);
+    Monster boss = new Ghost(this, 10, 10);
+    ArrayList<WitchQStun> witchSkillEffects = new ArrayList<>();
 
     public Panel() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -102,11 +105,11 @@ public class Panel extends JPanel implements Runnable {
     }
 
     public void update() {
-        if(gameState == pauseState || gameState == startState || gameState == guideState) {
-            return;
-        }
+//        if(gameState == pauseState || gameState == startState || gameState == guideState) {
+//            return;
+//        }
         if(sandTrap != null) sandTrap.update();
-
+        boss.update();
         monsters.removeIf(monster -> monster.getHp() <= 0);
         for(Monster monster : monsters) {
             monster.update();
@@ -126,6 +129,11 @@ public class Panel extends JPanel implements Runnable {
             }
         }
 
+        witchSkillEffects.removeIf(effect -> !effect.isActive());
+        for(WitchQStun effect : witchSkillEffects) {
+            effect.update();
+        }
+
         skillList.removeIf(skill -> !skill.isCasted());
         for(Skill skill : skillList) {
             if(skill != null) {
@@ -134,13 +142,6 @@ public class Panel extends JPanel implements Runnable {
         }
 
         player.update();
-//        for (Skill skill : skillList) {
-//            if (skill != null) {
-//                if (!skill.isCasted()) {
-//                    skill.update();
-//                }
-//            }
-//        }
     }
 
     public void paintComponent(Graphics g){
@@ -148,19 +149,20 @@ public class Panel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 
-        if(gameState == startState || gameState == guideState) {
-            ui.draw(g2);
-            return;
-        }
+//        if(gameState == startState || gameState == guideState) {
+//            ui.draw(g2);
+//            return;
+//        }
 
 
         // Draw map
-//        sandTrap.draw(g2);
-//        mapTile.draw(g2);
-//        spiderCave.draw(g2);
+        sandTrap.draw(g2);
+        mapTile.draw(g2);
+        spiderCave.draw(g2);
 
         // Sort entities in posY
         ArrayList<Entity> entities = new ArrayList<>(monsters);
+        entities.add(boss);
         entities.add(player);
         entities.sort(Comparator.comparingInt(Entity::getPosY));
 
@@ -177,13 +179,17 @@ public class Panel extends JPanel implements Runnable {
             effect.draw(g2);
         }
 
+        for(WitchQStun effect : witchSkillEffects) {
+            effect.draw(g2);
+        }
+
         for(Skill skill : skillList) {
             skill.draw(g2);
         }
 
-        if(gameState == pauseState) {
-            ui.draw(g2);
-        }
+//        if(gameState == pauseState) {
+//            ui.draw(g2);
+//        }
 //        nightmode.draw(g2);
 
         g2.dispose();
@@ -244,42 +250,25 @@ public class Panel extends JPanel implements Runnable {
     }
     void setMonsters() {
 
-        for(int i = 0; i < 1; ++i) {
-            boolean created = false;
+        boss.setPosX(mapWidth / 2);
+        boss.setPosY(mapHeight / 2);
+
+//        for(int i = 0; i < 1; ++i) {
+//            boolean created = false;
 
             // Create up to: 50 slimes OR 50 spiders OR 20 slaves OR 50 goblins OR 5 hobs
 
-            while (!created) {
+//            while (!created) {
 //                Random randomX = new Random();
 //                Random randomY = new Random();
 //                int x = randomX.nextInt(mapWidth);
 //                int y = randomY.nextInt(mapHeight);
 
-                int x = mapWidth / 2;
-                int y = mapHeight / 2;
-
-                if(collisionHandler.checkSpawn(x, y, 1)) {
-                    Skeleton monster = new Skeleton(this, 5, 10);
-                    monster.setPosX(x);
-                    monster.setPosY(y);
-                    monsters.add(monster);
-                    System.out.print(x);
-                    System.out.println(y);
-                    created = true;
-                }
-            }
-        }
-
-//        for(int i = 0; i < 100; ++i) {
-//            boolean created = false;
-//
-//            while (!created) {
-//
 //                int x = mapWidth / 2;
 //                int y = mapHeight / 2;
 //
-//                if(collisionHandler.checkSpawn(x, y, 3)) {
-//                    Slave monster =  new Slave(this, 5, 10);
+//                if(collisionHandler.checkSpawn(x, y, 1)) {
+//                    Ghost monster = new Ghost(this, 5, 10);
 //                    monster.setPosX(x);
 //                    monster.setPosY(y);
 //                    monsters.add(monster);
@@ -295,6 +284,16 @@ public class Panel extends JPanel implements Runnable {
         Random random = new Random();
         int idx = random.nextInt(3);
         items.add(new Item(this, idx, posX, posY));
+    }
+
+    public void setWitchSkillEffects(Monster monster, int time) {
+        for(WitchQStun effect : witchSkillEffects) {
+            if(effect.getMonster() == monster) {
+//                effect.extend(time);
+                return;
+            }
+        }
+        witchSkillEffects.add(new WitchQStun(this, monster, time));
     }
 
     public void setEffect(Entity entity, String name, int time, int entitySize) {
@@ -315,7 +314,7 @@ public class Panel extends JPanel implements Runnable {
 
     public Character getPlayer() { return player; }
 
-    public MonsterAsset getMonsterAsset() {
-        return monsterAsset;
+    public Asset getMonsterAsset() {
+        return asset;
     }
 }

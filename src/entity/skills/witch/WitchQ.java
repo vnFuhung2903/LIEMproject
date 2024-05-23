@@ -96,7 +96,7 @@ public class WitchQ extends Skill {
                         && monsterRightHitBox + panel.tileSize / 2 >= posX + panel.tileSize * 3 / 2
                         && monsterTopHitBox >= posY
                         && monsterBottomHitBox <= posY + panel.tileSize * 6) {
-                        System.out.println("Q hit");
+                        panel.setWitchSkillEffects(monster, 10);
                         monster.damage(1);
                     }
                     break;
@@ -107,7 +107,7 @@ public class WitchQ extends Skill {
                         && monsterRightHitBox + panel.tileSize / 2 >= posX + panel.tileSize * 3 / 2
                         && monsterTopHitBox >= posY
                         && monsterBottomHitBox <= posY + panel.tileSize * 6) {
-                        System.out.println("Q hit");
+                        panel.setWitchSkillEffects(monster, 10);
                         monster.damage(1);
                     }
                     break;
@@ -118,7 +118,7 @@ public class WitchQ extends Skill {
                         && monsterRightHitBox <= posX + panel.tileSize * 6
                         && monsterTopHitBox - panel.tileSize / 2 <= posY + panel.tileSize / 2
                         && monsterBottomHitBox + panel.tileSize / 2 >= posY + panel.tileSize * 3 / 2) {
-                        System.out.println("Q hit");
+                        panel.setWitchSkillEffects(monster, 10);
                         monster.damage(1);
                     }
                     break;
@@ -129,7 +129,7 @@ public class WitchQ extends Skill {
                         && monsterRightHitBox >= posX + panel.tileSize * 6
                         && monsterTopHitBox - panel.tileSize / 2 <= posY + panel.tileSize / 2
                         && monsterBottomHitBox + panel.tileSize / 2 >= posY + panel.tileSize * 3 / 2) {
-                        System.out.println("Q hit");
+                        panel.setWitchSkillEffects(monster, 10);
                         monster.damage(1);
                     }
                     break;

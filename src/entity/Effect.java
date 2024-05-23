@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Effect {
     Panel panel;
@@ -39,7 +40,6 @@ public class Effect {
                 maxImageNum = 3;
                 effectTimeAnimation = 5;
                 break;
-
         }
         this.active = true;
         this.entitySize = entitySize;
@@ -84,6 +84,9 @@ public class Effect {
                 effectIndex = 0;
                 if(--effectTime == 0)  {
                     active = false;
+                    if(Objects.equals(name, "ice")) {
+                        entity.setNotStun();
+                    }
                     effectTime = 5;
                 }
             }
@@ -95,13 +98,7 @@ public class Effect {
         int screenX = posX - panel.getPlayer().getPosX() + panel.getPlayer().screenX;
         int screenY = posY - panel.getPlayer().getPosY() + panel.getPlayer().screenY;
 
-        if (posX + panel.tileSize >= panel.getPlayer().getPosX() - panel.getPlayer().screenX &&
-                posX - panel.tileSize <= panel.getPlayer().getPosX() + panel.getPlayer().screenX &&
-                posY + panel.tileSize >= panel.getPlayer().getPosY() - panel.getPlayer().screenY &&
-                posY - panel.tileSize <= panel.getPlayer().getPosY() + panel.getPlayer().screenY
-        ) {
-            g2.drawImage(Image[effectIndex], screenX, screenY, panel.tileSize * entitySize, panel.tileSize * entitySize, null);
-        }
+        g2.drawImage(Image[effectIndex], screenX, screenY, panel.tileSize * entitySize, panel.tileSize * entitySize, null);
     }
 
     public void burn(Entity entity) {

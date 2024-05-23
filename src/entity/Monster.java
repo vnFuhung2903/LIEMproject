@@ -51,6 +51,7 @@ public class Monster extends Entity {
     public void move() {
 
         setAction();
+        if (stun) return;
         if(++moveCounter == 3) {
 
             //Check collision
