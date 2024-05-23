@@ -83,7 +83,7 @@ public class Witch extends Character {
                             panel.tileSize*10,panel.tileSize*10);
                     Rectangle monsterArea = new Rectangle(monster.getPosX(),monster.getPosY(),
                             monster.getMonsterSize()*panel.tileSize,monster.getMonsterSize()*panel.tileSize);
-                    if(monster.getPosX() >= posX - panel.tileSize * 10 && monster.getPosY() >= posY - panel.tileSize*10) {
+                    if(checkE.intersects(monsterArea)) {
                         WitchE witchE = new WitchE(panel, 10, this, monster);
                         panel.setSkill(witchE);
                     }
