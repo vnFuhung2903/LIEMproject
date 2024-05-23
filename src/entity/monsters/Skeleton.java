@@ -136,7 +136,6 @@ public class Skeleton extends Monster {
                     attacking = 0;
             }
         }
-        attacking = 1;
 
         if(invincible) {
             speed = 15;

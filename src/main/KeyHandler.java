@@ -27,13 +27,13 @@ public class KeyHandler implements KeyListener {
                 upPressed = true;
                 break;
             case KeyEvent.VK_UP:
-                if(--panel.pointerState < 0)  panel.pointerState = 2;
+                if(--panel.pointerState < 0)  panel.pointerState = panel.maxState;
                 break;
             case KeyEvent.VK_S:
                 downPressed = true;
                 break;
             case KeyEvent.VK_DOWN:
-               if(++panel.pointerState > 2)  panel.pointerState = 0;
+               if(++panel.pointerState > panel.maxState)  panel.pointerState = 0;
                 break;
             case KeyEvent.VK_A:
                 leftPressed = true;
@@ -64,14 +64,19 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_ENTER:
                 if(panel.gameState==panel.startState && panel.pointerState == panel.start) {
                     panel.gameState = panel.playState;
+                    panel.maxState = 2;
                 }
-                else if(panel.gameState==panel.startState && panel.pointerState == panel.guide) {
+                else if(panel.gameState==panel.startState  && panel.pointerState == panel.guide) {
                     panel.gameState = panel.guideState;
                 }
-                else if(panel.gameState==panel.guideState ) {
+                else if(panel.gameState == panel.guideState ) {
                     panel.gameState = panel.playState;
                 }
-                else if(panel.gameState==panel.playState && panel.pointerState == panel.quit) {
+                else if(panel.pointerState == panel.guide ) {
+                    panel.gameState = panel.guideState;
+                }
+                else if(panel.pointerState == panel.quit) {
+                    panel.maxState = 1;
                     panel.gameState = panel.startState;
                 }
                 break;
