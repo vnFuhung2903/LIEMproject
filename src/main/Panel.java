@@ -122,6 +122,7 @@ public class Panel extends JPanel implements Runnable {
         boss.update();
         monsters.removeIf(monster -> monster.getHp() <= 0);
         for(Monster monster : monsters) {
+            if(monster == boss) continue;
             monster.update();
         }
 
@@ -179,7 +180,6 @@ public class Panel extends JPanel implements Runnable {
 
         // Sort entities in posY
         ArrayList<Entity> entities = new ArrayList<>(monsters);
-        entities.add(boss);
         entities.add(player);
         entities.sort(Comparator.comparingInt(Entity::getPosY));
 
@@ -270,11 +270,10 @@ public class Panel extends JPanel implements Runnable {
 
         boss.setPosX(mapWidth / 2);
         boss.setPosY(mapHeight / 2);
+        monsters.add(boss);
 
 //        for(int i = 0; i < 1; ++i) {
 //            boolean created = false;
-
-            // Create up to: 50 slimes OR 50 spiders OR 20 slaves OR 50 goblins OR 5 hobs
 
 //            while (!created) {
 //                Random randomX = new Random();

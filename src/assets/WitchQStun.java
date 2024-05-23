@@ -30,6 +30,6 @@ public class WitchQStun {
     }
 
     public void draw(int screenX, int screenY, int index, int size, Graphics2D g2) {
-        g2.drawImage(Image[index], screenX, screenY, panel.tileSize * (1 + size) + panel.tileSize / 2, panel.tileSize * (1 + size) + panel.tileSize / 2, null);
+        g2.drawImage(Image[index], screenX, screenY, panel.tileSize * size, panel.tileSize * size, null);
     }
 }
