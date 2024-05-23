@@ -79,7 +79,7 @@ public class Goblin {
                     currentFrameImg = attackRight[index];
                     break;
             }
-            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 3 / 2, panel.tileSize * 3 / 2, null);
+            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 3/2 , panel.tileSize * 3/2, null);
             return;
         }
 

@@ -10,6 +10,7 @@ public class Monster extends Entity {
     protected String name;
     protected int monsterSize, attackIndex, attackTick = 0,attackTickQ=0, attackInterval;
     protected Rectangle triggerArea;
+    protected int counterTrigger = 0;
     protected boolean triggering = false;
     protected boolean readySkillE= true,readySkillQ = true,readySkillR = true;
     public Monster(Panel panel, int speed, int skillThread) {
@@ -81,22 +82,15 @@ public class Monster extends Entity {
 
     public void updateAttackAnimation() {}
 
-    public void checkTriggerPlayer() {
-
-        triggering = false;
+    public void checkTriggerPlayer(){
+        if(++counterTrigger > 300){
+            counterTrigger = 0;
+        }
+        if(counterTrigger > 0) return;
         if(triggerArea == null) return;
-
-        int monsterLeftTrigger = posX + triggerArea.x;
-        int monsterRightTrigger = monsterLeftTrigger + triggerArea.width;
-        int monsterTopTrigger = posY + triggerArea.y;
-        int monsterBottomTrigger = monsterTopTrigger + triggerArea.height;
-
-        int playerLeftTrigger = panel.getPlayer().getPosX();
-        int playerRightTrigger = playerLeftTrigger + panel.tileSize * 2;
-        int playerTopTrigger = panel.getPlayer().getPosY();
-        int playerBottomTrigger = playerTopTrigger + panel.tileSize * 2;
-
-        if(playerLeftTrigger >= monsterLeftTrigger && playerRightTrigger <= monsterRightTrigger && playerTopTrigger >= monsterTopTrigger && playerBottomTrigger <= monsterBottomTrigger) {
+        Rectangle monsterTrigger = new Rectangle(posX + triggerArea.x,posY + triggerArea.y,triggerArea.width, triggerArea.height);
+        Rectangle playerTrigger = new Rectangle(panel.getPlayer().getPosX(),panel.getPlayer().getPosY(),panel.tileSize,panel.tileSize);
+        if(monsterTrigger.intersects(playerTrigger)) {
             triggering = true;
         }
     }
