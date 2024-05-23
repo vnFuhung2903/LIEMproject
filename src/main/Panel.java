@@ -20,7 +20,8 @@ public class Panel extends JPanel implements Runnable {
 
 
     // MAP SETTINGS
-    public boolean night = false;
+
+
     public int timeNight = 1000;
     final public int maxMapCol = 250;
     final public int maxMapRow = 250;
@@ -43,6 +44,11 @@ public class Panel extends JPanel implements Runnable {
     public final int mute = 2;
     public int maxState = 1;
     public int pointerState = 0;
+
+    // UI
+    public boolean night = false;
+    public boolean openItem = false;
+    public int pointerItem = 0;
     // Systems
     TileManage mapTile = new TileManage(this);
     Nightmode nightmode = new Nightmode(this);
@@ -148,7 +154,6 @@ public class Panel extends JPanel implements Runnable {
 //        }
     }
     void checkNight(){
-        System.out.println(timeNight);
        if(--timeNight < 0 ){
            if(night) night = false;
            else night = true;

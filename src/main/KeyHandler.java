@@ -53,6 +53,16 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_K:
                 flashPressed = true;
                 break;
+            case KeyEvent.VK_I:
+                if(panel.openItem) panel.openItem = false;
+                else panel.openItem = true;
+                break;
+            case KeyEvent.VK_RIGHT:
+                if(--panel.pointerItem<0) panel.pointerItem = 3;
+                break;
+            case KeyEvent.VK_LEFT:
+                if(++panel.pointerItem>3) panel.pointerItem = 0;
+                break;
             case KeyEvent.VK_P:
                 if(panel.gameState==panel.playState) {
                     panel.gameState = panel.pauseState;
@@ -75,9 +85,12 @@ public class KeyHandler implements KeyListener {
                 else if(panel.pointerState == panel.guide ) {
                     panel.gameState = panel.guideState;
                 }
-                else if(panel.pointerState == panel.quit) {
+                else if(panel.pointerState == panel.quit && panel.gameState == panel.pauseState) {
                     panel.maxState = 1;
                     panel.gameState = panel.startState;
+                }
+                else if(panel.openItem) {
+                    System.out.println("use Item " + (panel.pointerItem + 1));
                 }
                 break;
         }

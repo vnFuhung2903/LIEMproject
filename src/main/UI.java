@@ -56,19 +56,35 @@ public class UI {
     public void drawPlayScreen(Graphics2D g2) {
        if(panel.night) {
            g2.drawImage(nightMode,0, 0, panel.screenWidth, panel.screenHeight, null);
-           System.out.println("draw Night");
        }
         g2.drawImage(uiWitch,0, 0, panel.tileSize*7/2, panel.tileSize*7/2, null);
         g2.drawImage(uiInterface,panel.tileSize/6, panel.tileSize*7/2, panel.tileSize*3, panel.tileSize*6, null);
-        g2.drawImage(hp, panel.tileSize*19/30 + 13/2, panel.tileSize*9/2 + panel.tileSize/4 + 2, panel.tileSize/2 - 1, panel.tileSize*26/6, null);
-        g2.drawImage(mana,panel.tileSize*145/72 + 17/2, panel.tileSize*9/2 + panel.tileSize/4 + 2, panel.tileSize/2 - 1, panel.tileSize*26/6, null);
+        g2.drawImage(hp, panel.tileSize*19/30 + 15/2 , panel.tileSize*9/2 + panel.tileSize/4 + 1, panel.tileSize/2 - 3, panel.tileSize*26/6, null);
+        g2.drawImage(mana,panel.tileSize*145/72 + 19/2 , panel.tileSize*9/2 + panel.tileSize/4 + 1, panel.tileSize/2 - 3, panel.tileSize*26/6, null);
         g2.drawImage(uiQ,panel.tileSize , panel.screenHeight - panel.tileSize*3, panel.tileSize*3/2, panel.tileSize*3/2, null);
         g2.drawImage(uiE,panel.tileSize*3, panel.screenHeight - panel.tileSize*3, panel.tileSize*3/2, panel.tileSize*3/2, null);
         if(1==1) {
-            System.out.println("draw Boss ");
             g2.drawImage(uiBoss[0], panel.tileSize * 15, 0, panel.tileSize * 3, panel.tileSize * 3, null);
             g2.drawImage(uiHpBoss[0], panel.tileSize * 5, panel.tileSize*3/2, panel.tileSize * 10, panel.tileSize/2, null);
-            g2.drawImage(uiHpBoss[1], panel.tileSize * 5, panel.tileSize*3/2, panel.tileSize * 10, panel.tileSize/2, null);
+            g2.drawImage(uiHpBoss[1], panel.tileSize * 5, panel.tileSize*3/2, panel.tileSize * 10*50/200, panel.tileSize/2, null);
+        }
+
+        int posX;
+        int posY;
+        int itemSize;
+        if(panel.openItem){
+            posX = panel.screenWidth/2 +  panel.tileSize*13/2;
+            posY = panel.screenHeight/2;
+            itemSize = panel.tileSize*3;
+            g2.drawImage(uiItem[4] , posX  - itemSize*(panel.pointerItem + 1)  ,posY - itemSize/2, itemSize , itemSize,null);
+        }
+        else{
+            posX = panel.screenWidth - panel.tileSize;
+            posY = panel.screenHeight - panel.tileSize*2;
+            itemSize = panel.tileSize*3/2;
+        }
+        for(int i = 0;i <4;i++){
+            g2.drawImage(uiItem[i] , posX  - itemSize*(i+1)  ,posY - itemSize/2, itemSize , itemSize,null);
         }
     }
     public void loadImage(){
@@ -136,15 +152,17 @@ public class UI {
             String hpBossImage2 = "assets/UI/hpBoss-02.png";
             uiHpBoss[1] = ImageIO.read(new File(hpBossImage2));
 
-            uiItem = new BufferedImage[4];
-            String Image1 = "assets/nightmode/night-01.png";
+            uiItem = new BufferedImage[5];
+            String Image1 = "assets/UI/uiItem-01.png";
             uiItem[0] = ImageIO.read(new File(Image1));
-            String Image2 = "assets/nightmode/night-02.png";
+            String Image2 = "assets/UI/uiItem-02.png";
             uiItem[1] = ImageIO.read(new File(Image2));
-            String Image3 = "assets/nightmode/night-03.png";
-            uiItem[2] = ImageIO.read(new File(Image2));
-            String Image4 = "assets/nightmode/night-04.png";
+            String Image3 = "assets/UI/uiItem-03.png";
+            uiItem[2] = ImageIO.read(new File(Image3));
+            String Image4 = "assets/UI/uiItem-04.png";
             uiItem[3] = ImageIO.read(new File(Image4));
+            String Image5 = "assets/UI/uiItem-05.png";
+            uiItem[4] = ImageIO.read(new File(Image5));
 
 
         }
