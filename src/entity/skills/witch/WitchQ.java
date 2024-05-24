@@ -52,8 +52,8 @@ public class WitchQ extends Skill {
 
     // Not set pos for Q because laze will change direction with its user
     public void setSkill() {
-        casted = true;
-        spriteIndex = 0;
+            casted = true;
+            spriteIndex = 0;
     }
 
     public void draw(Graphics2D g2) {
@@ -69,7 +69,7 @@ public class WitchQ extends Skill {
                 g2.drawImage(skillDown[spriteIndex], screenX, screenY, panel.tileSize * 2, panel.tileSize * 6, null);
                 break;
             case "left":
-                g2.drawImage(skillLeft[spriteIndex], screenX - panel.tileSize * 5, screenY, panel.tileSize * 6, panel.tileSize * 2, null);
+                g2.drawImage(skillLeft[spriteIndex], screenX - panel.tileSize * 18/4, screenY, panel.tileSize * 6, panel.tileSize * 2, null);
                 break;
             case "right":
                 g2.drawImage(skillRight[spriteIndex], screenX, screenY, panel.tileSize * 6, panel.tileSize * 2, null);
