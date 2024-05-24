@@ -23,7 +23,7 @@ public class Panel extends JPanel implements Runnable {
     // MAP SETTINGS
 
 
-    public int timeNight = 1000;
+    public int timeNight = 2000;
     final public int maxMapCol = 250;
     final public int maxMapRow = 250;
     final public int mapWidth = tileSize * maxMapRow;
@@ -172,7 +172,7 @@ public class Panel extends JPanel implements Runnable {
        if(--timeNight < 0 ){
            if(night) night = false;
            else night = true;
-           timeNight = 1000;
+           timeNight = 2000;
        }
     }
     public void paintComponent(Graphics g){
@@ -301,7 +301,7 @@ public class Panel extends JPanel implements Runnable {
                 int y = mapHeight / 2;
 
                 if(collisionHandler.checkSpawn(x, y, 1)) {
-                    Goblin monster = new Goblin(this, 5, 10);
+                    Slime monster = new Slime(this, 5, 10);
                     monster.setPosX(x);
                     monster.setPosY(y);
                     monsters.add(monster);
@@ -332,7 +332,7 @@ public class Panel extends JPanel implements Runnable {
     public void setEffect(Entity entity, String name, int time, int entitySize) {
         for(Effect effect : effects) {
             if(effect.getEntity() == entity && Objects.equals(effect.getName(), name)) {
-//                effect.extend(time);
+                effect.extend(time);
                 return;
             }
         }

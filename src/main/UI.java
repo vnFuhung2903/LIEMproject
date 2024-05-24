@@ -21,6 +21,7 @@ public class UI {
     public void draw(Graphics2D g2) {
 
         if(panel.gameState==panel.pauseState) {
+            drawPlayScreen(g2);
             drawPauseScreen(g2);
         }
         else if(panel.gameState==panel.startState) {
@@ -65,15 +66,15 @@ public class UI {
         g2.drawImage(uiWitch,0, 0, panel.tileSize*3, panel.tileSize*3, null);
         g2.drawImage(uiInterface,panel.tileSize/5, panel.tileSize*3, panel.tileSize*2, panel.tileSize*4, null);
         if(panel.hpPercent>0)
-            g2.drawImage(hp,panel.tileSize/5, panel.tileSize*371/96, panel.tileSize*2, (panel.tileSize*72/25)*panel.hpPercent/100, null);
+            g2.drawImage(hp,panel.tileSize/5 , panel.tileSize*15/4 + (panel.tileSize*139/48)*(100-panel.hpPercent)/100, panel.tileSize*2 , (panel.tileSize*139/48)*panel.hpPercent/100, null);
         if(panel.manaPercent>0)
-            g2.drawImage(mana,panel.tileSize/5, panel.tileSize*371/96, panel.tileSize*2, (panel.tileSize*72/25)*panel.manaPercent/100, null);
-            g2.drawImage(uiQ,panel.tileSize , panel.screenHeight - panel.tileSize*3, panel.tileSize*3/2, panel.tileSize*3/2, null);
-            g2.drawImage(uiE,panel.tileSize*3, panel.screenHeight - panel.tileSize*3, panel.tileSize*3/2, panel.tileSize*3/2, null);
+            g2.drawImage(mana,panel.tileSize/5 , panel.tileSize*15/4 +(panel.tileSize*139/48)*(100-panel.manaPercent)/100, panel.tileSize*2, (panel.tileSize*139/48)*panel.manaPercent/100, null);
+            g2.drawImage(uiQ,panel.tileSize , panel.screenHeight - panel.tileSize*3, panel.tileSize*2, panel.tileSize*2, null);
+            g2.drawImage(uiE,panel.tileSize*3, panel.screenHeight - panel.tileSize*3, panel.tileSize*2, panel.tileSize*2, null);
         if(panel.hpBossPercent > 0) {
             g2.drawImage(uiBoss[1], panel.tileSize * 37/2, 0, panel.tileSize * 7/2, panel.tileSize * 7/2, null);
-            g2.drawImage(uiHpBoss[0], panel.tileSize * 19/2, panel.tileSize*3/2, panel.tileSize * 10, panel.tileSize, null);
-            g2.drawImage(uiHpBoss[1], panel.tileSize * 19/2, panel.tileSize*3/2, panel.tileSize * 10 * panel.hpBossPercent/100, panel.tileSize, null);
+            g2.drawImage(uiHpBoss[0], panel.tileSize * 17/2, panel.tileSize*3/2, panel.tileSize * 10, panel.tileSize, null);
+            g2.drawImage(uiHpBoss[1], panel.tileSize * 35/4 , panel.tileSize*3/2, (panel.tileSize * 19/2) * panel.hpBossPercent/100, panel.tileSize, null);
         }
 
         int posX;
@@ -161,10 +162,10 @@ public class UI {
             String witchImage = "assets/UI/uiWitch-01.png";
             uiWitch =  ImageIO.read(new File(witchImage));
 
-            String QImage = "assets/UI/uiSkillQ.png";
+            String QImage = "assets/UI/uiSkillQ-01.png";
             uiQ =  ImageIO.read(new File(QImage));
 
-            String EImage = "assets/UI/uiSkillE.png";
+            String EImage = "assets/UI/uiSkillE-01.png";
             uiE =  ImageIO.read(new File(EImage));
 
             String nightImage = "assets/nightmode/night-01.png";

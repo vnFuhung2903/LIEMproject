@@ -84,6 +84,7 @@ public class KeyHandler implements KeyListener {
                     panel.gameState = panel.guideState;
                 }
                 else if(panel.pointerState == panel.quit && panel.gameState == panel.pauseState) {
+                    System.exit(0);
                     panel.maxState = 1;
                     panel.gameState = panel.startState;
                 }
@@ -115,6 +116,9 @@ public class KeyHandler implements KeyListener {
                 break;
             case KeyEvent.VK_K:
                 EPressed = false;
+                break;
+            case KeyEvent.VK_M:
+                panel.setEffect(panel.getPlayer(), "dispel", 50, 2);
                 break;
             case KeyEvent.VK_ENTER:
                  if(panel.openItem) {

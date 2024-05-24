@@ -17,4 +17,5 @@ public class Main {
         window.setVisible(true); //can see the window
         panel.startThread();
     }
+
 }

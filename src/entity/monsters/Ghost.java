@@ -11,7 +11,7 @@ public class Ghost extends Monster {
     int counterE = 0, counterInvisible = 0, invisibleCD, passiveCD, action,timeCurse;
     public Ghost(Panel panel, int speed, int skillThread) {
         super(panel, speed, skillThread);
-        this.hp = 1000;
+        this.hp = 10;
         Random randomColor = new Random();
         int directionIndex = randomColor.nextInt(5);
         switch (directionIndex) {

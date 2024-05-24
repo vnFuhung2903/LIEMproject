@@ -26,7 +26,6 @@ public class Witch extends Character {
 
     WitchQ witchQ;
 
-
     int passiveInterval = 15, getHitInterval = 10, getHitIndex = 0, passiveIndex = 0;
     boolean preparingQ;
 
@@ -240,7 +239,7 @@ public class Witch extends Character {
                 attackIndex = 0;
                 attacking = false;
                 usingSkillQ = false;
-                mana -= 10;
+                mana -= 50;
             }
         }
     }
@@ -265,12 +264,12 @@ public class Witch extends Character {
     }
 
     public void checkAttacking() {
-        if(keyHandler.isUsingSkillQ() && !witchQ.isCasted() && mana>=5) {
+        if(keyHandler.isUsingSkillQ() && !witchQ.isCasted() && mana>=10) {
             attacking = true;
             preparingQ = true;
         }
 
-        if(keyHandler.isUsingSkillE() && mana >=10) {
+        if(keyHandler.isUsingSkillE() && mana>=10) {
             attacking = true;
             usingSkillE = true;
         }

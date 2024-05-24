@@ -10,7 +10,7 @@ public abstract class Entity {
     protected Panel panel;
     protected int posX, posY, speed, moveCounter = 0, actionLockCounter = 0, skillThread, hp, maxHp,mana,maxMana;
     protected boolean attacking = false, stun = false;
-    protected boolean flash = false;
+    protected boolean dispel = false;
     protected KeyHandler keyHandler;
 
     // For collision and hit box

@@ -46,7 +46,7 @@ public class WitchE extends Skill {
             {
                 spriteIndex = 0;
                 casted = false;
-                mana -= 20;
+                mana -= 50;
             }
         }
     }
