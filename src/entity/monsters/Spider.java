@@ -44,7 +44,7 @@ public class Spider extends Monster {
         int screenY = posY - panel.getPlayer().getPosY() + panel.getPlayer().screenY;
 
         if (onScreen(1,screenX,screenY)) {
-            panel.getMonsterAsset().getSpiderAssets().draw(this, screenX, screenY, spriteIndex, g2);
+            panel.getAsset().getSpiderAssets().draw(this, screenX, screenY, spriteIndex, g2);
         }
     }
 

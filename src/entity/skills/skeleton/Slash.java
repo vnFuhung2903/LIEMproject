@@ -102,6 +102,6 @@ public class Slash extends Skill {
         int screenX = posX - panel.getPlayer().getPosX() + panel.getPlayer().screenX;
         int screenY = posY - panel.getPlayer().getPosY() + panel.getPlayer().screenY;
         if (onScreen(4,screenX,screenY))
-            panel.getMonsterAsset().getSkeletonSlashAssets().draw(screenX, screenY, direction, g2);
+            panel.getAsset().getSkeletonSlashAssets().draw(screenX, screenY, direction, g2);
     }
 }

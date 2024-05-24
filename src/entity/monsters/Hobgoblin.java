@@ -42,10 +42,10 @@ public class Hobgoblin extends Monster {
 
         if (onScreen(3,screenX,screenY)) {
             if (attacking) {
-                panel.getMonsterAsset().getHobgoblinAsset().draw(this, screenX, screenY, attackIndex, true, g2);
+                panel.getAsset().getHobgoblinAsset().draw(this, screenX, screenY, attackIndex, true, g2);
                 return;
             }
-            panel.getMonsterAsset().getHobgoblinAsset().draw(this, screenX, screenY, spriteIndex, false, g2);
+            panel.getAsset().getHobgoblinAsset().draw(this, screenX, screenY, spriteIndex, false, g2);
         }
     }
 

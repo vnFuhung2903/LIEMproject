@@ -10,12 +10,12 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Effect {
-    private Panel panel;
-    private String name;
-    private Entity entity;
-    private int posX, posY, effectInterval, effectTick = 0, effectIndex = 0, maxImageNum, entitySize = 1, effectTime, effectTimeAnimation;
-    private boolean active;
-    private BufferedImage[] images;
+    Panel panel;
+    String name;
+    Entity entity;
+    int posX, posY, effectInterval, effectTick = 0, effectIndex = 0, maxImageNum, entitySize = 1, effectTime,effectTimeAnimation;
+    boolean active;
+    BufferedImage[] Image;
 
     public Effect(Panel panel, Entity entity, String name, int time, int entitySize) {
         this.panel = panel;
@@ -27,10 +27,10 @@ public class Effect {
         this.effectTime = time;
         setEffectProperties(name);
         this.active = true;
-        loadEffectImages();
+        loadImage();
     }
 
-    private void setEffectProperties(String name) {
+    void setEffectProperties(String name) {
         switch (name) {
             case "burn":
                 maxImageNum = 7;
@@ -56,7 +56,7 @@ public class Effect {
                 maxImageNum = 9;
                 effectTimeAnimation = 2;
                 break;
-            case "dispel":
+            case "immune":
                 maxImageNum = 6;
                 effectTimeAnimation = 5;
                 break;
@@ -64,11 +64,12 @@ public class Effect {
         }
     }
 
-    private void loadEffectImages() {
+    void loadImage() {
+
         try {
-            images = new BufferedImage[maxImageNum];
-            for (int i = 0; i < maxImageNum; i++) {
-                images[i] = ImageIO.read(new File("assets/effects/" + name + "Effect-0" + (i + 1) + ".png"));
+            Image = new BufferedImage[maxImageNum];
+            for(int i = 0; i < maxImageNum; ++i) {
+                Image[i] = ImageIO.read(new File("assets/effects/" + name + "Effect-0" + (i + 1) + ".png"));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -77,13 +78,13 @@ public class Effect {
 
     public void update() {
 
-        if (!entity.dispel) {
+        if (!entity.immune) {
             applyBadEffect(entity);
         }
 
         switch (name){
-            case "dispel":
-                dispel(entity);
+            case "immune":
+                immune(entity);
                 break;
             case "healing":
                 heal(entity);
@@ -96,7 +97,7 @@ public class Effect {
         if (++effectTick >= effectTimeAnimation) {
             effectTick = 0;
             if (++effectIndex >= maxImageNum) {
-                if (name == "ice"|| name == "dispel") {
+                if (Objects.equals(name, "ice") || Objects.equals(name, "immune")) {
                     effectIndex = maxImageNum - 1;
                 } else {
                     effectIndex = 0;
@@ -104,20 +105,20 @@ public class Effect {
 
                 if (--effectTime == 0) {
                     active = false;
-                    if ( name == "dispel" ) entity.dispel = false;
-                    if (name == "ice") entity.setNotStun();
+                    if (Objects.equals(name, "immune")) entity.immune = false;
+                    if (Objects.equals(name, "ice")) entity.setNotStun();
+                    if (Objects.equals(name, "ghostPassive")) entity.setSpeed(entity.getSpeed() * 5);
                     effectTime = 5;
                 }
             }
         }
     }
 
-    private void applyBadEffect(Entity entity) {
+    void applyBadEffect(Entity entity) {
         switch (name) {
             case "burn":
                 burn(entity);
                 break;
-
             case "ice":
                 stun(entity);
                 break;
@@ -128,6 +129,7 @@ public class Effect {
                 healingMana(entity);
                 break;
             case "ghostPassive":
+                slow(entity);
                 break;
         }
     }
@@ -136,43 +138,43 @@ public class Effect {
         int screenX = posX - panel.getPlayer().getPosX() + panel.getPlayer().screenX;
         int screenY = posY - panel.getPlayer().getPosY() + panel.getPlayer().screenY;
 
-        g2.drawImage(images[effectIndex], screenX, screenY, panel.tileSize * entitySize, panel.tileSize * entitySize, null);
+        g2.drawImage(Image[effectIndex], screenX, screenY, panel.tileSize * entitySize, panel.tileSize * entitySize, null);
     }
 
-    private void burn(Entity entity) {
+    void burn(Entity entity) {
         if (entity.getHp() > 0) {
             entity.damage(2);
         }
     }
 
-    private void poison(Entity entity) {
+    void poison(Entity entity) {
         if (entity.getHp() > 0) {
             entity.damage(entity.getHp() / 1000);
         }
     }
 
-    private void heal(Entity entity) {
+    void heal(Entity entity) {
         if (entity.getHp() < entity.getMaxHp()) {
             entity.hp ++ ;
         }
     }
 
-    private void healingMana(Entity entity) {
+    void healingMana(Entity entity) {
         if (entity.getMana() < entity.getMaxMana()) {
             entity.mana++;
         }
     }
 
-    private void stun(Entity entity) {
+    void stun(Entity entity) {
         entity.setStun();
     }
 
-    private void dispel(Entity entity) {
-        entity.dispel = true;
+    void immune(Entity entity) {
+        entity.immune = true;
     }
-
-    public void extend(int time) {
-        effectInterval += time;
+    
+    void slow(Entity entity) {
+        entity.setSpeed(entity.getSpeed() / 5);
     }
 
     public boolean isActive() {

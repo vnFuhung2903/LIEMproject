@@ -2,6 +2,7 @@ package map;
 
 import java.awt.Graphics2D;
 import java.io.*;
+import java.util.Random;
 import javax.imageio.ImageIO;
 import org.json.*;
 
@@ -45,6 +46,10 @@ public class TileManage  {
 
     public void loadMap() {
         try {
+//            String map;
+//            Random random = new Random();
+//            int r = random.nextInt(4);
+//            map = "assets/mapDesert/desert" + (r + 1) + ".json";
             mapObj = new JSONObject(new JSONTokener(new FileReader("assets/mapDesert/map.json")));
             JSONArray layers = mapObj.getJSONArray("layers");
             JSONArray data = layers.getJSONObject(0).getJSONArray("data");

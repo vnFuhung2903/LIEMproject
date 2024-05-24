@@ -45,13 +45,10 @@ public class SandTrap {
                 int screenX = posX - panel.getPlayer().getPosX() + panel.getPlayer().screenX + i * panel.tileSize;
                 int screenY = posY - panel.getPlayer().getPosY() + panel.getPlayer().screenY + j * panel.tileSize;
 
-                if (posX + panel.tileSize >= panel.getPlayer().getPosX() - panel.getPlayer().screenX &&
-                        posX - panel.tileSize <= panel.getPlayer().getPosX() + panel.getPlayer().screenX &&
-                        posY + panel.tileSize >= panel.getPlayer().getPosY() - panel.getPlayer().screenY &&
-                        posY - panel.tileSize <= panel.getPlayer().getPosY() + panel.getPlayer().screenY) {
+                if(screenX >= Toolkit.getDefaultToolkit().getScreenSize().width || screenY >=Toolkit.getDefaultToolkit().getScreenSize().height) return;
+                if(screenX + panel.tileSize <= 0 && screenY + panel.tileSize <= 0) return;
 
-                    g2.drawImage(Image[j * 4 + i], screenX, screenY, panel.tileSize, panel.tileSize, null);
-                }
+                g2.drawImage(Image[j * 4 + i], screenX, screenY, panel.tileSize, panel.tileSize, null);
             }
     }
 

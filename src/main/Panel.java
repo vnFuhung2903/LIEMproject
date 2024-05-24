@@ -1,5 +1,6 @@
 package main;
 
+import javax.sound.sampled.Clip;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.util.*;
@@ -30,36 +31,28 @@ public class Panel extends JPanel implements Runnable {
     final public int mapHeight = tileSize * maxMapCol;
 
     // FPS
+
     double FPS = 60;
+
     // GAME STATE
-    public int gameState;
-    public int startState=0;
-    public final int  playState = 1;
-    public final int pauseState = 2;
-    public final int guideState = 3;
-    public final int start = 0;
-    public final int guide = 1;
-    public final int quit = 0;
-    public final int mute = 2;
-    public int maxState = 1;
-    public int pointerState = 0;
+    public enum gameState {
+        startState,
+        ingameState,
+        pauseState,
+        guideState
+    };
+    gameState currentState;
+    String[] startOption = {"start", "guide"};
+    String[] pauseOption = {"back", "quit"};
+    int currentPointer = 0;
+    boolean bossFighter = true;
 
     // UI
-    public boolean night = false;
+    boolean night = false;
     public boolean openItem = false;
     public int pointerItem = 0;
+    int bossId;
 
-    //Item
-    public int numItemHealHp = 0;
-    public int numItemHealMana = 0;
-    public int numItemDispel = 0;
-
-    // HP
-    public int hpBossPercent = 100;
-    public int hpPercent = 100;
-
-    //Mana
-    public int manaPercent = 100;
     // Systems
     TileManage mapTile = new TileManage(this);
     SandTrap sandTrap;
@@ -69,6 +62,7 @@ public class Panel extends JPanel implements Runnable {
     Thread gameThread;
     UI ui = new UI(this);
     public CollisionHandler collisionHandler = new CollisionHandler(this);
+    public Sound sound = new Sound();
 
     // Entities
     entity.Character player = new entity.characters.Witch(this, 10, keyHandler, mouseEventHandler);
@@ -77,14 +71,18 @@ public class Panel extends JPanel implements Runnable {
     ArrayList<Item> items = new ArrayList<>();
     ArrayList<Effect> effects = new ArrayList<>();
     Asset asset = new Asset(this);
-    Monster boss = new Ghost(this, 10, 10);
+    Monster boss;
     ArrayList<WitchQStun> witchSkillEffects = new ArrayList<>();
+
+    // Items
+    public int numItemHealHp = 0;
+    public int numItemHealMana = 0;
+    public int numItemImmunity = 0;
 
     public Panel() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setPreferredSize(new Dimension(screenSize.width,screenSize.height));
-        Color bgColor = new Color(243, 174, 92);
-        this.setBackground(bgColor);
+        setBgColor(243, 174, 92);
 
         // in some cases, using double buffered my increase resource usage and latency (tang tai nguyen va do tre)
         this.setDoubleBuffered(true);
@@ -95,9 +93,10 @@ public class Panel extends JPanel implements Runnable {
     }
 
     public void setUpGame() {
-        gameState = startState;
+        currentState = gameState.startState;
         setMap();
         setMonsters();
+        sound.startMusic.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public  void startThread() {
@@ -125,15 +124,33 @@ public class Panel extends JPanel implements Runnable {
     }
 
     public void update() {
-//        if(hpPercent < 0) return;
-        checkHpPercent();
-        checkManaPercent();
-        checkNight();
-        if(gameState == pauseState || gameState == startState || gameState == guideState) {
+        if(currentState != gameState.ingameState) {
             return;
         }
+
+        useItem(keyHandler.getItemPressed());
+
         if(sandTrap != null) sandTrap.update();
-        boss.update();
+        if(boss != null) boss.update();
+        else if(bossFighter) {
+            Random random = new Random();
+            int r = random.nextInt();
+            switch(r % 2) {
+                case 0:
+                    boss = new Skeleton(this, 10, 10);
+                    break;
+                case 1:
+                    boss = new Ghost(this, 10, 10);
+                    break;
+            }
+            boss.setPosX(mapWidth / 2);
+            boss.setPosY(mapHeight / 2);
+            monsters.add(boss);
+            sound.igMusic.close();
+            sound.bossMusic.loop(Clip.LOOP_CONTINUOUSLY);
+            bossFighter = false;
+        }
+
         monsters.removeIf(monster -> monster.getHp() <= 0);
         for(Monster monster : monsters) {
             if(monster == boss) continue;
@@ -168,10 +185,9 @@ public class Panel extends JPanel implements Runnable {
 
         player.update();
     }
-    void checkNight(){
+    void checkNight() {
        if(--timeNight < 0 ){
-           if(night) night = false;
-           else night = true;
+           night = !night;
            timeNight = 2000;
        }
     }
@@ -180,50 +196,41 @@ public class Panel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 
-        if(gameState == startState || gameState == guideState) {
-            ui.draw(g2);
-            g2.dispose();
-            return;
+        if(currentState == gameState.ingameState || currentState == gameState.pauseState) {
+
+            // Draw map
+            sandTrap.draw(g2);
+            mapTile.draw(g2);
+            spiderCave.draw(g2);
+
+            // Sort entities in posY
+            ArrayList<Entity> entities = new ArrayList<>(monsters);
+            entities.add(player);
+            entities.sort(Comparator.comparingInt(Entity::getPosY));
+
+            // Draw others
+            for (Entity entity : entities) {
+                entity.draw(g2);
+            }
+
+            for (Item item : items) {
+                item.draw(g2);
+            }
+
+            for (Effect effect : effects) {
+                effect.draw(g2);
+            }
+
+            for (WitchQStun effect : witchSkillEffects) {
+                effect.draw(g2);
+            }
+
+            for (Skill skill : skillList) {
+                skill.draw(g2);
+            }
         }
 
-
-        // Draw map
-        sandTrap.draw(g2);
-        mapTile.draw(g2);
-        spiderCave.draw(g2);
-
-        // Sort entities in posY
-        ArrayList<Entity> entities = new ArrayList<>(monsters);
-        entities.add(player);
-        entities.sort(Comparator.comparingInt(Entity::getPosY));
-
-        // Draw others
-        for (Entity entity : entities) {
-            entity.draw(g2);
-        }
-
-        for(Item item : items) {
-            item.draw(g2);
-        }
-
-        for(Effect effect : effects) {
-            effect.draw(g2);
-        }
-
-        for(WitchQStun effect : witchSkillEffects) {
-            effect.draw(g2);
-        }
-
-        for(Skill skill : skillList) {
-            skill.draw(g2);
-        }
-
-        if(gameState == pauseState || gameState == playState) {
-            ui.draw(g2);
-        }
-//        nightmode.draw(g2);
-
-
+        ui.draw(g2);
         g2.dispose();
     }
 
@@ -254,9 +261,6 @@ public class Panel extends JPanel implements Runnable {
             int x = mapWidth / 2;
             int y = mapHeight / 2;
 
-//            int x = player.getPosX();
-//            int y = player.getPosY();
-
             if (collisionHandler.checkSpawn(x, y, 1)) {
                 spiderCave = new SpiderCave(this, x, y);
                 created = true;
@@ -270,7 +274,7 @@ public class Panel extends JPanel implements Runnable {
             }
         }
     }
-    public void setMonstersGhost (int x,int y) {
+    public void spawnSlave (int x,int y) {
         if(collisionHandler.checkSpawn(x, y, 2)) {
             Slave monster = new Slave(this, 2, 10);
             monster.setPosX(x);
@@ -282,14 +286,8 @@ public class Panel extends JPanel implements Runnable {
     }
     void setMonsters() {
 
-        boss.setPosX(mapWidth / 2);
-        boss.setPosY(mapHeight / 2);
-        monsters.add(boss);
-
-        for(int i = 0; i < 10; ++i) {
-            boolean created = false;
-
-            // Create up to: 50 slimes OR 50 spiders OR 20 slaves OR 50 goblins OR 5 hobs
+//        for(int i = 0; i < 1; ++i) {
+//            boolean created = false;
 
 //            while (!created) {
 //                Random randomX = new Random();
@@ -297,23 +295,21 @@ public class Panel extends JPanel implements Runnable {
 //                int x = randomX.nextInt(mapWidth);
 //                int y = randomY.nextInt(mapHeight);
 
-                int x = mapWidth / 2;
-                int y = mapHeight / 2;
+//
+//                if(collisionHandler.checkSpawn(x, y, 1)) {
+//                    Ghost monster = new Ghost(this, 5, 10);
+//                    monster.setPosX(x);
+//                    monster.setPosY(y);
+//                    monsters.add(monster);
+//                    System.out.print(x);
+//                    System.out.println(y);
+//                    created = true;
+//                }
+//            }
+//        }
+    }
 
-                if(collisionHandler.checkSpawn(x, y, 1)) {
-                    Slime monster = new Slime(this, 5, 10);
-                    monster.setPosX(x);
-                    monster.setPosY(y);
-                    monsters.add(monster);
-                    System.out.print(x);
-                    System.out.println(y);
-                    created = true;
-                }
-            }
-        }
-
-
-    public void createItem(int id, int posX, int posY) {
+    public void createItem(int posX, int posY) {
         Random random = new Random();
         int idx = random.nextInt(3);
         items.add(new Item(this, idx, posX, posY));
@@ -322,7 +318,6 @@ public class Panel extends JPanel implements Runnable {
     public void setWitchSkillEffects(Monster monster, int time) {
         for(WitchQStun effect : witchSkillEffects) {
             if(effect.getMonster() == monster) {
-//                effect.extend(time);
                 return;
             }
         }
@@ -332,19 +327,41 @@ public class Panel extends JPanel implements Runnable {
     public void setEffect(Entity entity, String name, int time, int entitySize) {
         for(Effect effect : effects) {
             if(effect.getEntity() == entity && Objects.equals(effect.getName(), name)) {
-                effect.extend(time);
                 return;
             }
         }
         effects.add(new Effect(this, entity, name, time, entitySize));
     }
-    public void checkHpPercent () {
 
-        hpPercent = player.getHp()*100/player.getMaxHp();
-        hpBossPercent = boss.getHp()*100/boss.getMaxHp();
+    public void useItem(int id) {
+        switch (id) {
+            case 0:
+                if(numItemHealHp > 0) {
+                    setEffect(player, "healing", 10, 2);
+                }
+                break;
+            case 1:
+                if(numItemHealMana > 0) {
+                    setEffect(player, "healingMana", 10, 2);
+                }
+                break;
+            case 2:
+                if(numItemHealHp > 0) {
+                    setEffect(player, "immune", 10, 2);
+                }
+                break;
+            default:
+                break;
+        }
     }
-    public void checkManaPercent () {
-        manaPercent = player.getMana()*100/player.getMaxMana();
+
+    public int getBossHpPercent () {
+        return boss.getHp() * 100 / boss.getMaxHp();
+    }
+
+    public int getHpPercent() { return player.getHp() * 100 / player.getMaxHp(); }
+    public int getManaPercent() {
+        return player.getMana() * 100 / player.getMaxMana();
     }
 
 
@@ -356,7 +373,44 @@ public class Panel extends JPanel implements Runnable {
 
     public Character getPlayer() { return player; }
 
-    public Asset getMonsterAsset() {
+    public Asset getAsset() {
         return asset;
+    }
+
+    void setBgColor (int r, int g, int b) {
+        Color color = new Color(r, g, b);
+        this.setBackground(color);
+    }
+
+    public gameState getCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(gameState currentState) {
+        this.currentState = currentState;
+    }
+
+    public boolean encounterBoss() {
+        return boss != null;
+    }
+
+    public String getCurrentOption(String[] option) {
+        return option[currentPointer];
+    }
+
+    public int getCurrentPointer() {
+        return currentPointer;
+    }
+
+    public void modifyPointer(int value, String[] option) {
+        this.currentPointer += value;
+        if(currentPointer < 0) currentPointer = option.length - 1;
+        if(currentPointer >= option.length) currentPointer = 0;
+    }
+
+    public void resetCurrentPointer() { this.currentPointer = 0; }
+
+    public int getBossId() {
+        return bossId;
     }
 }

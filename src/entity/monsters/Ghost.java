@@ -50,9 +50,9 @@ public class Ghost extends Monster {
 
         if (onScreen(4,screenX,screenY)) {
             if (attacking) {
-                panel.getMonsterAsset().getGhostAssets().draw1(this, screenX, screenY, attackIndex, true,g2);
+                panel.getAsset().getGhostAssets().draw1(this, screenX, screenY, attackIndex, true,g2);
             }
-            panel.getMonsterAsset().getGhostAssets().draw1(this, screenX, screenY, spriteIndex, false, g2);
+            panel.getAsset().getGhostAssets().draw1(this, screenX, screenY, spriteIndex, false, g2);
         }
 
     }
@@ -249,29 +249,20 @@ public class Ghost extends Monster {
         switch (direction) {
             case "up":
                 y -= panel.tileSize * 2;
-                for (int i = 0; i < 4; i++) {
-                    panel.setMonstersGhost(x + i * panel.tileSize, y);
-                }
-
                 break;
             case "down":
                 y += panel.tileSize * 6;
-                for (int i = 0; i < 4; i++) {
-                    panel.setMonstersGhost(x + i * panel.tileSize, y);
-                }
                 break;
             case "left":
                 x -= panel.tileSize * 2;
-                for (int i = 0; i < 4; i++) {
-                    panel.setMonstersGhost(x, y + i * panel.tileSize );
-                }
                 break;
             case "right":
                 x += panel.tileSize * 6;
-                for (int i = 0; i < 4; i++) {
-                    panel.setMonstersGhost(x, y + i * panel.tileSize);
-                }
                 break;
+        }
+
+        for (int i = 0; i < 4; i++) {
+            panel.spawnSlave(x + i * panel.tileSize, y);
         }
     }
 }

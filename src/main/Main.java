@@ -3,7 +3,6 @@ package main;
 import javax.swing.JFrame;
 
 public class Main {
-
     public static void main(String[] args) {
         JFrame window = new JFrame(); // create a window
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // close the window
@@ -17,5 +16,4 @@ public class Main {
         window.setVisible(true); //can see the window
         panel.startThread();
     }
-
 }

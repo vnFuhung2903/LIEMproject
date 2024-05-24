@@ -42,7 +42,7 @@ public class WitchQStun {
         int screenY = posY - panel.getPlayer().getPosY() + panel.getPlayer().screenY;
 
         if(monster.onScreen(monster.getMonsterSize(), screenX, screenY))
-            panel.getMonsterAsset().getWitchQStunAssets().draw(screenX, screenY, index, monster.getMonsterSize(), g2);
+            panel.getAsset().getWitchQStunAssets().draw(screenX, screenY, index, monster.getMonsterSize(), g2);
 
     }
 

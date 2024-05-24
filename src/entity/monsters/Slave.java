@@ -43,10 +43,10 @@ public class Slave extends Monster {
         if (onScreen(2,screenX,screenY)) {
 
             if (attacking) {
-                panel.getMonsterAsset().getSlaveAssets().draw(this, screenX, screenY, attackIndex, true, g2);
+                panel.getAsset().getSlaveAssets().draw(this, screenX, screenY, attackIndex, true, g2);
                 return;
             }
-            panel.getMonsterAsset().getSlaveAssets().draw(this, screenX, screenY, spriteIndex, false, g2);
+            panel.getAsset().getSlaveAssets().draw(this, screenX, screenY, spriteIndex, false, g2);
         }
 
     }

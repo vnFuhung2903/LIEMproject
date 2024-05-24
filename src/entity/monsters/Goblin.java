@@ -44,10 +44,10 @@ public class Goblin extends Monster {
         {
 
             if(attacking) {
-                panel.getMonsterAsset().getGoblinAssets().draw(this, screenX, screenY, attackIndex, true, g2);
+                panel.getAsset().getGoblinAssets().draw(this, screenX, screenY, attackIndex, true, g2);
                 return;
             }
-            panel.getMonsterAsset().getGoblinAssets().draw(this, screenX, screenY, spriteIndex, false, g2);
+            panel.getAsset().getGoblinAssets().draw(this, screenX, screenY, spriteIndex, false, g2);
         }
 
     }

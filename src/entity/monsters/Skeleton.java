@@ -52,22 +52,22 @@ public class Skeleton extends Monster {
 
         if (onScreen(4,screenX,screenY)) {
             if(invincible) {
-                panel.getMonsterAsset().getSkeletonAssets().drawE(this,screenX,screenY,spriteIndex,true,g2);
+                panel.getAsset().getSkeletonAssets().drawE(this,screenX,screenY,spriteIndex,true,g2);
                 return;
             }
 
             if ((attacking & 1) == 1) {
-                panel.getMonsterAsset().getSkeletonAssets().draw(this,screenX,screenY,attackIndex,true,g2);
+                panel.getAsset().getSkeletonAssets().draw(this,screenX,screenY,attackIndex,true,g2);
                 return;
             }
 
             if((attacking & 2) == 2){
-                panel.getMonsterAsset().getSkeletonAssets().drawQ(this,screenX,screenY,spriteTickQSke,true,g2);
-                if(spriteTickQSke > 4) panel.getMonsterAsset().getSkeletonAssets().drawQEffect(this,screenX,screenY,attackQIndex,g2);
+                panel.getAsset().getSkeletonAssets().drawQ(this,screenX,screenY,spriteTickQSke,true,g2);
+                if(spriteTickQSke > 4) panel.getAsset().getSkeletonAssets().drawQEffect(this,screenX,screenY,attackQIndex,g2);
                 return;
             }
 
-            panel.getMonsterAsset().getSkeletonAssets().draw(this,screenX,screenY,spriteIndex,false,g2);
+            panel.getAsset().getSkeletonAssets().draw(this,screenX,screenY,spriteIndex,false,g2);
         }
 
     }

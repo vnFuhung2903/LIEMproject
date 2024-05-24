@@ -9,10 +9,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 public class UI {
     Panel panel;
-    BufferedImage uiInterface,uiItem[],uiWitch,uiE,uiQ,uiCoolDownSkill,hp,mana;
-    BufferedImage start,guide,backgroundStart,backgroundGuide,quit,setting,backgroundSetting,pointer,mute,nightMode,backgroundEnd,backgroundBoss ;
-    BufferedImage uiBoss[], uiHpBoss[];
-
+    BufferedImage uiInterface, uiWitch,uiE,uiQ, hp,mana;
+    BufferedImage start, guide, backgroundStart, backgroundEnd, backgroundBoss, backgroundGuide, quit, setting, backgroundSetting, pointer, mute, nightMode;
+    BufferedImage[] uiBoss, uiHpBoss, uiItem;
     public UI(Panel panel) {
         this.panel = panel;
         loadImage();
@@ -20,82 +19,78 @@ public class UI {
     }
     public void draw(Graphics2D g2) {
 
-        if(panel.gameState==panel.pauseState) {
-            drawPlayScreen(g2);
+        if(panel.getCurrentState() == Panel.gameState.pauseState) {
             drawPauseScreen(g2);
+            return;
         }
-        else if(panel.gameState==panel.startState) {
+        if(panel.getCurrentState() == Panel.gameState.startState) {
             drawStartScreen(g2);
+            return;
         }
-        else if(panel.gameState==panel.playState) {
+        if(panel.getCurrentState()== Panel.gameState.ingameState) {
             drawPlayScreen(g2);
+            return;
         }
-        else if(panel.gameState==panel.guideState) {
+        if(panel.getCurrentState()== Panel.gameState.guideState) {
             drawGuideScreen(g2);
         }
-//        if (panel.hpPercent <= 0){
-//            drawEndGame(g2);
-//        }
     }
+
     public void drawPauseScreen(Graphics2D g2) {
         g2.drawImage(backgroundSetting,panel.screenWidth/2- panel.tileSize*3, panel.screenHeight/2- panel.tileSize*9/2, panel.tileSize*6, panel.tileSize*9, null);
-        g2.drawImage(pointer,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize*2 + panel.tileSize*panel.pointerState*2, panel.tileSize*4, panel.tileSize*2, null);
-        g2.drawImage(quit,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize*2 , panel.tileSize*4, panel.tileSize*2, null);
-        g2.drawImage(guide,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2, panel.tileSize*4, panel.tileSize*2, null);
-        g2.drawImage(mute,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2+ panel.tileSize*2, panel.tileSize*4, panel.tileSize*2, null);
+        g2.drawImage(pointer,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize - panel.tileSize + panel.tileSize * panel.getCurrentPointer()*2, panel.tileSize*4, panel.tileSize*2, null);
+        g2.drawImage(quit,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize - panel.tileSize , panel.tileSize*4, panel.tileSize*2, null);
+        g2.drawImage(guide,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize + panel.tileSize, panel.tileSize*4, panel.tileSize*2, null);
+        g2.drawImage(mute,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize + panel.tileSize*3, panel.tileSize*4, panel.tileSize*2, null);
     }
     public void drawStartScreen(Graphics2D g2) {
         g2.drawImage(backgroundStart,0, 0, panel.screenWidth, panel.screenHeight, null);
-//        g2.drawImage(backgroundStart,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize - panel.tileSize + panel.tileSize*panel.pointerState*2 , panel.tileSize*4, panel.tileSize*2, null);
-        g2.drawImage(pointer,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize*3 + panel.tileSize*panel.pointerState*2 , panel.tileSize*4, panel.tileSize*2, null);
-        g2.drawImage(start,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize*3 , panel.tileSize*4, panel.tileSize*2, null);
+//        g2.drawImage(backgroundStart,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize - panel.tileSize + panel.tileSize*panel.getCurrentPointer()*2 , panel.tileSize*4, panel.tileSize*2, null);
+        g2.drawImage(pointer,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize - panel.tileSize*2 + panel.tileSize*panel.getCurrentPointer()*2 , panel.tileSize*4, panel.tileSize*2, null);
+        g2.drawImage(start,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize - panel.tileSize*2 , panel.tileSize*4, panel.tileSize*2, null);
         g2.drawImage(guide,panel.screenWidth/2- panel.tileSize*2,panel.screenHeight/2-panel.tileSize  , panel.tileSize*4, panel.tileSize*2, null);
 //        g2.drawImage(setting,panel.screenWidth/2- panel.tileSize*2,panel.screenHeight/2-panel.tileSize  + panel.tileSize*2, panel.tileSize*4, panel.tileSize*2, null);
     }
+
     public void drawGuideScreen(Graphics2D g2) {
         g2.drawImage(backgroundGuide,0, 0, panel.screenWidth, panel.screenHeight, null);
+    }
 
-    }
     public void drawPlayScreen(Graphics2D g2) {
-    if(panel.hpBossPercent > 0){
-        g2.drawImage(backgroundBoss,0, 0, panel.screenWidth, panel.screenHeight, null);
-    }
-       else if(panel.night) {
-           g2.drawImage(nightMode,0, 0, panel.screenWidth, panel.screenHeight, null);
-       }
+
+        if(panel.encounterBoss() && panel.getBossHpPercent() > 0){
+            g2.drawImage(backgroundBoss,0, 0, panel.screenWidth, panel.screenHeight, null);
+        }
+//        else if(panel.night) {
+//            g2.drawImage(nightMode,0, 0, panel.screenWidth, panel.screenHeight, null);
+//        }
         g2.drawImage(uiWitch,0, 0, panel.tileSize*3, panel.tileSize*3, null);
         g2.drawImage(uiInterface,panel.tileSize/5, panel.tileSize*3, panel.tileSize*2, panel.tileSize*4, null);
-        if(panel.hpPercent>0)
-            g2.drawImage(hp,panel.tileSize/5 , panel.tileSize*15/4 + (panel.tileSize*139/48)*(100-panel.hpPercent)/100, panel.tileSize*2 , (panel.tileSize*139/48)*panel.hpPercent/100, null);
-        if(panel.manaPercent>0)
-            g2.drawImage(mana,panel.tileSize/5 , panel.tileSize*15/4 +(panel.tileSize*139/48)*(100-panel.manaPercent)/100, panel.tileSize*2, (panel.tileSize*139/48)*panel.manaPercent/100, null);
-            g2.drawImage(uiQ,panel.tileSize , panel.screenHeight - panel.tileSize*3, panel.tileSize*2, panel.tileSize*2, null);
-            g2.drawImage(uiE,panel.tileSize*3, panel.screenHeight - panel.tileSize*3, panel.tileSize*2, panel.tileSize*2, null);
-        if(panel.hpBossPercent > 0) {
-            g2.drawImage(uiBoss[1], panel.tileSize * 37/2, 0, panel.tileSize * 7/2, panel.tileSize * 7/2, null);
+        if(panel.getHpPercent()>0)
+            g2.drawImage(hp,panel.tileSize/5 , panel.tileSize*15/4 + (panel.tileSize*139/48)*(100-panel.getHpPercent())/100, panel.tileSize*2 , (panel.tileSize*139/48)*panel.getHpPercent()/100, null);
+        if(panel.getManaPercent()>0)
+            g2.drawImage(mana,panel.tileSize/5 , panel.tileSize*15/4 +(panel.tileSize*139/48)*(100-panel.getManaPercent())/100, panel.tileSize*2, (panel.tileSize*139/48)*panel.getManaPercent()/100, null);
+        g2.drawImage(uiQ,panel.tileSize , panel.screenHeight - panel.tileSize*3, panel.tileSize*2, panel.tileSize*2, null);
+        g2.drawImage(uiE,panel.tileSize*3, panel.screenHeight - panel.tileSize*3, panel.tileSize*2, panel.tileSize*2, null);
+        if(panel.encounterBoss() && panel.getBossHpPercent() > 0) {
+            g2.drawImage(uiBoss[panel.getBossId()], panel.tileSize * 37/2, 0, panel.tileSize * 7/2, panel.tileSize * 7/2, null);
             g2.drawImage(uiHpBoss[0], panel.tileSize * 17/2, panel.tileSize*3/2, panel.tileSize * 10, panel.tileSize, null);
-            g2.drawImage(uiHpBoss[1], panel.tileSize * 35/4 , panel.tileSize*3/2, (panel.tileSize * 19/2) * panel.hpBossPercent/100, panel.tileSize, null);
+            g2.drawImage(uiHpBoss[1], panel.tileSize * 35/4 , panel.tileSize*3/2, (panel.tileSize * 19/2) * panel.getBossHpPercent()/100, panel.tileSize, null);
         }
 
         int posX;
         int posY;
         int itemSize;
-        if(panel.openItem){
-            posX = panel.screenWidth/2 + panel.tileSize*5;
-            posY = panel.screenHeight/2;
-            itemSize = panel.tileSize*3;
-            g2.drawImage(uiItem[3] , posX  - itemSize*(panel.pointerItem + 1)  ,posY - itemSize/2, itemSize , itemSize,null);
-        }
-        else{
-            posX = panel.screenWidth/2 +  panel.tileSize*10;
+
+            posX = panel.screenWidth - panel.tileSize;
             posY = panel.screenHeight - panel.tileSize*2;
             itemSize = panel.tileSize*3/2;
-        }
-        for(int i = 0;i <3;i++){
+
+        for(int i = 0;i < 3;i++){
             int numItem = 0;
             switch(i){
                 case 0:
-                    numItem = panel.numItemDispel;
+                    numItem = panel.numItemImmunity;
                     break;
                 case 1:
                     numItem = panel.numItemHealMana;
@@ -107,15 +102,16 @@ public class UI {
             g2.drawImage(uiItem[i] , posX  - itemSize*(i+1)  ,posY - itemSize/2, itemSize , itemSize,null);
             g2.drawImage(uiItem[4+numItem] , posX  - itemSize*(i+1)  ,posY - itemSize/2, itemSize , itemSize,null);
         }
-        if(panel.openItem){
-            g2.drawImage(uiItem[3] , panel.screenWidth/2 +  panel.tileSize*5 - itemSize*(panel.pointerItem + 1)  ,posY - itemSize/2, itemSize , itemSize,null);
-        }
+//        if(panel.openItem){
+//            g2.drawImage(uiItem[3] , panel.screenWidth/2 +  panel.tileSize*5 - itemSize*(panel.pointerItem + 1)  ,posY - itemSize/2, itemSize , itemSize,null);
+//        }
     }
+
     public void drawEndGame(Graphics2D g2) {
         g2.drawImage(backgroundEnd,0, 0, panel.screenWidth, panel.screenHeight, null);
-
     }
-    public void loadImage(){
+
+    void loadImage() {
         try {
             uiBoss = new BufferedImage[2];
             uiHpBoss = new BufferedImage[2];
@@ -203,14 +199,9 @@ public class UI {
             uiItem[6] = ImageIO.read(new File(Image7));
             String Image8 = "assets/UI/uiItem-08.png";
             uiItem[7] = ImageIO.read(new File(Image8));
-
-
-
         }
         catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
 }

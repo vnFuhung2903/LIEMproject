@@ -25,7 +25,7 @@ public class WitchE extends Skill {
         int screenX = posX - panel.getPlayer().getPosX() + panel.getPlayer().screenX;
         int screenY = posY - panel.getPlayer().getPosY() + panel.getPlayer().screenY;
         if (onScreen(monster.getMonsterSize()+1,screenX,screenY)) {
-            panel.getMonsterAsset().getWitchEAssets().draw(screenX - panel.tileSize / 2, screenY - panel.tileSize / 2, spriteIndex, monster.getMonsterSize(), g2);
+            panel.getAsset().getWitchEAssets().draw(screenX - panel.tileSize / 2, screenY - panel.tileSize / 2, spriteIndex, monster.getMonsterSize(), g2);
         }
     }
 

@@ -44,7 +44,7 @@ public class Slime extends Monster {
         int screenY = posY - panel.getPlayer().getPosY() + panel.getPlayer().screenY;
 
         if (onScreen(1,screenX,screenY)) {
-            panel.getMonsterAsset().getSlimeAssets().draw(this, screenX, screenY, spriteIndex, g2);
+            panel.getAsset().getSlimeAssets().draw(this, screenX, screenY, spriteIndex, g2);
         }
     }
 
