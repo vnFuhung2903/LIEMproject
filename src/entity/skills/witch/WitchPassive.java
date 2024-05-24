@@ -56,23 +56,23 @@ public class WitchPassive extends Skill {
 
     public void checkHitBox() {
 
-//        for(Monster monster : panel.getMonsters()) {
-//
-//            Rectangle monsterHitBoxArea = monster.getHitBoxArea();
-//            int monsterLeftHitBox = monster.getPosX() + monsterHitBoxArea.x;
-//            int monsterRightHitBox = monsterLeftHitBox + monsterHitBoxArea.width;
-//            int monsterTopHitBox = monster.getPosY() + monsterHitBoxArea.y;
-//            int monsterBottomHitBox = monsterTopHitBox + monsterHitBoxArea.height;
-//
-//            posX = panel.getPlayer().getPosX() + screenX - panel.getPlayer().screenX;
-//            posY = panel.getPlayer().getPosY() + screenY - panel.getPlayer().screenY;
-//            if(monsterLeftHitBox - panel.tileSize / 2 <= posX + hitBoxArea.x
-//                && monsterRightHitBox + panel.tileSize / 2 >= posX + hitBoxArea.x + hitBoxArea.width
-//                && monsterTopHitBox - panel.tileSize / 2 <= posY + hitBoxArea.y
-//                && monsterBottomHitBox + panel.tileSize / 2 >= posY  + hitBoxArea.y + hitBoxArea.height) {
+        for(Monster monster : panel.getMonsters()) {
+
+            Rectangle monsterHitBoxArea = monster.getHitBoxArea();
+            int monsterLeftHitBox = monster.getPosX() + monsterHitBoxArea.x;
+            int monsterRightHitBox = monsterLeftHitBox + monsterHitBoxArea.width;
+            int monsterTopHitBox = monster.getPosY() + monsterHitBoxArea.y;
+            int monsterBottomHitBox = monsterTopHitBox + monsterHitBoxArea.height;
+
+            posX = panel.getPlayer().getPosX() + screenX - panel.getPlayer().screenX;
+            posY = panel.getPlayer().getPosY() + screenY - panel.getPlayer().screenY;
+            if(monsterLeftHitBox - panel.tileSize / 2 <= posX + hitBoxArea.x
+                && monsterRightHitBox + panel.tileSize / 2 >= posX + hitBoxArea.x + hitBoxArea.width
+                && monsterTopHitBox - panel.tileSize / 2 <= posY + hitBoxArea.y
+                && monsterBottomHitBox + panel.tileSize / 2 >= posY  + hitBoxArea.y + hitBoxArea.height) {
 //                System.out.println("Passive hit");
-//                monster.damage(1);
-//            }
-//        }
+                monster.damage(1);
+            }
+        }
     }
 }

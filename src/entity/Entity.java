@@ -8,7 +8,7 @@ import main.Panel;
 public abstract class Entity {
 
     protected Panel panel;
-    protected int posX, posY, speed, moveCounter = 0, actionLockCounter = 0, skillThread, hp, maxHp;
+    protected int posX, posY, speed, moveCounter = 0, actionLockCounter = 0, skillThread, hp, maxHp,mana,maxMana;
     protected boolean attacking = false, stun = false;
     protected boolean flash = false;
     protected KeyHandler keyHandler;
@@ -51,6 +51,7 @@ public abstract class Entity {
     public void checkHitBox() {}
     public void damage(int damagePerHit) {}
     public int getHp() { return hp; }
+    public int getMaxHp() { return maxHp; }
     public void setSpeed(int speed) {
         this.speed = speed;
     }
@@ -65,5 +66,10 @@ public abstract class Entity {
         this.stun = true;
     }
     public void setNotStun() { this.stun = false; }
-
+    public int getMana(){
+        return mana;
+    }
+    public int getMaxMana(){
+        return maxMana;
+    }
 }

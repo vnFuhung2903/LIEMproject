@@ -12,7 +12,7 @@ public class Slime extends Monster {
     public Slime(Panel panel, int speed, int skillThread) {
         super(panel, speed, skillThread);
         this.name = "Slime";
-
+        this.hp = 10;
         Random randomColor = new Random();
         int colorIndex = randomColor.nextInt(1000);
         switch (colorIndex % 3) {

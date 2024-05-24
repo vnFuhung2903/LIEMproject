@@ -134,8 +134,7 @@ public class Slave extends Monster {
                 attackArea.x = posX;
                 attackArea.y = posY - panel.tileSize;
                 if(attackArea.intersects(playerHitBoxArea)){
-                    System.out.println("Slave attack");
-                    panel.setEffect(panel.getPlayer(), "ghostPassive", 5, 2);
+//                    System.out.println("Slave attack");
                     panel.getPlayer().damage(1);
                 }
                 break;
@@ -143,8 +142,7 @@ public class Slave extends Monster {
                 attackArea.x = posX;
                 attackArea.y = posY + panel.tileSize;
                 if(attackArea.intersects(playerHitBoxArea)){
-                    System.out.println("Slave attack");
-                    panel.setEffect(panel.getPlayer(), "ghostPassive", 5, 2);
+//                    System.out.println("Slave attack");
                     panel.getPlayer().damage(1);
                 }
                 break;
@@ -152,8 +150,7 @@ public class Slave extends Monster {
                 attackArea.x = posX + panel.tileSize;
                 attackArea.y = posY;
                 if(attackArea.intersects(playerHitBoxArea)){
-                    System.out.println("Slave attack");
-                    panel.setEffect(panel.getPlayer(), "ghostPassive", 5, 2);
+//                    System.out.println("Slave attack");
                     panel.getPlayer().damage(1);
                 }
                 break;
@@ -161,8 +158,7 @@ public class Slave extends Monster {
                 attackArea.x = posX - panel.tileSize;
                 attackArea.y = posY;
                 if(attackArea.intersects(playerHitBoxArea)){
-                    System.out.println("Slave attack");
-                    panel.setEffect(panel.getPlayer(), "ghostPassive", 5, 2);
+//                    System.out.println("Slave attack");
                     panel.getPlayer().damage(1);
                 }
                 break;

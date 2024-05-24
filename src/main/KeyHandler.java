@@ -44,24 +44,22 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_SPACE:
                 spacePressed = true;
                 break;
-            case KeyEvent.VK_Q:
+            case KeyEvent.VK_J:
                 QPressed = true;
                 break;
-            case KeyEvent.VK_E:
+            case KeyEvent.VK_K:
                 EPressed = true;
                 break;
-            case KeyEvent.VK_K:
-                flashPressed = true;
-                break;
+
             case KeyEvent.VK_I:
                 if(panel.openItem) panel.openItem = false;
                 else panel.openItem = true;
                 break;
             case KeyEvent.VK_RIGHT:
-                if(--panel.pointerItem<0) panel.pointerItem = 3;
+                if(--panel.pointerItem<0) panel.pointerItem = 2;
                 break;
             case KeyEvent.VK_LEFT:
-                if(++panel.pointerItem>3) panel.pointerItem = 0;
+                if(++panel.pointerItem>2) panel.pointerItem = 0;
                 break;
             case KeyEvent.VK_P:
                 if(panel.gameState==panel.playState) {
@@ -89,9 +87,6 @@ public class KeyHandler implements KeyListener {
                     panel.maxState = 1;
                     panel.gameState = panel.startState;
                 }
-                else if(panel.openItem) {
-                    System.out.println("use Item " + (panel.pointerItem + 1));
-                }
                 break;
         }
     }
@@ -115,15 +110,28 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_SPACE:
                 spacePressed = false;
                 break;
-            case KeyEvent.VK_Q:
+            case KeyEvent.VK_J:
                 QPressed = false;
                 break;
-            case KeyEvent.VK_E:
+            case KeyEvent.VK_K:
                 EPressed = false;
                 break;
-            case KeyEvent.VK_K:
-                flashPressed = false;
-                break;
+            case KeyEvent.VK_ENTER:
+                 if(panel.openItem) {
+                switch(panel.pointerItem){
+                    case 2:
+                        if(panel.numItemHealHp>0){panel.numItemHealHp--;
+                            panel.setEffect(panel.getPlayer(), "healing", 5, 2);}
+                        break;
+                    case 1:
+                        if(panel.numItemHealMana>0){panel.numItemHealMana--;
+                            panel.setEffect(panel.getPlayer(), "healingMana", 5, 2);}
+                        break;
+                    case 0:
+                        if(panel.numItemDispel>0)panel.numItemDispel--;
+                        break;
+                }
+            }
         }
     }
 }

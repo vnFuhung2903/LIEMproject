@@ -40,6 +40,14 @@ public class Effect {
                 maxImageNum = 3;
                 effectTimeAnimation = 5;
                 break;
+            case "healingMana":
+                maxImageNum = 5;
+                effectTimeAnimation = 5;
+                break;
+            case "ghostPassive":
+                maxImageNum = 9;
+                effectTimeAnimation = 2;
+                break;
         }
         this.active = true;
         this.entitySize = entitySize;
@@ -74,6 +82,11 @@ public class Effect {
             case "poison":
                 poison(entity);
                 break;
+            case "healingMana":
+                healingMana(entity);
+                break;
+            case "ghostPassive":
+                break;
         }
 
         posX = entity.getPosX();
@@ -81,7 +94,8 @@ public class Effect {
         if (++effectTick >= effectTimeAnimation) {
             effectTick = 0;
             if (++effectIndex >= maxImageNum) {
-                effectIndex = 0;
+                if (name == "ice") effectIndex = maxImageNum;
+                else effectIndex = 0;
                 if(--effectTime == 0)  {
                     active = false;
                     if(Objects.equals(name, "ice")) {
@@ -102,13 +116,17 @@ public class Effect {
     }
 
     public void burn(Entity entity) {
-        entity.hp -= 10;
+        entity.hp -= 2;
     }
     public void poison(Entity entity) {
-        entity.hp -= 1;
+        while(--entity.hp <= 3000) entity.hp -= 1;
     }
     public void heal(Entity entity) {
+        while((entity.hp + 1) <= 3000)
         entity.hp += 1;
+    }
+    public void healingMana(Entity entity) {
+        while((entity.mana + 5) <= 200) entity.mana += 1;
     }
     public void stun(Entity entity) { entity.setStun(); }
     public void  extend(int time) {

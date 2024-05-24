@@ -54,8 +54,19 @@ public class Item {
     }
 
     public void checkHitBox() {
-        if(posX > panel.getPlayer().getPosX() && posX < panel.getPlayer().getPosX() + panel.tileSize * 2 && posY > panel.getPlayer().getPosY() && posY <= panel.getPlayer().getPosY() + panel.tileSize * 2) {
-            System.out.println("Take item");
+        if (posX > panel.getPlayer().getPosX() && posX < panel.getPlayer().getPosX() + panel.tileSize * 2 && posY > panel.getPlayer().getPosY() && posY <= panel.getPlayer().getPosY() + panel.tileSize * 2) {
+            switch (id) {
+                case 3:
+                    if (panel.numItemDispel < 3) panel.numItemDispel++;
+                    break;
+                case 2:
+                    if (panel.numItemHealMana < 3) panel.numItemHealMana++;
+                    break;
+                case 1:
+                    if (panel.numItemHealHp < 3) panel.numItemHealHp++;
+                    break;
+            }
+
             this.collectable = false;
         }
     }

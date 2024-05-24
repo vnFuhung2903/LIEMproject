@@ -37,8 +37,8 @@ public class Skeleton extends Monster {
         readySkillQ = true;
         readySkillR = true;
         attacking = 0;
-        maxHp = hp;
-
+        this.hp = 30000;
+        this.maxHp = 30000;
         this.triggerArea = new Rectangle(-4 * panel.tileSize, -4 * panel.tileSize, 12 * panel.tileSize, 12 * panel.tileSize);
         this.collisionArea = new Rectangle(panel.tileSize / 2, panel.tileSize / 2, 0, panel.tileSize / 2);
         this.hitBoxArea = new Rectangle(panel.tileSize, panel.tileSize, panel.tileSize * 4, panel.tileSize * 4);

@@ -26,12 +26,17 @@ public class Witch extends Character {
 
     WitchQ witchQ;
 
+
     int passiveInterval = 15, getHitInterval = 10, getHitIndex = 0, passiveIndex = 0;
     boolean preparingQ;
 
     public Witch(Panel panel, int skillThread, KeyHandler keyHandler, MouseEventHandler mouseEventHandler) {
         super(panel, skillThread, keyHandler, mouseEventHandler);
         this.attackInterval = 10;
+        this.hp = 3000;
+        this.maxHp = 3000;
+        this.mana = 1000;
+        this.maxMana = 1000;
         this.collisionArea = new Rectangle(panel.tileSize , panel.tileSize , 0, panel.tileSize / 2);
         this.hitBoxArea = new Rectangle(panel.tileSize / 2, panel.tileSize / 2, panel.tileSize, panel.tileSize);
 
@@ -235,6 +240,7 @@ public class Witch extends Character {
                 attackIndex = 0;
                 attacking = false;
                 usingSkillQ = false;
+                mana -= 10;
             }
         }
     }
@@ -259,12 +265,12 @@ public class Witch extends Character {
     }
 
     public void checkAttacking() {
-        if(keyHandler.isUsingSkillQ() && !witchQ.isCasted()) {
+        if(keyHandler.isUsingSkillQ() && !witchQ.isCasted() && mana>=5) {
             attacking = true;
             preparingQ = true;
         }
 
-        if(keyHandler.isUsingSkillE()) {
+        if(keyHandler.isUsingSkillE() && mana >=10) {
             attacking = true;
             usingSkillE = true;
         }

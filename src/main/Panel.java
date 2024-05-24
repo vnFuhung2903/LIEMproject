@@ -48,9 +48,20 @@ public class Panel extends JPanel implements Runnable {
     public boolean night = false;
     public boolean openItem = false;
     public int pointerItem = 0;
+
+    //Item
+    public int numItemHealHp = 0;
+    public int numItemHealMana = 0;
+    public int numItemDispel = 0;
+
+    // HP
+    public int hpBossPercent = 100;
+    public int hpPercent = 100;
+
+    //Mana
+    public int manaPercent = 100;
     // Systems
     TileManage mapTile = new TileManage(this);
-    Nightmode nightmode = new Nightmode(this);
     SandTrap sandTrap;
     SpiderCave spiderCave;
     KeyHandler keyHandler = new KeyHandler(this);
@@ -114,6 +125,9 @@ public class Panel extends JPanel implements Runnable {
     }
 
     public void update() {
+//        if(hpPercent < 0) return;
+        checkHpPercent();
+        checkManaPercent();
         checkNight();
         if(gameState == pauseState || gameState == startState || gameState == guideState) {
             return;
@@ -272,8 +286,10 @@ public class Panel extends JPanel implements Runnable {
         boss.setPosY(mapHeight / 2);
         monsters.add(boss);
 
-//        for(int i = 0; i < 1; ++i) {
-//            boolean created = false;
+        for(int i = 0; i < 10; ++i) {
+            boolean created = false;
+
+            // Create up to: 50 slimes OR 50 spiders OR 20 slaves OR 50 goblins OR 5 hobs
 
 //            while (!created) {
 //                Random randomX = new Random();
@@ -281,21 +297,21 @@ public class Panel extends JPanel implements Runnable {
 //                int x = randomX.nextInt(mapWidth);
 //                int y = randomY.nextInt(mapHeight);
 
-//                int x = mapWidth / 2;
-//                int y = mapHeight / 2;
-//
-//                if(collisionHandler.checkSpawn(x, y, 1)) {
-//                    Ghost monster = new Ghost(this, 5, 10);
-//                    monster.setPosX(x);
-//                    monster.setPosY(y);
-//                    monsters.add(monster);
-//                    System.out.print(x);
-//                    System.out.println(y);
-//                    created = true;
-//                }
-//            }
-//        }
-    }
+                int x = mapWidth / 2;
+                int y = mapHeight / 2;
+
+                if(collisionHandler.checkSpawn(x, y, 1)) {
+                    Goblin monster = new Goblin(this, 5, 10);
+                    monster.setPosX(x);
+                    monster.setPosY(y);
+                    monsters.add(monster);
+                    System.out.print(x);
+                    System.out.println(y);
+                    created = true;
+                }
+            }
+        }
+
 
     public void createItem(int id, int posX, int posY) {
         Random random = new Random();
@@ -322,6 +338,15 @@ public class Panel extends JPanel implements Runnable {
         }
         effects.add(new Effect(this, entity, name, time, entitySize));
     }
+    public void checkHpPercent () {
+
+        hpPercent = player.getHp()*100/player.getMaxHp();
+        hpBossPercent = boss.getHp()*100/boss.getMaxHp();
+    }
+    public void checkManaPercent () {
+        manaPercent = player.getMana()*100/player.getMaxMana();
+    }
+
 
     public void setSkill(Skill skill) {
         skillList.add(skill);

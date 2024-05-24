@@ -14,589 +14,589 @@
  "tiles":[
         {
          "id":65,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/BigBone-02.png",
+         "image":"BigBone-02.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":66,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/BigBone2-01.png",
+         "image":"BigBone2-01.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":67,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/BigBone2-02.png",
+         "image":"BigBone2-02.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":68,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/BigBone2-03.png",
+         "image":"BigBone2-03.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":69,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/BigBone2-04.png",
+         "image":"BigBone2-04.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":70,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/BigBone2-05.png",
+         "image":"BigBone2-05.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":71,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/BigBone2-06.png",
+         "image":"BigBone2-06.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":72,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/BigBone2-07.png",
+         "image":"BigBone2-07.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":73,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/BigBone2-08.png",
+         "image":"BigBone2-08.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":74,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/BigBone-03.png",
+         "image":"BigBone-03.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":75,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/BigBone-04.png",
+         "image":"BigBone-04.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":76,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/BigBone-05.png",
+         "image":"BigBone-05.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":77,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/BigBone-06.png",
+         "image":"BigBone-06.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":78,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/BigBone-07.png",
+         "image":"BigBone-07.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":79,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/BigBone-08.png",
+         "image":"BigBone-08.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":80,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/bigTree-01.png",
+         "image":"bigTree-01.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":81,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/bigTree-02.png",
+         "image":"bigTree-02.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":82,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/bigTree-03.png",
+         "image":"bigTree-03.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":83,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/bigTree-04.png",
+         "image":"bigTree-04.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":84,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/bone1-01.png",
+         "image":"bone1-01.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":85,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/bone1-02.png",
+         "image":"bone1-02.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":86,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/bone1-03.png",
+         "image":"bone1-03.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":87,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/bone1-04.png",
+         "image":"bone1-04.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":88,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/bone2-01.png",
+         "image":"bone2-01.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":89,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/bone2-02.png",
+         "image":"bone2-02.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":90,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/bone2-03.png",
+         "image":"bone2-03.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":91,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/bone2-04.png",
+         "image":"bone2-04.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":92,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/lake-01.png",
+         "image":"lake-01.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":93,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/lake-02.png",
+         "image":"lake-02.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":94,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/lake-03.png",
+         "image":"lake-03.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":95,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/lake-04.png",
+         "image":"lake-04.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":96,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/lake-05.png",
+         "image":"lake-05.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":97,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/lake-06.png",
+         "image":"lake-06.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":98,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/lake-07.png",
+         "image":"lake-07.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":99,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/lake-08.png",
+         "image":"lake-08.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":100,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/lake-09.png",
+         "image":"lake-09.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":101,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/mapDesert-01.png",
+         "image":"mapDesert-01.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":102,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/mapDesertFinal-01.png",
+         "image":"mapDesertFinal-01.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":103,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/mapDesertFinal-02.png",
+         "image":"mapDesertFinal-02.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":104,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/mapDesertFinal-03.png",
+         "image":"mapDesertFinal-03.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":105,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/mapDesertFinal-04.png",
+         "image":"mapDesertFinal-04.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":106,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/mapDesertFinal-05.png",
+         "image":"mapDesertFinal-05.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":107,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/mapDesertFinal-06.png",
+         "image":"mapDesertFinal-06.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":108,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/mapDesertFinal-07.png",
+         "image":"mapDesertFinal-07.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":109,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/mapDesertFinal-08.png",
+         "image":"mapDesertFinal-08.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":110,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/mapDesertFinal-09.png",
+         "image":"mapDesertFinal-09.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":111,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/mapDesertFinal-10.png",
+         "image":"mapDesertFinal-10.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":112,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/mapDesertFinal-11.png",
+         "image":"mapDesertFinal-11.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":113,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/mapDesertFinal-12.png",
+         "image":"mapDesertFinal-12.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":114,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/mapDesertFinal-13.png",
+         "image":"mapDesertFinal-13.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":115,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/mapDesertFinal-14.png",
+         "image":"mapDesertFinal-14.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":116,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/mapDesertFinal-15.png",
+         "image":"mapDesertFinal-15.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":117,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/mapDesertFinal-16.png",
+         "image":"mapDesertFinal-16.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":118,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newbigBone-01.png",
+         "image":"newbigBone-01.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":119,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newbigBone-02.png",
+         "image":"newbigBone-02.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":120,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newbigBone-03.png",
+         "image":"newbigBone-03.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":121,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newbigBone-04.png",
+         "image":"newbigBone-04.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":122,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newbigBone-05.png",
+         "image":"newbigBone-05.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":123,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newbigBone-06.png",
+         "image":"newbigBone-06.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":124,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newbigBone-07.png",
+         "image":"newbigBone-07.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":125,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newbigBone-08.png",
+         "image":"newbigBone-08.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":126,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newbigBone-09.png",
+         "image":"newbigBone-09.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":127,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newbigBone-10.png",
+         "image":"newbigBone-10.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":128,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newbigBone-11.png",
+         "image":"newbigBone-11.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":129,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newbigBone-12.png",
+         "image":"newbigBone-12.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":130,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newbigBone-13.png",
+         "image":"newbigBone-13.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":131,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newbigBone-14.png",
+         "image":"newbigBone-14.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":132,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newbigBone-15.png",
+         "image":"newbigBone-15.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":133,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newbigBone-16.png",
+         "image":"newbigBone-16.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":134,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newbigBone-17.png",
+         "image":"newbigBone-17.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":135,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newbigBone-18.png",
+         "image":"newbigBone-18.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":136,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newBigRock-01.png",
+         "image":"newBigRock-01.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":137,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newBigRock-02.png",
+         "image":"newBigRock-02.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":138,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newBigRock-03.png",
+         "image":"newBigRock-03.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":139,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newBigRock-04.png",
+         "image":"newBigRock-04.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":140,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newBigRock-05.png",
+         "image":"newBigRock-05.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":141,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newBigRock-06.png",
+         "image":"newBigRock-06.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":142,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newBigRock-07.png",
+         "image":"newBigRock-07.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":143,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newBigRock-08.png",
+         "image":"newBigRock-08.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":144,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newBigRock-09.png",
+         "image":"newBigRock-09.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":145,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newBigRock-10.png",
+         "image":"newBigRock-10.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":146,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newBigRock-11.png",
+         "image":"newBigRock-11.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":147,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/newBigRock-12.png",
+         "image":"newBigRock-12.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":148,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/rock-01.png",
+         "image":"rock-01.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":149,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/rock-02.png",
+         "image":"rock-02.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":150,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/rock-03.png",
+         "image":"rock-03.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":151,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/rock-04.png",
+         "image":"rock-04.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":152,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/rock-05.png",
+         "image":"rock-05.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":153,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/rock-06.png",
+         "image":"rock-06.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":154,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/skull1-01.png",
+         "image":"skull1-01.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":155,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/skull1-02.png",
+         "image":"skull1-02.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":156,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/skull1-03.png",
+         "image":"skull1-03.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":157,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/skull1-04.png",
+         "image":"skull1-04.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":158,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/skull2-01.png",
+         "image":"skull2-01.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":159,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/skull2-02.png",
+         "image":"skull2-02.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":160,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/skull2-03.png",
+         "image":"skull2-03.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":161,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/skull2-04.png",
+         "image":"skull2-04.png",
          "imageheight":209,
          "imagewidth":209
         }, 
         {
          "id":162,
-         "image":"..\/source mapdesert\/drive-download-20240511T172507Z-001\/BigBone-01.png",
+         "image":"BigBone-01.png",
          "imageheight":209,
          "imagewidth":209
         }],

@@ -8,10 +8,10 @@ import java.util.Random;
 public class Ghost extends Monster {
 
     boolean invisible;
-    int counterE = 0, counterInvisible = 0, invisibleCD, passiveCD, action;
+    int counterE = 0, counterInvisible = 0, invisibleCD, passiveCD, action,timeCurse;
     public Ghost(Panel panel, int speed, int skillThread) {
         super(panel, speed, skillThread);
-
+        this.hp = 1000;
         Random randomColor = new Random();
         int directionIndex = randomColor.nextInt(5);
         switch (directionIndex) {
@@ -31,6 +31,8 @@ public class Ghost extends Monster {
 
         this.monsterSize = 4;
         this.attackInterval = 10;
+        this.hp = 30000;
+        this.maxHp = 30000;
 
         this.triggerArea = new Rectangle(-4 * panel.tileSize, -4 * panel.tileSize, 9 * panel.tileSize, 9 * panel.tileSize);
         this.collisionArea = new Rectangle(panel.tileSize / 2, panel.tileSize / 2, 0, panel.tileSize / 2);
@@ -170,7 +172,12 @@ public class Ghost extends Monster {
             readySkillQ = false;
             updateAttackAnimation();
             if (attackIndex == 5 && attackTick == 0) {
-                curse();
+                panel.setEffect(panel.getPlayer(), "ghostPassive", 3, 2);
+                if(--timeCurse < 0) {
+                    timeCurse = 10;
+                    curse();
+
+                }
             }
             return;
         }
@@ -209,6 +216,7 @@ public class Ghost extends Monster {
     }
 
     public void curse() {
+
         Random random = new Random();
         int r = random.nextInt();
         switch (r % 3) {
