@@ -23,6 +23,8 @@ public class Witch extends Character {
     BufferedImage[] getHitLeft;
     BufferedImage[] getHitRight;
     BufferedImage[] passiveBackground;
+    protected boolean readyQ = true, readyE = true;
+    protected int counterQ = 0,counterE = 0;
 
     WitchQ witchQ;
 
@@ -53,7 +55,8 @@ public class Witch extends Character {
     }
 
     public void update() {
-
+        cooldownQ();
+        cooldownE();
         checkHitBox();
 
         for(int i = 0; i < 6; ++i) {
@@ -87,7 +90,7 @@ public class Witch extends Character {
                             panel.tileSize*10,panel.tileSize*10);
                     Rectangle monsterArea = new Rectangle(monster.getPosX(),monster.getPosY(),
                             monster.getMonsterSize()*panel.tileSize,monster.getMonsterSize()*panel.tileSize);
-                    if(monster.getPosX() >= posX - panel.tileSize * 10 && monster.getPosY() >= posY - panel.tileSize*10) {
+                    if(checkE.intersects(monsterArea)) {
                         WitchE witchE = new WitchE(panel, 10, this, monster);
                         panel.setSkill(witchE);
                     }
@@ -239,7 +242,6 @@ public class Witch extends Character {
                 attackIndex = 0;
                 attacking = false;
                 usingSkillQ = false;
-                mana -= 50;
             }
         }
     }
@@ -264,14 +266,16 @@ public class Witch extends Character {
     }
 
     public void checkAttacking() {
-        if(keyHandler.isUsingSkillQ() && !witchQ.isCasted() && mana>=10) {
+        if(keyHandler.isUsingSkillQ() && !witchQ.isCasted() && readyQ) {
             attacking = true;
             preparingQ = true;
+            readyQ = false;
         }
 
-        if(keyHandler.isUsingSkillE() && mana>=10) {
+        if(keyHandler.isUsingSkillE() && readyE) {
             attacking = true;
             usingSkillE = true;
+            readyE = false;
         }
     }
 
@@ -288,5 +292,21 @@ public class Witch extends Character {
         hp -= damagePerHit;
         getHit = true;
         spriteIndex = 0;
+    }
+    public void cooldownQ(){
+        if(readyQ == false){
+            if(++counterQ > 200){
+                counterQ = 0;
+                readyQ = true;
+            }
+        }
+    }
+    public void cooldownE(){
+        if(readyE == false){
+            if(++counterE > 200){
+                counterE = 0;
+                readyE = true;
+            }
+        }
     }
 }

@@ -70,7 +70,7 @@ public class WitchPassive extends Skill {
                 && monsterRightHitBox + panel.tileSize / 2 >= posX + hitBoxArea.x + hitBoxArea.width
                 && monsterTopHitBox - panel.tileSize / 2 <= posY + hitBoxArea.y
                 && monsterBottomHitBox + panel.tileSize / 2 >= posY  + hitBoxArea.y + hitBoxArea.height) {
-//                System.out.println("Passive hit");
+                System.out.println("Passive hit");
                 monster.damage(1);
             }
         }

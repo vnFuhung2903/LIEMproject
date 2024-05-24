@@ -52,8 +52,8 @@ public class WitchQ extends Skill {
 
     // Not set pos for Q because laze will change direction with its user
     public void setSkill() {
-        casted = true;
-        spriteIndex = 0;
+            casted = true;
+            spriteIndex = 0;
     }
 
     public void draw(Graphics2D g2) {
@@ -63,13 +63,13 @@ public class WitchQ extends Skill {
 
         switch (panel.getPlayer().getDirection()) {
             case "up":
-                g2.drawImage(skillUp[spriteIndex], screenX, screenY - panel.tileSize * 19 / 4, panel.tileSize * 2, panel.tileSize * 6, null);
+                g2.drawImage(skillUp[spriteIndex], screenX, screenY - panel.tileSize * 5, panel.tileSize * 2, panel.tileSize * 6, null);
                 break;
             case "down":
                 g2.drawImage(skillDown[spriteIndex], screenX, screenY, panel.tileSize * 2, panel.tileSize * 6, null);
                 break;
             case "left":
-                g2.drawImage(skillLeft[spriteIndex], screenX - panel.tileSize * 4, screenY, panel.tileSize * 6, panel.tileSize * 2, null);
+                g2.drawImage(skillLeft[spriteIndex], screenX - panel.tileSize * 18/4, screenY, panel.tileSize * 6, panel.tileSize * 2, null);
                 break;
             case "right":
                 g2.drawImage(skillRight[spriteIndex], screenX, screenY, panel.tileSize * 6, panel.tileSize * 2, null);
@@ -82,54 +82,54 @@ public class WitchQ extends Skill {
 
         for(Monster monster : monsters) {
 
-            Rectangle monsterHitBoxArea = monster.getHitBoxArea();
-            int monsterLeftHitBox = monster.getPosX() + monsterHitBoxArea.x;
-            int monsterRightHitBox = monsterLeftHitBox + monsterHitBoxArea.width;
-            int monsterTopHitBox = monster.getPosY() + monsterHitBoxArea.y;
-            int monsterBottomHitBox = monsterTopHitBox + monsterHitBoxArea.height;
+            Rectangle monsterHitBoxArea = new Rectangle(monster.getPosX()+monster.getHitBoxArea().x,
+                    monster.getPosY() + monster.getHitBoxArea().y,
+                    monster.getHitBoxArea().width,monster.getHitBoxArea().height);
+            Rectangle areaQ = new Rectangle(0,0,0,0);
+
 
             switch (panel.getPlayer().getDirection()) {
                 case "up":
-                    posX = panel.getPlayer().getPosX();
-                    posY = panel.getPlayer().getPosY() - panel.tileSize * 5;
-                    if(monsterLeftHitBox - panel.tileSize / 2 <= posX + panel.tileSize / 2
-                        && monsterRightHitBox + panel.tileSize / 2 >= posX + panel.tileSize * 3 / 2
-                        && monsterTopHitBox >= posY
-                        && monsterBottomHitBox <= posY + panel.tileSize * 6) {
+                    areaQ.x = panel.getPlayer().getPosX();
+                    areaQ.y = panel.getPlayer().getPosY() - panel.tileSize * 5;
+                    areaQ.width = panel.tileSize * 2;
+                    areaQ.height = panel.tileSize * 6;
+                    if(areaQ.intersects(monsterHitBoxArea)){
                         panel.setWitchSkillEffects(monster, 10);
+                        System.out.println("dame");
                         monster.damage(1);
                     }
                     break;
                 case "down":
-                    posX = panel.getPlayer().getPosX();
-                    posY = panel.getPlayer().getPosY();
-                    if(monsterLeftHitBox - panel.tileSize / 2 <= posX + panel.tileSize / 2
-                        && monsterRightHitBox + panel.tileSize / 2 >= posX + panel.tileSize * 3 / 2
-                        && monsterTopHitBox >= posY
-                        && monsterBottomHitBox <= posY + panel.tileSize * 6) {
+                    areaQ.x = panel.getPlayer().getPosX();
+                    areaQ.y = panel.getPlayer().getPosY();
+                    areaQ.width = panel.tileSize * 2;
+                    areaQ.height = panel.tileSize * 6;
+                    if(areaQ.intersects(monsterHitBoxArea)) {
                         panel.setWitchSkillEffects(monster, 10);
+                        System.out.println("dame");
                         monster.damage(1);
                     }
                     break;
                 case "left":
-                    posX = panel.getPlayer().getPosX() - panel.tileSize * 4;
-                    posY = panel.getPlayer().getPosY();
-                    if(monsterLeftHitBox >= posX
-                        && monsterRightHitBox <= posX + panel.tileSize * 6
-                        && monsterTopHitBox - panel.tileSize / 2 <= posY + panel.tileSize / 2
-                        && monsterBottomHitBox + panel.tileSize / 2 >= posY + panel.tileSize * 3 / 2) {
+                    areaQ.x = panel.getPlayer().getPosX() - panel.tileSize * 5;
+                    areaQ.y = panel.getPlayer().getPosY();
+                    areaQ.width = panel.tileSize * 6;
+                    areaQ.height = panel.tileSize * 2;
+                    if(areaQ.intersects(monsterHitBoxArea)) {
                         panel.setWitchSkillEffects(monster, 10);
+                        System.out.println("dame");
                         monster.damage(1);
                     }
                     break;
                 case "right":
-                    posX = panel.getPlayer().getPosX();
-                    posY = panel.getPlayer().getPosY();
-                    if(monsterLeftHitBox >= posX
-                        && monsterRightHitBox >= posX + panel.tileSize * 6
-                        && monsterTopHitBox - panel.tileSize / 2 <= posY + panel.tileSize / 2
-                        && monsterBottomHitBox + panel.tileSize / 2 >= posY + panel.tileSize * 3 / 2) {
+                    areaQ.x = panel.getPlayer().getPosX();
+                    areaQ.y = panel.getPlayer().getPosY();
+                    areaQ.width = panel.tileSize * 6;
+                    areaQ.height = panel.tileSize * 2;
+                    if(areaQ.intersects(monsterHitBoxArea)) {
                         panel.setWitchSkillEffects(monster, 10);
+                        System.out.println("dame");
                         monster.damage(1);
                     }
                     break;

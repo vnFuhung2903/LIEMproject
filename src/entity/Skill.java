@@ -22,5 +22,5 @@ public class Skill extends Entity {
 
     public void setSkill(int posX, int posY) {}
 
-    public boolean isCasted() { return casted; }
+    public boolean isCasted() { return casted;}
 }
