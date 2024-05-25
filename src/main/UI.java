@@ -34,9 +34,9 @@ public class UI {
         if(panel.getCurrentState()== Panel.gameState.guideState) {
             drawGuideScreen(g2);
         }
-//        if (panel.hpPercent <= 0){
-//            drawEndGame(g2);
-//        }
+        if (panel.getHpPercent() <= 0){
+            drawEndGame(g2);
+        }
     }
 
     public void drawPauseScreen(Graphics2D g2) {

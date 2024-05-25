@@ -90,9 +90,9 @@ public class WitchQ extends Skill {
 
             switch (panel.getPlayer().getDirection()) {
                 case "up":
-                    areaQ.x = panel.getPlayer().getPosX();
+                    areaQ.x = panel.getPlayer().getPosX() + panel.tileSize / 2;
                     areaQ.y = panel.getPlayer().getPosY() - panel.tileSize * 5;
-                    areaQ.width = panel.tileSize * 2;
+                    areaQ.width = panel.tileSize;
                     areaQ.height = panel.tileSize * 6;
                     if(areaQ.intersects(monsterHitBoxArea)){
                         panel.setWitchSkillEffects(monster, 10);
@@ -101,9 +101,9 @@ public class WitchQ extends Skill {
                     }
                     break;
                 case "down":
-                    areaQ.x = panel.getPlayer().getPosX();
-                    areaQ.y = panel.getPlayer().getPosY();
-                    areaQ.width = panel.tileSize * 2;
+                    areaQ.x = panel.getPlayer().getPosX() + panel.tileSize * 2;
+                    areaQ.y = panel.getPlayer().getPosY() + panel.tileSize;
+                    areaQ.width = panel.tileSize;
                     areaQ.height = panel.tileSize * 6;
                     if(areaQ.intersects(monsterHitBoxArea)) {
                         panel.setWitchSkillEffects(monster, 10);
@@ -113,9 +113,9 @@ public class WitchQ extends Skill {
                     break;
                 case "left":
                     areaQ.x = panel.getPlayer().getPosX() - panel.tileSize * 5;
-                    areaQ.y = panel.getPlayer().getPosY();
+                    areaQ.y = panel.getPlayer().getPosY() + panel.tileSize / 2;
                     areaQ.width = panel.tileSize * 6;
-                    areaQ.height = panel.tileSize * 2;
+                    areaQ.height = panel.tileSize;
                     if(areaQ.intersects(monsterHitBoxArea)) {
                         panel.setWitchSkillEffects(monster, 10);
                         System.out.println("dame");
@@ -123,10 +123,10 @@ public class WitchQ extends Skill {
                     }
                     break;
                 case "right":
-                    areaQ.x = panel.getPlayer().getPosX();
-                    areaQ.y = panel.getPlayer().getPosY();
+                    areaQ.x = panel.getPlayer().getPosX() + panel.tileSize;
+                    areaQ.y = panel.getPlayer().getPosY() + panel.tileSize / 2;
                     areaQ.width = panel.tileSize * 6;
-                    areaQ.height = panel.tileSize * 2;
+                    areaQ.height = panel.tileSize;
                     if(areaQ.intersects(monsterHitBoxArea)) {
                         panel.setWitchSkillEffects(monster, 10);
                         System.out.println("dame");

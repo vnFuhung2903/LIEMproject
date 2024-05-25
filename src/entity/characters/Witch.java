@@ -70,7 +70,10 @@ public class Witch extends Character {
 //            return;
 //        }
 
-        if(usingSkillQ) witchQ.update();
+        if(usingSkillQ) {
+            witchQ.update();
+            mana -= 3;
+        }
 //        if(usingSkillE) witchE.update();
 
         if (attacking) {
@@ -95,6 +98,7 @@ public class Witch extends Character {
                         panel.setSkill(witchE);
                     }
                 }
+                mana -=100;
                 usingSkillE = false;
             }
         }
@@ -295,7 +299,7 @@ public class Witch extends Character {
     }
     public void cooldownQ(){
         if(readyQ == false){
-            if(++counterQ > 500){
+            if(++counterQ > 300){
                 counterQ = 0;
                 readyQ = true;
             }
@@ -303,7 +307,7 @@ public class Witch extends Character {
     }
     public void cooldownE(){
         if(readyE == false){
-            if(++counterE > 500){
+            if(++counterE > 300){
                 counterE = 0;
                 readyE = true;
             }

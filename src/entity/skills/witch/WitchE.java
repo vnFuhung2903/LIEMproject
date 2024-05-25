@@ -33,7 +33,7 @@ public class WitchE extends Skill {
         posX = monster.getPosX();
         posY = monster.getPosY();
         if(spriteIndex > 11) {
-            monster.damage(1);
+            monster.damage(50);
         }
         updateAnimation();
     }
