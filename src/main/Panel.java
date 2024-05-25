@@ -311,7 +311,7 @@ public class Panel extends JPanel implements Runnable {
 
     public void createItem(int posX, int posY) {
         Random random = new Random();
-        int idx = random.nextInt(3);
+        int idx = random.nextInt(3) + 1;
         items.add(new Item(this, idx, posX, posY));
     }
 
@@ -367,7 +367,12 @@ public class Panel extends JPanel implements Runnable {
         return player.getMana() * 100 / player.getMaxMana();
     }
 
-
+    public boolean countdownQ(){
+        return player.countdownQ();
+}
+    public boolean countdownE(){
+        return player.countdownE();
+    }
     public void setSkill(Skill skill) {
         skillList.add(skill);
     }
