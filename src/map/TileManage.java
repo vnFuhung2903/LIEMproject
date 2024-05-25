@@ -28,7 +28,7 @@ public class TileManage  {
     }
     public void getTileImage() {
         try {
-            imageObj = new JSONObject(new JSONTokener(new FileReader("assets/mapDesert/image.tsj")));
+            imageObj = new JSONObject(new JSONTokener(new FileReader("assets/mapDesert/imagedesert.tsj")));
             JSONArray tiles = imageObj.getJSONArray("tiles");
 
             for(int i = 0; i < tiles.length(); ++i) {
@@ -50,7 +50,7 @@ public class TileManage  {
 //            Random random = new Random();
 //            int r = random.nextInt(4);
 //            map = "assets/mapDesert/desert" + (r + 1) + ".json";
-            mapObj = new JSONObject(new JSONTokener(new FileReader("assets/mapDesert/map.json")));
+            mapObj = new JSONObject(new JSONTokener(new FileReader("assets/mapDesert/desert1.json")));
             JSONArray layers = mapObj.getJSONArray("layers");
             JSONArray data = layers.getJSONObject(0).getJSONArray("data");
             mapWidth = layers.getJSONObject(0).getInt("width");
@@ -88,7 +88,7 @@ public class TileManage  {
 
                 if (isInDisplayArea(mapX, mapY, minX, minY, maxX, maxY)) {
                     int tileNum = mapTileNum[row][col];
-                    if (tileNum >= 0 && tileNum < 100 & tile[tileNum] != null) {
+                    if ( tile[tileNum] != null) {
                         g2.drawImage(tile[tileNum].image, mapX - playerX + screenX, mapY - playerY + screenY, panel.tileSize, panel.tileSize, null);
 
                     }

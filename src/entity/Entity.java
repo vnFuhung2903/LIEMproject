@@ -37,7 +37,6 @@ public abstract class Entity {
     public int getPosY() {
         return posY;
     }
-
     public void setPosY(int pos) {
         posY = pos;
     }
@@ -75,10 +74,10 @@ public abstract class Entity {
         return maxMana;
     }
 
-    public boolean countdownQ(){
-        return readyQ;
+    public int countdownQ(){
+        return (500-counterQ)*100/500;
     }
-    public boolean countdownE(){
-        return readyE;
+    public int countdownE(){
+        return (500-counterE)*100/500;
     }
 }

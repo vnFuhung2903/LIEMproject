@@ -77,10 +77,10 @@ public class UI {
         g2.drawImage(uiQ,panel.tileSize , panel.screenHeight - panel.tileSize*3, panel.tileSize*2, panel.tileSize*2, null);
         g2.drawImage(uiE,panel.tileSize*3, panel.screenHeight - panel.tileSize*3, panel.tileSize*2, panel.tileSize*2, null);
 
-        if(!panel.countdownQ() )
-            g2.drawImage(cooldownSkill,panel.tileSize , (panel.screenHeight - panel.tileSize*3), panel.tileSize*2, panel.tileSize*2, null);
-        if(!panel.countdownE())
-            g2.drawImage(cooldownSkill,panel.tileSize*3 , (panel.screenHeight - panel.tileSize*3), panel.tileSize*2, panel.tileSize*2, null);
+        if(panel.countdownQ() < 100 )
+            g2.drawImage(cooldownSkill,panel.tileSize , (panel.screenHeight - panel.tileSize*11/4) + panel.tileSize*3/2 *(100-  panel.countdownQ())/100 , panel.tileSize*2 , panel.tileSize*3/2 * panel.countdownQ()/100, null);
+        if(panel.countdownE() < 100)
+            g2.drawImage(cooldownSkill,panel.tileSize*3, (panel.screenHeight - panel.tileSize*11/4) + + panel.tileSize*3/2 *(100-  panel.countdownE())/100, panel.tileSize*2  , panel.tileSize*3/2* panel.countdownE()/100, null);
 
         if(panel.encounterBoss() && panel.getBossHpPercent() > 0) {
             g2.drawImage(uiBoss[panel.getBossId()], panel.tileSize * 37/2, 0, panel.tileSize * 7/2, panel.tileSize * 7/2, null);

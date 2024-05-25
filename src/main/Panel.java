@@ -286,32 +286,32 @@ public class Panel extends JPanel implements Runnable {
     }
     void setMonsters() {
 
-//        for(int i = 0; i < 1; ++i) {
-//            boolean created = false;
+        for(int i = 0; i < 10; ++i) {
+            boolean created = false;
 
-//            while (!created) {
-//                Random randomX = new Random();
-//                Random randomY = new Random();
-//                int x = randomX.nextInt(mapWidth);
-//                int y = randomY.nextInt(mapHeight);
+            while (!created) {
+                Random randomX = new Random();
+                Random randomY = new Random();
+                int x = randomX.nextInt(mapWidth);
+                int y = randomY.nextInt(mapHeight);
 
 //
-//                if(collisionHandler.checkSpawn(x, y, 1)) {
-//                    Ghost monster = new Ghost(this, 5, 10);
-//                    monster.setPosX(x);
-//                    monster.setPosY(y);
-//                    monsters.add(monster);
-//                    System.out.print(x);
-//                    System.out.println(y);
-//                    created = true;
-//                }
-//            }
-//        }
+                if(collisionHandler.checkSpawn(x, y, 1)) {
+                    Slime monster = new Slime(this, 5, 10);
+                    monster.setPosX(x);
+                    monster.setPosY(y);
+                    monsters.add(monster);
+                    System.out.print(x);
+                    System.out.println(y);
+                    created = true;
+                }
+            }
+        }
     }
 
     public void createItem(int posX, int posY) {
         Random random = new Random();
-        int idx = random.nextInt(3) + 1;
+        int idx = random.nextInt(3);
         items.add(new Item(this, idx, posX, posY));
     }
 
@@ -367,10 +367,10 @@ public class Panel extends JPanel implements Runnable {
         return player.getMana() * 100 / player.getMaxMana();
     }
 
-    public boolean countdownQ(){
+    public int countdownQ(){
         return player.countdownQ();
 }
-    public boolean countdownE(){
+    public int countdownE(){
         return player.countdownE();
     }
     public void setSkill(Skill skill) {

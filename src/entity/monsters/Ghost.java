@@ -221,13 +221,13 @@ public class Ghost extends Monster {
         int r = random.nextInt();
         switch (r % 3) {
             case 0:
-                panel.setEffect(panel.getPlayer(), "ice", 10, 2);
+                panel.setEffect(panel.getPlayer(), "ice", 20, 2);
                 break;
             case 1:
-                panel.setEffect(panel.getPlayer(), "burn", 10, 2);
+                panel.setEffect(panel.getPlayer(), "burn", 20, 2);
                 break;
             default:
-                panel.setEffect(panel.getPlayer(), "poison", 10, 2);
+                panel.setEffect(panel.getPlayer(), "poison", 20, 2);
                 break;
         }
     }
