@@ -13,23 +13,7 @@ public class Spider extends Monster {
     public Spider(Panel panel, int speed, int skillThread, SpiderCave spiderCave) {
         super(panel, speed, skillThread);
 
-        Random randomColor = new Random();
-        int directionIndex = randomColor.nextInt(5);
-        switch (directionIndex) {
-            case 1:
-                direction = "left";
-                break;
-            case 2:
-                direction = "right";
-                break;
-            case 3:
-                direction = "up";
-                break;
-            case 4:
-                direction = "down";
-                break;
-        }
-
+        setRandomDirection();
         this.monsterSize = 1;
         this.cave = spiderCave;
 

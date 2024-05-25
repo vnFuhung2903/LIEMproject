@@ -25,8 +25,8 @@ public class Panel extends JPanel implements Runnable {
 
 
     public int timeNight = 2000;
-    final public int maxMapCol = 250;
-    final public int maxMapRow = 250;
+    final public int maxMapCol = 100;
+    final public int maxMapRow = 100;
     final public int mapWidth = tileSize * maxMapRow;
     final public int mapHeight = tileSize * maxMapCol;
 
@@ -45,7 +45,7 @@ public class Panel extends JPanel implements Runnable {
     String[] startOption = {"start", "guide"};
     String[] pauseOption = {"back", "quit", "mute"};
     int currentPointer = 0;
-    boolean bossFighter = true;
+    boolean bossFighter = false;
 
     // UI
     boolean night = false;
@@ -82,8 +82,8 @@ public class Panel extends JPanel implements Runnable {
     public Panel() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setPreferredSize(new Dimension(screenSize.width,screenSize.height));
-        setBgColor(243, 174, 92);
-
+//        setBgColor(243, 174, 92);
+        setBgColor(212, 243, 255);
         // in some cases, using double buffered my increase resource usage and latency (tang tai nguyen va do tre)
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
@@ -143,6 +143,7 @@ public class Panel extends JPanel implements Runnable {
                     boss = new Ghost(this, 5, 10);
                     break;
             }
+            if(boss == null) System.out.println(bossId);
             boss.setPosX(mapWidth / 2);
             boss.setPosY(mapHeight / 2);
             monsters.add(boss);

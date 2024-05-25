@@ -11,24 +11,8 @@ public class Ghost extends Monster {
     int counterE = 0, counterInvisible = 0, invisibleCD, passiveCD, action,timeCurse;
     public Ghost(Panel panel, int speed, int skillThread) {
         super(panel, speed, skillThread);
-        this.hp = 10;
-        Random randomColor = new Random();
-        int directionIndex = randomColor.nextInt(5);
-        switch (directionIndex) {
-            case 1:
-                direction = "left";
-                break;
-            case 2:
-                direction = "right";
-                break;
-            case 3:
-                direction = "up";
-                break;
-            case 4:
-                direction = "down";
-                break;
-        }
 
+        setRandomDirection();
         this.monsterSize = 4;
         this.attackInterval = 10;
         this.hp = 30000;
@@ -62,30 +46,30 @@ public class Ghost extends Monster {
         checkTriggerPlayer();
         if (++actionLockCounter == 50) {
             actionLockCounter = 0;
-            if (triggering) {
-
-                int distanceX = posX - panel.getPlayer().getPosX();
-                int distanceY = posY - panel.getPlayer().getPosY();
-
-                if (Math.abs(distanceX) < Math.abs(distanceY)) {
-                    collisionDetected = false;
-                    direction = distanceY < 0 ? "down" : "up";
-                    panel.collisionHandler.checkMapCollision(this);
-                    if (!collisionDetected)
-                        return;
-                } else {
-                    collisionDetected = false;
-                    direction = distanceX < 0 ? "right" : "left";
-                    panel.collisionHandler.checkMapCollision(this);
-                    if (!collisionDetected)
-                        return;
-                }
-
-                collisionDetected = false;
-                triggering = false;
-            }
-
-            setRandomDirection();
+//            if (triggering) {
+//
+//                int distanceX = posX - panel.getPlayer().getPosX();
+//                int distanceY = posY - panel.getPlayer().getPosY();
+//
+//                if (Math.abs(distanceX) < Math.abs(distanceY)) {
+//                    collisionDetected = false;
+//                    direction = distanceY < 0 ? "down" : "up";
+//                    panel.collisionHandler.checkMapCollision(this);
+//                    if (!collisionDetected)
+//                        return;
+//                } else {
+//                    collisionDetected = false;
+//                    direction = distanceX < 0 ? "right" : "left";
+//                    panel.collisionHandler.checkMapCollision(this);
+//                    if (!collisionDetected)
+//                        return;
+//                }
+//
+//                collisionDetected = false;
+//                triggering = false;
+//            }
+//
+//            setRandomDirection();
         }
     }
 

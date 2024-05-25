@@ -10,23 +10,7 @@ public class Goblin extends Monster {
     public Goblin(Panel panel, int speed, int skillThread) {
         super(panel, speed, skillThread);
 
-        Random randomColor = new Random();
-        int directionIndex = randomColor.nextInt(5);
-        switch (directionIndex) {
-            case 1:
-                direction = "left";
-                break;
-            case 2:
-                direction = "right";
-                break;
-            case 3:
-                direction = "up";
-                break;
-            case 4:
-                direction = "down";
-                break;
-        }
-
+        setRandomDirection();
         this.monsterSize = 1;
         this.attackInterval = 10;
 

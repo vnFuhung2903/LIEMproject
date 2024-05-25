@@ -15,18 +15,18 @@ public class Slime extends Monster {
         this.hp = 10;
         Random randomColor = new Random();
         int colorIndex = randomColor.nextInt(1000);
-        switch (colorIndex % 3) {
+        switch (colorIndex % 4) {
             case 0:
                 color = "Red";
                 break;
             case 1:
                 color = "Green";
                 break;
-            case 3:
-                color = "Blue";
-                break;
             case 2:
                 color = "Poison";
+                break;
+            default:
+                color = "Blue";
                 break;
         }
         setRandomDirection();
