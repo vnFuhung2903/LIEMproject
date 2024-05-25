@@ -49,8 +49,6 @@ public class Panel extends JPanel implements Runnable {
 
     // UI
     boolean night = false;
-    public boolean openItem = false;
-    public int pointerItem = 0;
     int bossId;
 
     // Systems
@@ -72,6 +70,7 @@ public class Panel extends JPanel implements Runnable {
     ArrayList<Effect> effects = new ArrayList<>();
     Asset asset = new Asset(this);
     Monster boss;
+    TeleportGate teleportGate;
     ArrayList<WitchQStun> witchSkillEffects = new ArrayList<>();
 
     // Items
@@ -130,11 +129,20 @@ public class Panel extends JPanel implements Runnable {
 
         useItem(keyHandler.getItemPressed());
 
-        if(sandTrap != null) sandTrap.update();
-        if(boss != null) boss.update();
-        else if(bossFighter) {
+        if(teleportGate != null) {
+            teleportGate.update();
+        }
+
+        if(boss != null) {
+            if(boss.getHp() <= 0) {
+                teleportGate = new TeleportGate(this, boss.getPosX() + tileSize * 2, boss.getPosY() + tileSize * 2);
+                boss = null;
+            }
+            else boss.update();
+        }
+        else if(bossFighter && teleportGate == null) {
             Random random = new Random();
-            bossId = random.nextInt() % 2;
+            bossId = random.nextInt() & 1;
             switch(bossId) {
                 case 0:
                     boss = new Skeleton(this, 5, 10);
@@ -143,7 +151,6 @@ public class Panel extends JPanel implements Runnable {
                     boss = new Ghost(this, 5, 10);
                     break;
             }
-            if(boss == null) System.out.println(bossId);
             boss.setPosX(mapWidth / 2);
             boss.setPosY(mapHeight / 2);
             monsters.add(boss);
@@ -151,6 +158,8 @@ public class Panel extends JPanel implements Runnable {
             sound.bossMusic.loop(Clip.LOOP_CONTINUOUSLY);
             bossFighter = false;
         }
+
+        if(sandTrap != null) sandTrap.update();
 
         monsters.removeIf(monster -> monster.getHp() <= 0);
         for(Monster monster : monsters) {
@@ -200,7 +209,7 @@ public class Panel extends JPanel implements Runnable {
         if(currentState == gameState.ingameState || currentState == gameState.pauseState) {
 
             // Draw map
-            sandTrap.draw(g2);
+            if(sandTrap != null) sandTrap.draw(g2);
             mapTile.draw(g2);
             spiderCave.draw(g2);
 
@@ -285,6 +294,7 @@ public class Panel extends JPanel implements Runnable {
             System.out.println(y);
         }
     }
+
     void setMonsters() {
 
         for(int i = 0; i < 10; ++i) {
@@ -310,10 +320,21 @@ public class Panel extends JPanel implements Runnable {
         }
     }
 
+    public void resetGame() {
+        boss = null;
+        sandTrap = null;
+        teleportGate = null;
+        bossFighter = false;
+        mapTile.loadDesertMap();
+        mapTile.getTileImage("assets/mapDesert/imagedesert.tsj");
+        setBgColor(243, 174, 92);
+        setMonsters();
+    }
+
     public void createItem(int posX, int posY) {
         Random random = new Random();
-        int idx = random.nextInt(3);
-        items.add(new Item(this, idx, posX, posY));
+        int idx = random.nextInt() & 3;
+        items.add(new Item(this, idx % 3, posX, posY));
     }
 
     public void setWitchSkillEffects(Monster monster, int time) {
@@ -374,6 +395,7 @@ public class Panel extends JPanel implements Runnable {
     public int countdownE(){
         return player.countdownE();
     }
+
     public void setSkill(Skill skill) {
         skillList.add(skill);
     }
