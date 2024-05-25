@@ -43,7 +43,7 @@ public class Panel extends JPanel implements Runnable {
     };
     gameState currentState;
     String[] startOption = {"start", "guide"};
-    String[] pauseOption = {"back", "quit", "mute"};
+    String[] pauseOption = {"back", "mute", "quit"};
     int currentPointer = 0;
     boolean bossFighter = false;
 
