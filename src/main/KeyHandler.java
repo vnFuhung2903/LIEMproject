@@ -33,12 +33,14 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_W:
             case KeyEvent.VK_UP:
                 upPressed = true;
-                panel.modifyPointer(-1, panel.startOption);
+                if(panel.getCurrentState() == Panel.gameState.startState) panel.modifyPointer(-1, panel.startOption);
+                if(panel.getCurrentState() == Panel.gameState.pauseState) panel.modifyPointer(-1, panel.pauseOption);
                 break;
             case KeyEvent.VK_S:
             case KeyEvent.VK_DOWN:
                 downPressed = true;
-                panel.modifyPointer(1, panel.startOption);
+                if(panel.getCurrentState() == Panel.gameState.startState) panel.modifyPointer(1, panel.startOption);
+                if(panel.getCurrentState() == Panel.gameState.pauseState) panel.modifyPointer(1, panel.pauseOption);
                 break;
             case KeyEvent.VK_A:
             case KeyEvent.VK_LEFT:
@@ -94,12 +96,17 @@ public class KeyHandler implements KeyListener {
                     panel.resetCurrentPointer();
                     break;
                 }
-                if(panel.getCurrentState() == Panel.gameState.pauseState &&  Objects.equals(panel.getCurrentOption(panel.pauseOption), "quit")) {
-                    panel.setCurrentState(Panel.gameState.startState);
-                    if(panel.encounterBoss()) panel.sound.bossMusic.close();
-                    else panel.sound.igMusic.close();
-                    panel.sound.startMusic.loop(Clip.LOOP_CONTINUOUSLY);
-                    panel.resetCurrentPointer();
+                if(panel.getCurrentState() == Panel.gameState.pauseState) {
+                    if(Objects.equals(panel.getCurrentOption(panel.pauseOption), "quit")) {
+                        System.exit(0);
+                        break;
+                    }
+                    if(Objects.equals(panel.getCurrentOption(panel.pauseOption), "mute")) {
+                        if (panel.encounterBoss()) panel.sound.bossMusic.close();
+                        else panel.sound.igMusic.close();
+                        break;
+                    }
+                    panel.setCurrentState(Panel.gameState.ingameState);
                 }
                 break;
         }

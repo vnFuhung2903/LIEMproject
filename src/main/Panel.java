@@ -43,7 +43,7 @@ public class Panel extends JPanel implements Runnable {
     };
     gameState currentState;
     String[] startOption = {"start", "guide"};
-    String[] pauseOption = {"back", "quit"};
+    String[] pauseOption = {"back", "quit", "mute"};
     int currentPointer = 0;
     boolean bossFighter = true;
 
@@ -137,10 +137,10 @@ public class Panel extends JPanel implements Runnable {
             int r = random.nextInt();
             switch(r % 2) {
                 case 0:
-                    boss = new Skeleton(this, 10, 10);
+                    boss = new Skeleton(this, 5, 10);
                     break;
                 case 1:
-                    boss = new Ghost(this, 10, 10);
+                    boss = new Ghost(this, 5, 10);
                     break;
             }
             boss.setPosX(mapWidth / 2);
