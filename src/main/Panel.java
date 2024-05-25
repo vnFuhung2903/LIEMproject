@@ -134,8 +134,8 @@ public class Panel extends JPanel implements Runnable {
         if(boss != null) boss.update();
         else if(bossFighter) {
             Random random = new Random();
-            int r = random.nextInt();
-            switch(r % 2) {
+            bossId = random.nextInt() % 2;
+            switch(bossId) {
                 case 0:
                     boss = new Skeleton(this, 5, 10);
                     break;
@@ -338,16 +338,19 @@ public class Panel extends JPanel implements Runnable {
             case 0:
                 if(numItemHealHp > 0) {
                     setEffect(player, "healing", 10, 2);
+                    --numItemHealHp;
                 }
                 break;
             case 1:
                 if(numItemHealMana > 0) {
                     setEffect(player, "healingMana", 10, 2);
+                    --numItemHealMana;
                 }
                 break;
             case 2:
-                if(numItemHealHp > 0) {
+                if(numItemImmunity > 0) {
                     setEffect(player, "immune", 10, 2);
+                    --numItemImmunity;
                 }
                 break;
             default:
