@@ -10,6 +10,8 @@ public abstract class Entity {
     protected Panel panel;
     protected int posX, posY, speed, moveCounter = 0, actionLockCounter = 0, skillThread, hp, maxHp, mana, maxMana;
     protected boolean attacking = false, stun = false;
+    protected boolean readyQ = true, readyE = true;
+    protected int counterQ = 0,counterE = 0;
     protected boolean immune = false;
     protected KeyHandler keyHandler;
 
@@ -35,7 +37,6 @@ public abstract class Entity {
     public int getPosY() {
         return posY;
     }
-
     public void setPosY(int pos) {
         posY = pos;
     }
@@ -71,5 +72,12 @@ public abstract class Entity {
     }
     public int getMaxMana(){
         return maxMana;
+    }
+
+    public int countdownQ(){
+        return (500-counterQ)*100/500;
+    }
+    public int countdownE(){
+        return (500-counterE)*100/500;
     }
 }

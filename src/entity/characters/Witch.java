@@ -23,8 +23,8 @@ public class Witch extends Character {
     BufferedImage[] getHitLeft;
     BufferedImage[] getHitRight;
     BufferedImage[] passiveBackground;
-    protected boolean readyQ = true, readyE = true;
-    protected int counterQ = 0,counterE = 0;
+
+
 
     WitchQ witchQ;
 
@@ -34,8 +34,8 @@ public class Witch extends Character {
     public Witch(Panel panel, int skillThread, KeyHandler keyHandler, MouseEventHandler mouseEventHandler) {
         super(panel, skillThread, keyHandler, mouseEventHandler);
         this.attackInterval = 10;
-        this.hp = 3000;
-        this.maxHp = 3000;
+        this.hp = 1000;
+        this.maxHp = 1000;
         this.mana = 1000;
         this.maxMana = 1000;
         this.collisionArea = new Rectangle(panel.tileSize , panel.tileSize , 0, panel.tileSize / 2);
@@ -295,7 +295,7 @@ public class Witch extends Character {
     }
     public void cooldownQ(){
         if(readyQ == false){
-            if(++counterQ > 200){
+            if(++counterQ > 500){
                 counterQ = 0;
                 readyQ = true;
             }
@@ -303,10 +303,11 @@ public class Witch extends Character {
     }
     public void cooldownE(){
         if(readyE == false){
-            if(++counterE > 200){
+            if(++counterE > 500){
                 counterE = 0;
                 readyE = true;
             }
         }
     }
+
 }

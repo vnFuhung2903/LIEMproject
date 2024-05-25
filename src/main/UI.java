@@ -9,8 +9,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 public class UI {
     Panel panel;
-    BufferedImage uiInterface, uiWitch,uiE,uiQ, hp,mana;
-    BufferedImage start, guide, backgroundStart, backgroundEnd, backgroundBoss, backgroundGuide, quit, setting, backgroundSetting, pointer, mute, nightMode;
+    BufferedImage uiInterface, uiWitch,uiE,uiQ, hp,mana,cooldownSkill;
+    BufferedImage start, guide, backgroundStart, backgroundEnd, backgroundBoss, backgroundGuide, quit,returnGame, backgroundSetting, pointer, mute, nightMode;
     BufferedImage[] uiBoss, uiHpBoss, uiItem;
     public UI(Panel panel) {
         this.panel = panel;
@@ -34,14 +34,17 @@ public class UI {
         if(panel.getCurrentState()== Panel.gameState.guideState) {
             drawGuideScreen(g2);
         }
+//        if (panel.hpPercent <= 0){
+//            drawEndGame(g2);
+//        }
     }
 
     public void drawPauseScreen(Graphics2D g2) {
         g2.drawImage(backgroundSetting,panel.screenWidth/2- panel.tileSize*3, panel.screenHeight/2- panel.tileSize*9/2, panel.tileSize*6, panel.tileSize*9, null);
         g2.drawImage(pointer,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize - panel.tileSize + panel.tileSize * panel.getCurrentPointer()*2, panel.tileSize*4, panel.tileSize*2, null);
-        g2.drawImage(quit,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize - panel.tileSize , panel.tileSize*4, panel.tileSize*2, null);
-        g2.drawImage(guide,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize + panel.tileSize, panel.tileSize*4, panel.tileSize*2, null);
-        g2.drawImage(mute,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize + panel.tileSize*3, panel.tileSize*4, panel.tileSize*2, null);
+        g2.drawImage(returnGame,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize - panel.tileSize , panel.tileSize*4, panel.tileSize*2, null);
+        g2.drawImage(mute,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize + panel.tileSize, panel.tileSize*4, panel.tileSize*2, null);
+        g2.drawImage(quit,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize + panel.tileSize*3, panel.tileSize*4, panel.tileSize*2, null);
     }
     public void drawStartScreen(Graphics2D g2) {
         g2.drawImage(backgroundStart,0, 0, panel.screenWidth, panel.screenHeight, null);
@@ -49,29 +52,36 @@ public class UI {
         g2.drawImage(pointer,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize - panel.tileSize*2 + panel.tileSize*panel.getCurrentPointer()*2 , panel.tileSize*4, panel.tileSize*2, null);
         g2.drawImage(start,panel.screenWidth/2 -panel.tileSize*2,panel.screenHeight/2-panel.tileSize - panel.tileSize*2 , panel.tileSize*4, panel.tileSize*2, null);
         g2.drawImage(guide,panel.screenWidth/2- panel.tileSize*2,panel.screenHeight/2-panel.tileSize  , panel.tileSize*4, panel.tileSize*2, null);
-//        g2.drawImage(setting,panel.screenWidth/2- panel.tileSize*2,panel.screenHeight/2-panel.tileSize  + panel.tileSize*2, panel.tileSize*4, panel.tileSize*2, null);
+
     }
 
     public void drawGuideScreen(Graphics2D g2) {
         g2.drawImage(backgroundGuide,0, 0, panel.screenWidth, panel.screenHeight, null);
-    }
 
+    }
     public void drawPlayScreen(Graphics2D g2) {
 
         if(panel.encounterBoss() && panel.getBossHpPercent() > 0){
             g2.drawImage(backgroundBoss,0, 0, panel.screenWidth, panel.screenHeight, null);
         }
-//        else if(panel.night) {
-//            g2.drawImage(nightMode,0, 0, panel.screenWidth, panel.screenHeight, null);
-//        }
+        else if(panel.night) {
+            g2.drawImage(nightMode,0, 0, panel.screenWidth, panel.screenHeight, null);
+        }
         g2.drawImage(uiWitch,0, 0, panel.tileSize*3, panel.tileSize*3, null);
         g2.drawImage(uiInterface,panel.tileSize/5, panel.tileSize*3, panel.tileSize*2, panel.tileSize*4, null);
         if(panel.getHpPercent()>0)
             g2.drawImage(hp,panel.tileSize/5 , panel.tileSize*15/4 + (panel.tileSize*139/48)*(100-panel.getHpPercent())/100, panel.tileSize*2 , (panel.tileSize*139/48)*panel.getHpPercent()/100, null);
         if(panel.getManaPercent()>0)
             g2.drawImage(mana,panel.tileSize/5 , panel.tileSize*15/4 +(panel.tileSize*139/48)*(100-panel.getManaPercent())/100, panel.tileSize*2, (panel.tileSize*139/48)*panel.getManaPercent()/100, null);
+
         g2.drawImage(uiQ,panel.tileSize , panel.screenHeight - panel.tileSize*3, panel.tileSize*2, panel.tileSize*2, null);
         g2.drawImage(uiE,panel.tileSize*3, panel.screenHeight - panel.tileSize*3, panel.tileSize*2, panel.tileSize*2, null);
+
+        if(panel.countdownQ() < 100 )
+            g2.drawImage(cooldownSkill,panel.tileSize , (panel.screenHeight - panel.tileSize*11/4) + panel.tileSize*3/2 *(100-  panel.countdownQ())/100 , panel.tileSize*2 , panel.tileSize*3/2 * panel.countdownQ()/100, null);
+        if(panel.countdownE() < 100)
+            g2.drawImage(cooldownSkill,panel.tileSize*3, (panel.screenHeight - panel.tileSize*11/4) + + panel.tileSize*3/2 *(100-  panel.countdownE())/100, panel.tileSize*2  , panel.tileSize*3/2* panel.countdownE()/100, null);
+
         if(panel.encounterBoss() && panel.getBossHpPercent() > 0) {
             g2.drawImage(uiBoss[panel.getBossId()], panel.tileSize * 37/2, 0, panel.tileSize * 7/2, panel.tileSize * 7/2, null);
             g2.drawImage(uiHpBoss[0], panel.tileSize * 17/2, panel.tileSize*3/2, panel.tileSize * 10, panel.tileSize, null);
@@ -109,6 +119,7 @@ public class UI {
 
     public void drawEndGame(Graphics2D g2) {
         g2.drawImage(backgroundEnd,0, 0, panel.screenWidth, panel.screenHeight, null);
+
     }
 
     void loadImage() {
@@ -123,7 +134,7 @@ public class UI {
             guide = ImageIO.read(new File(guideImage));
 
             String settingImage = "assets/UI/button-03.png";
-            setting= ImageIO.read(new File(settingImage));
+            returnGame= ImageIO.read(new File(settingImage));
 
             String quitImage = "assets/UI/button-04.png";
             quit= ImageIO.read(new File(quitImage));
@@ -164,6 +175,9 @@ public class UI {
             String EImage = "assets/UI/uiSkillE-01.png";
             uiE =  ImageIO.read(new File(EImage));
 
+            String cooldownImage = "assets/UI/uiSkillCooldown-01.png";
+            cooldownSkill =  ImageIO.read(new File(cooldownImage));
+
             String nightImage = "assets/nightmode/night-01.png";
             nightMode = ImageIO.read(new File(nightImage));
 
@@ -199,9 +213,14 @@ public class UI {
             uiItem[6] = ImageIO.read(new File(Image7));
             String Image8 = "assets/UI/uiItem-08.png";
             uiItem[7] = ImageIO.read(new File(Image8));
+
+
+
         }
         catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 }
