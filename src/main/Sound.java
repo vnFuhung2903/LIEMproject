@@ -3,10 +3,12 @@ package main;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import java.io.File;
 
 public class Sound {
-    public Clip igMusic, startMusic, bossMusic;
+    public Clip ingameMusic, startMusic, bossPhaseMusic;
+    FloatControl ingameMusicVolControl, bossPhaseVolControl;
     public Sound() {
         getMusic();
     }
@@ -20,13 +22,16 @@ public class Sound {
 
             file = new File("sound/ingame.wav");
             audioInputStream = AudioSystem.getAudioInputStream(file);
-            igMusic = AudioSystem.getClip();
-            igMusic.open(audioInputStream);
+            ingameMusic = AudioSystem.getClip();
+            ingameMusic.open(audioInputStream);
 
             file = new File("sound/boss.wav");
             audioInputStream = AudioSystem.getAudioInputStream(file);
-            bossMusic = AudioSystem.getClip();
-            bossMusic.open(audioInputStream);
+            bossPhaseMusic = AudioSystem.getClip();
+            bossPhaseMusic.open(audioInputStream);
+            
+            ingameMusicVolControl = (FloatControl) ingameMusic.getControl(FloatControl.Type.MASTER_GAIN);
+            bossPhaseVolControl = (FloatControl) bossPhaseMusic.getControl(FloatControl.Type.MASTER_GAIN);
         } catch (Exception e) {
             e.printStackTrace();
         }

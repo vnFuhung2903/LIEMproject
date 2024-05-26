@@ -46,6 +46,7 @@ public class Panel extends JPanel implements Runnable {
     String[] pauseOption = {"back", "mute", "quit"};
     int currentPointer = 0;
     boolean bossFighter = true;
+    boolean muted = false;
 
     // UI
     boolean night = false;
@@ -137,8 +138,8 @@ public class Panel extends JPanel implements Runnable {
             if(boss.getHp() <= 0) {
                 teleportGate = new TeleportGate(this, boss.getPosX(), boss.getPosY());
                 boss = null;
-                sound.bossMusic.close();
-                sound.igMusic.loop(Clip.LOOP_CONTINUOUSLY);
+                sound.bossPhaseVolControl.setValue(-80.0f);
+                sound.ingameMusicVolControl.setValue(0.0f);
             }
             else boss.update();
         }
@@ -156,8 +157,8 @@ public class Panel extends JPanel implements Runnable {
             boss.setPosX(mapWidth / 2);
             boss.setPosY(mapHeight / 2);
             monsters.add(boss);
-            sound.igMusic.close();
-            sound.bossMusic.loop(Clip.LOOP_CONTINUOUSLY);
+            sound.ingameMusicVolControl.setValue(-80.0f);
+            sound.bossPhaseMusic.loop(Clip.LOOP_CONTINUOUSLY);
             bossFighter = false;
         }
 
@@ -449,5 +450,13 @@ public class Panel extends JPanel implements Runnable {
 
     public int getBossId() {
         return bossId;
+    }
+
+    public void setMuted() {
+        muted = !muted;
+    }
+
+    public boolean isMuted() {
+        return muted;
     }
 }

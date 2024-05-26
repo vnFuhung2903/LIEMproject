@@ -81,7 +81,7 @@ public class KeyHandler implements KeyListener {
                 if(panel.getCurrentState() == Panel.gameState.startState && Objects.equals(panel.getCurrentOption(panel.startOption), "start")) {
                     panel.setCurrentState(Panel.gameState.ingameState);
                     panel.sound.startMusic.close();
-                    panel.sound.igMusic.loop(Clip.LOOP_CONTINUOUSLY);
+                    panel.sound.ingameMusic.loop(Clip.LOOP_CONTINUOUSLY);
                     panel.resetCurrentPointer();
                     break;
                 }
@@ -92,7 +92,7 @@ public class KeyHandler implements KeyListener {
                 if(panel.getCurrentState() == Panel.gameState.guideState) {
                     panel.setCurrentState(Panel.gameState.ingameState);
                     panel.sound.startMusic.close();
-                    panel.sound.igMusic.loop(Clip.LOOP_CONTINUOUSLY);
+                    panel.sound.ingameMusic.loop(Clip.LOOP_CONTINUOUSLY);
                     panel.resetCurrentPointer();
                     break;
                 }
@@ -102,8 +102,16 @@ public class KeyHandler implements KeyListener {
                         break;
                     }
                     if(Objects.equals(panel.getCurrentOption(panel.pauseOption), "mute")) {
-                        if (panel.encounterBoss()) panel.sound.bossMusic.close();
-                        else panel.sound.igMusic.close();
+                        if(panel.isMuted()) {
+                            panel.setMuted();
+                            if (panel.encounterBoss()) panel.sound.bossPhaseVolControl.setValue(0.0f);
+                            else panel.sound.ingameMusicVolControl.setValue(0.0f);
+                        }
+                        else {
+                            panel.setMuted();
+                            if (panel.encounterBoss()) panel.sound.bossPhaseVolControl.setValue(-80.0f);
+                            else panel.sound.ingameMusicVolControl.setValue(-80.0f);
+                        }
                         break;
                     }
                     panel.setCurrentState(Panel.gameState.ingameState);
