@@ -45,7 +45,7 @@ public class Panel extends JPanel implements Runnable {
     String[] startOption = {"start", "guide"};
     String[] pauseOption = {"back", "mute", "quit"};
     int currentPointer = 0;
-    boolean bossFighter = false;
+    boolean bossFighter = true;
 
     // UI
     boolean night = false;
@@ -135,7 +135,7 @@ public class Panel extends JPanel implements Runnable {
 
         if(boss != null) {
             if(boss.getHp() <= 0) {
-                teleportGate = new TeleportGate(this, boss.getPosX() + tileSize * 2, boss.getPosY() + tileSize * 2);
+                teleportGate = new TeleportGate(this, boss.getPosX(), boss.getPosY());
                 boss = null;
             }
             else boss.update();
@@ -238,6 +238,10 @@ public class Panel extends JPanel implements Runnable {
             for (Skill skill : skillList) {
                 skill.draw(g2);
             }
+
+            if(teleportGate != null) {
+                teleportGate.draw(g2);
+            }
         }
 
         ui.draw(g2);
@@ -326,7 +330,7 @@ public class Panel extends JPanel implements Runnable {
         teleportGate = null;
         bossFighter = false;
         mapTile.loadDesertMap();
-        mapTile.getTileImage("assets/mapDesert/imagedesert.tsj");
+        mapTile.getTileImage("mapDesert");
         setBgColor(243, 174, 92);
         setMonsters();
     }

@@ -239,7 +239,7 @@ public class Skeleton extends Monster {
 
     public void checkAttacking() {
         Rectangle checkAttacking = new Rectangle(0, 0, panel.tileSize*5, panel.tileSize*5);
-        Rectangle playerArea = new Rectangle(panel.getPlayer().getPosX(), panel.getPlayer().getPosY(), panel.tileSize, panel.tileSize);
+        Rectangle playerArea = new Rectangle(panel.getPlayer().getPosX(), panel.getPlayer().getPosY(), panel.tileSize * 2, panel.tileSize * 2);
         switch (direction) {
             case "up":
                 checkAttacking.x = posX - panel.tileSize / 2;

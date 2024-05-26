@@ -24,8 +24,6 @@ public class Witch extends Character {
     BufferedImage[] getHitRight;
     BufferedImage[] passiveBackground;
 
-
-
     WitchQ witchQ;
 
     int passiveInterval = 15, getHitInterval = 10, getHitIndex = 0, passiveIndex = 0;

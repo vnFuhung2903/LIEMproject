@@ -23,24 +23,21 @@ public class TileManage  {
         mapTileNum = new int[100][100];
 //        loadDesertMap();
         loadIceMap();
-//        getTileImage("assets/mapDesert/imagedesert.tsj");
-        getTileImage("assets/mapIce/imageice.json");
+//        getTileImage("assets/mapDesert/image.json");
+        getTileImage("mapIce");
     }
-    public void getTileImage(String mapImage) {
+    public void getTileImage(String mapName) {
         try {
-//            imageObj = new JSONObject(new JSONTokener(new FileReader("assets/mapDesert/image.tsj")));
-            imageObj = new JSONObject(new JSONTokener(new FileReader(mapImage)));
+            imageObj = new JSONObject(new JSONTokener(new FileReader("assets/" + mapName + "/image.json")));
             JSONArray tiles = imageObj.getJSONArray("tiles");
 
             for(int i = 0; i < tiles.length(); ++i) {
                 int index = tiles.getJSONObject(i).getInt("id");
                 String Image = tiles.getJSONObject(i).getString("image");
                 tile[index + 1] = new Tile();
-//                tile[index + 1].image = ImageIO.read(new File("assets/mapDesert/" + Image));
-                tile[index + 1].image = ImageIO.read(new File("assets/mapIce/" + Image));
+                tile[index + 1].image = ImageIO.read(new File("assets/" + mapName + "/" + Image));
             }
-        } catch(IOException e)
-        {
+        } catch(IOException e) {
             e.printStackTrace();
         }
     }
@@ -60,10 +57,10 @@ public class TileManage  {
             for(int row = 0; row < mapWidth; ++row) {
                 for (int col = 0; col < mapHeight; ++col) {
                     mapTileNum[row][col] = data.getInt(row * mapWidth + col);
-//                    System.out.print(mapTileNum[row][col]);
-//                    System.out.print(", ");
+                    System.out.print(mapTileNum[row][col]);
+                    System.out.print(", ");
                 }
-//                System.out.println();
+                System.out.println();
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
