@@ -137,6 +137,8 @@ public class Panel extends JPanel implements Runnable {
             if(boss.getHp() <= 0) {
                 teleportGate = new TeleportGate(this, boss.getPosX(), boss.getPosY());
                 boss = null;
+                sound.bossMusic.close();
+                sound.igMusic.loop(Clip.LOOP_CONTINUOUSLY);
             }
             else boss.update();
         }
