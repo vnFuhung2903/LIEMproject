@@ -8,7 +8,7 @@ import java.util.Objects;
 public class KeyHandler implements KeyListener {
     Panel panel;
     public boolean upPressed, downPressed, leftPressed, rightPressed;
-    boolean spacePressed, QPressed, EPressed, Item1Pressed, Item2Pressed, Item3Pressed;
+    boolean spacePressed, QPressed, EPressed;
     public KeyHandler(Panel panel) {
         this.panel = panel;
     }
@@ -21,9 +21,9 @@ public class KeyHandler implements KeyListener {
     }
     public boolean isUsingSkillE() { return EPressed; }
     public int getItemPressed() {
-        if(Item1Pressed) return 0;
-        if(Item2Pressed) return 1;
-        if(Item3Pressed) return 2;
+        if(panel.Item1Pressed) return 0;
+        if(panel.Item2Pressed) return 1;
+        if(panel.Item3Pressed) return 2;
         return -1;
     }
     public void keyTyped(KeyEvent e){}
@@ -59,15 +59,7 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_E:
                 EPressed = true;
                 break;
-            case KeyEvent.VK_1:
-                Item1Pressed = true;
-                break;
-            case KeyEvent.VK_2:
-                Item2Pressed = true;
-                break;
-            case KeyEvent.VK_3:
-                Item3Pressed = true;
-                break;
+
             case KeyEvent.VK_P:
                 if(panel.getCurrentState() == Panel.gameState.ingameState) {
                     panel.setCurrentState(Panel.gameState.pauseState);
@@ -150,13 +142,13 @@ public class KeyHandler implements KeyListener {
                 EPressed = false;
                 break;
             case KeyEvent.VK_1:
-                Item1Pressed = false;
+                panel.Item1Pressed = true;
                 break;
             case KeyEvent.VK_2:
-                Item2Pressed = false;
+                panel.Item2Pressed = true;
                 break;
             case KeyEvent.VK_3:
-                Item3Pressed = false;
+                panel.Item3Pressed = true;
                 break;
         }
     }

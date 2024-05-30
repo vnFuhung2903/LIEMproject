@@ -24,7 +24,8 @@ public class Panel extends JPanel implements Runnable {
     // MAP SETTINGS
 
 
-    public int timeNight = 2000;
+    public int timeNight = 500;
+    public int timeBoss = 3000;
     final public int maxMapCol = 100;
     final public int maxMapRow = 100;
     final public int mapWidth = tileSize * maxMapRow;
@@ -45,11 +46,12 @@ public class Panel extends JPanel implements Runnable {
     String[] startOption = {"start", "guide"};
     String[] pauseOption = {"back", "mute", "quit"};
     int currentPointer = 0;
-    boolean bossFighter = true;
+    boolean bossFighter = false;
     boolean muted = false;
+    public boolean Item1Pressed, Item2Pressed, Item3Pressed;
 
     // UI
-    boolean night = false;
+    boolean night = true ;
     int bossId;
 
     // Systems
@@ -124,6 +126,9 @@ public class Panel extends JPanel implements Runnable {
     }
 
     public void update() {
+        if(getHpPercent() <=0 ) return;
+        checkNight();
+        countdownBoss();
         if(currentState != gameState.ingameState) {
             return;
         }
@@ -151,7 +156,7 @@ public class Panel extends JPanel implements Runnable {
                     boss = new Skeleton(this, 5, 10);
                     break;
                 case 1:
-                    boss = new Ghost(this, 5, 10);
+                    boss = new Ghost(this, 2, 10);
                     break;
             }
             boss.setPosX(mapWidth / 2);
@@ -201,8 +206,14 @@ public class Panel extends JPanel implements Runnable {
     void checkNight() {
        if(--timeNight < 0 ){
            night = !night;
-           timeNight = 2000;
+           timeNight = 500;
        }
+    }
+    void countdownBoss() {
+        if(--timeBoss < 0 ){
+            bossFighter = !bossFighter;
+            timeBoss = 20000;
+        }
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -282,12 +293,12 @@ public class Panel extends JPanel implements Runnable {
                 spiderCave = new SpiderCave(this, x, y);
                 created = true;
 
-//                for(int i = 0; i < 4; i++) {
-//                    Spider monster =  new Spider(this, 5, 10, spiderCave);
-//                    monster.setPosX(x + i + 1);
-//                    monster.setPosY(y + i + 1);
-//                    monsters.add(monster);
-//                }
+                for(int i = 0; i < 4; i++) {
+                    Spider monster =  new Spider(this, 5, 10, spiderCave);
+                    monster.setPosX(x + i + 1);
+                    monster.setPosY(y + i + 1);
+                    monsters.add(monster);
+                }
             }
         }
     }
@@ -304,7 +315,32 @@ public class Panel extends JPanel implements Runnable {
 
     void setMonsters() {
 
-        for(int i = 0; i < 10; ++i) {
+        for (int i = 0; i < 30; ++i) {
+            boolean created = false;
+
+            while (!created) {
+                Random randomX = new Random();
+                Random randomY = new Random();
+                int x = randomX.nextInt(mapWidth);
+                int y = randomY.nextInt(mapHeight);
+//
+//                int x = mapWidth / 2;
+//                int y = mapHeight / 2;
+
+//
+                if (collisionHandler.checkSpawn(x, y, 1)) {
+                    Goblin monster = new Goblin(this, 10, 10);
+                    monster.setPosX(x);
+                    monster.setPosY(y);
+                    monsters.add(monster);
+                    System.out.print(x);
+                    System.out.println(y);
+                    created = true;
+                }
+
+            }
+        }
+        for (int i = 0; i < 20; ++i) {
             boolean created = false;
 
             while (!created) {
@@ -313,9 +349,12 @@ public class Panel extends JPanel implements Runnable {
                 int x = randomX.nextInt(mapWidth);
                 int y = randomY.nextInt(mapHeight);
 
+//                int x = mapWidth / 2;
+//                int y = mapHeight / 2;
+
 //
-                if(collisionHandler.checkSpawn(x, y, 1)) {
-                    Slime monster = new Slime(this, 5, 10);
+                if (collisionHandler.checkSpawn(x, y, 1)) {
+                    Hobgoblin monster = new Hobgoblin(this, 5, 10);
                     monster.setPosX(x);
                     monster.setPosY(y);
                     monsters.add(monster);
@@ -324,9 +363,84 @@ public class Panel extends JPanel implements Runnable {
                     created = true;
                 }
             }
+            }
+
+            for (int i = 0; i < 50; ++i) {
+                boolean created = false;
+
+                while (!created) {
+                Random randomX = new Random();
+                Random randomY = new Random();
+                int x = randomX.nextInt(mapWidth);
+                int y = randomY.nextInt(mapHeight);
+
+//                    int x = mapWidth / 2;
+//                    int y = mapHeight / 2;
+
+//
+                    if (collisionHandler.checkSpawn(x, y, 1)) {
+                        Slave monster = new Slave(this, 10, 10);
+                        monster.setPosX(x);
+                        monster.setPosY(y);
+                        monsters.add(monster);
+                        System.out.print(x);
+                        System.out.println(y);
+                        created = true;
+                    }
+
+                }
+            }
+        for(int i = 0; i < 100; ++i) {
+            boolean created = false;
+
+            while (!created) {
+                Random randomX = new Random();
+                Random randomY = new Random();
+                int x = randomX.nextInt(mapWidth);
+                int y = randomY.nextInt(mapHeight);
+
+//                int x = mapWidth/2;
+//                int y = mapHeight/2;
+
+//
+                if (collisionHandler.checkSpawn(x, y, 1)) {
+                    Slime monster = new Slime(this, 2, 10);
+                    monster.setPosX(x);
+                    monster.setPosY(y);
+                    monsters.add(monster);
+                    System.out.print(x);
+                    System.out.println(y);
+                    created = true;
+                }
+
+            }
+        }
+        for(int i = 0; i < 50; ++i) {
+            boolean created = false;
+
+            while (!created) {
+                Random randomX = new Random();
+                Random randomY = new Random();
+                int x = randomX.nextInt(mapWidth);
+                int y = randomY.nextInt(mapHeight);
+
+//                int x = mapWidth/2;
+//                int y = mapHeight/2;
+
+//
+                if (collisionHandler.checkSpawn(x, y, 1)) {
+                    Spider monster = new Spider(this, 15, 10,spiderCave);
+                    monster.setPosX(x);
+                    monster.setPosY(y);
+                    monsters.add(monster);
+                    System.out.print(x);
+                    System.out.println(y);
+                    created = true;
+                }
+
+            }
         }
     }
-
     public void resetGame() {
         boss = null;
         sandTrap = null;
@@ -366,20 +480,23 @@ public class Panel extends JPanel implements Runnable {
         switch (id) {
             case 0:
                 if(numItemHealHp > 0) {
-                    setEffect(player, "healing", 10, 2);
+                    setEffect(player, "healing", 5, 2);
                     --numItemHealHp;
+                    Item1Pressed = false;
                 }
                 break;
             case 1:
                 if(numItemHealMana > 0) {
-                    setEffect(player, "healingMana", 10, 2);
+                    setEffect(player, "healingMana", 5, 2);
                     --numItemHealMana;
+                    Item2Pressed = false;
                 }
                 break;
             case 2:
                 if(numItemImmunity > 0) {
-                    setEffect(player, "immune", 10, 2);
+                    setEffect(player, "immune", 20, 2);
                     --numItemImmunity;
+                    Item3Pressed = false;
                 }
                 break;
             default:

@@ -15,7 +15,7 @@ public class Monster extends Entity {
     protected boolean readySkillE= true,readySkillQ = true,readySkillR = true;
     public Monster(Panel panel, int speed, int skillThread) {
         super(panel, speed, skillThread);
-        this.hp = 200;
+        this.hp = 100;
     }
 
     public void setAction() {}

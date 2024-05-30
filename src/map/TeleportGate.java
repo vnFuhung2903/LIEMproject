@@ -36,7 +36,7 @@ public class TeleportGate {
 
     public void update() {
         checkHitBox();
-        if(++tick >= 10) {
+        if(++tick >= 5) {
             tick = 0;
             if (++imageIndex >= 10) {
                 imageIndex = 0;

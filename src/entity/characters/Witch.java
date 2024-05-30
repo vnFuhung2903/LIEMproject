@@ -33,6 +33,7 @@ public class Witch extends Character {
         super(panel, skillThread, keyHandler, mouseEventHandler);
         this.attackInterval = 10;
         this.hp = 1000;
+        this.speed = 1;
         this.maxHp = 1000;
         this.mana = 1000;
         this.maxMana = 1000;

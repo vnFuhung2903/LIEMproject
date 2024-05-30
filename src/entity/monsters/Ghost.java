@@ -15,8 +15,8 @@ public class Ghost extends Monster {
         setRandomDirection();
         this.monsterSize = 4;
         this.attackInterval = 10;
-        this.hp = 30000;
-        this.maxHp = 30000;
+        this.hp = 1000;
+        this.maxHp = 1000;
 
         this.triggerArea = new Rectangle(-4 * panel.tileSize, -4 * panel.tileSize, 9 * panel.tileSize, 9 * panel.tileSize);
         this.collisionArea = new Rectangle(panel.tileSize / 2, panel.tileSize / 2, 0, panel.tileSize / 2);
@@ -46,30 +46,30 @@ public class Ghost extends Monster {
         checkTriggerPlayer();
         if (++actionLockCounter == 50) {
             actionLockCounter = 0;
-//            if (triggering) {
-//
-//                int distanceX = posX - panel.getPlayer().getPosX();
-//                int distanceY = posY - panel.getPlayer().getPosY();
-//
-//                if (Math.abs(distanceX) < Math.abs(distanceY)) {
-//                    collisionDetected = false;
-//                    direction = distanceY < 0 ? "down" : "up";
-//                    panel.collisionHandler.checkMapCollision(this);
-//                    if (!collisionDetected)
-//                        return;
-//                } else {
-//                    collisionDetected = false;
-//                    direction = distanceX < 0 ? "right" : "left";
-//                    panel.collisionHandler.checkMapCollision(this);
-//                    if (!collisionDetected)
-//                        return;
-//                }
-//
-//                collisionDetected = false;
-//                triggering = false;
-//            }
-//
-//            setRandomDirection();
+            if (triggering) {
+
+                int distanceX = posX - panel.getPlayer().getPosX();
+                int distanceY = posY - panel.getPlayer().getPosY();
+
+                if (Math.abs(distanceX) < Math.abs(distanceY)) {
+                    collisionDetected = false;
+                    direction = distanceY < 0 ? "down" : "up";
+                    panel.collisionHandler.checkMapCollision(this);
+                    if (!collisionDetected)
+                        return;
+                } else {
+                    collisionDetected = false;
+                    direction = distanceX < 0 ? "right" : "left";
+                    panel.collisionHandler.checkMapCollision(this);
+                    if (!collisionDetected)
+                        return;
+                }
+
+                collisionDetected = false;
+                triggering = false;
+            }
+
+            setRandomDirection();
         }
     }
 

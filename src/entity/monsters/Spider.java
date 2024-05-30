@@ -51,16 +51,16 @@ public class Spider extends Monster {
     }
 
     boolean abandonCave() {
-        switch (direction) {
-            case "left":
-                return posX - speed < cave.getPosX() + cave.getTerritoryArea().x;
-            case "right":
-                return posX + speed > cave.getPosX() + cave.getTerritoryArea().x + cave.getTerritoryArea().width;
-            case "top":
-                return posY - speed < cave.getPosY() + cave.getTerritoryArea().y;
-            case "bottom":
-                return posY + speed > cave.getPosY() + cave.getTerritoryArea().y + cave.getTerritoryArea().height;
-        }
+//        switch (direction) {
+//            case "left":
+//                return posX - speed < cave.getPosX() + cave.getTerritoryArea().x;
+//            case "right":
+//                return posX + speed > cave.getPosX() + cave.getTerritoryArea().x + cave.getTerritoryArea().width;
+//            case "top":
+//                return posY - speed < cave.getPosY() + cave.getTerritoryArea().y;
+//            case "bottom":
+//                return posY + speed > cave.getPosY() + cave.getTerritoryArea().y + cave.getTerritoryArea().height;
+//        }
         return false;
     }
 

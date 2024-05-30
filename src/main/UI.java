@@ -18,24 +18,26 @@ public class UI {
 
     }
     public void draw(Graphics2D g2) {
-
-        if(panel.getCurrentState() == Panel.gameState.pauseState) {
-            drawPauseScreen(g2);
-            return;
-        }
-        if(panel.getCurrentState() == Panel.gameState.startState) {
-            drawStartScreen(g2);
-            return;
-        }
-        if(panel.getCurrentState()== Panel.gameState.ingameState) {
-            drawPlayScreen(g2);
-            return;
-        }
-        if(panel.getCurrentState()== Panel.gameState.guideState) {
-            drawGuideScreen(g2);
-        }
         if (panel.getHpPercent() <= 0){
             drawEndGame(g2);
+        }
+        else
+        {
+            if (panel.getCurrentState() == Panel.gameState.pauseState) {
+                drawPauseScreen(g2);
+                return;
+            }
+            if (panel.getCurrentState() == Panel.gameState.startState) {
+                drawStartScreen(g2);
+                return;
+            }
+            if (panel.getCurrentState() == Panel.gameState.ingameState) {
+                drawPlayScreen(g2);
+                return;
+            }
+            if (panel.getCurrentState() == Panel.gameState.guideState) {
+                drawGuideScreen(g2);
+            }
         }
     }
 
@@ -64,9 +66,9 @@ public class UI {
         if(panel.encounterBoss() && panel.getBossHpPercent() > 0){
             g2.drawImage(backgroundBoss,0, 0, panel.screenWidth, panel.screenHeight, null);
         }
-        else if(panel.night) {
-            g2.drawImage(nightMode,0, 0, panel.screenWidth, panel.screenHeight, null);
-        }
+//        else if(panel.night) {
+//            g2.drawImage(nightMode,0, 0, panel.screenWidth, panel.screenHeight, null);
+//        }
         g2.drawImage(uiWitch,0, 0, panel.tileSize*3, panel.tileSize*3, null);
         g2.drawImage(uiInterface,panel.tileSize/5, panel.tileSize*3, panel.tileSize*2, panel.tileSize*4, null);
         if(panel.getHpPercent()>0)
@@ -119,7 +121,6 @@ public class UI {
 
     public void drawEndGame(Graphics2D g2) {
         g2.drawImage(backgroundEnd,0, 0, panel.screenWidth, panel.screenHeight, null);
-
     }
 
     void loadImage() {
