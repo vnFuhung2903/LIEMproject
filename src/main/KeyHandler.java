@@ -53,10 +53,10 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_SPACE:
                 spacePressed = true;
                 break;
-            case KeyEvent.VK_Q:
+            case KeyEvent.VK_J:
                 QPressed = true;
                 break;
-            case KeyEvent.VK_E:
+            case KeyEvent.VK_K:
                 EPressed = true;
                 break;
 
@@ -135,10 +135,10 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_SPACE:
                 spacePressed = false;
                 break;
-            case KeyEvent.VK_Q:
+            case KeyEvent.VK_J:
                 QPressed = false;
                 break;
-            case KeyEvent.VK_E:
+            case KeyEvent.VK_K:
                 EPressed = false;
                 break;
             case KeyEvent.VK_1:

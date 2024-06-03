@@ -92,7 +92,7 @@ public class Slash extends Skill {
                 hitboxArea.height = panel.tileSize * 4;
                 if(hitboxArea.intersects(playerArea)){
                     System.out.println("splash attack");
-                    panel.getPlayer().damage(1);
+                    panel.getPlayer().damage(50);
                 }
                 break;
         }

@@ -15,8 +15,8 @@ public class Ghost extends Monster {
         setRandomDirection();
         this.monsterSize = 4;
         this.attackInterval = 10;
-        this.hp = 1000;
-        this.maxHp = 1000;
+        this.hp = 3000;
+        this.maxHp = 3000;
 
         this.triggerArea = new Rectangle(-4 * panel.tileSize, -4 * panel.tileSize, 9 * panel.tileSize, 9 * panel.tileSize);
         this.collisionArea = new Rectangle(panel.tileSize / 2, panel.tileSize / 2, 0, panel.tileSize / 2);
@@ -92,7 +92,7 @@ public class Ghost extends Monster {
     }
     public void cooldownE(){
         if(!readySkillE) {
-            if (++counterE > 10000) {
+            if (++counterE > 500) {
                 readySkillE = true;
                 counterE = 0;
             }

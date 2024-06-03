@@ -12,8 +12,14 @@ public class Main {
         window.add(panel);
         window.pack();
         window.setLocationRelativeTo(null);
-        // not spesify the location of the window: it means the window be display at the center of the screen
+        // not specify the location of the window: it means the window be display at the center of the screen
         window.setVisible(true); //can see the window
         panel.startThread();
     }
 }
+
+
+
+
+
+

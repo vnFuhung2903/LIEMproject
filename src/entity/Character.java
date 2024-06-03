@@ -58,10 +58,9 @@ public class Character extends Entity {
                 direction = "right";
             }
 
-            // Check collision
             collisionDetected = false;
             panel.collisionHandler.checkMapCollision(this);
-//            panel.collisionHandler.checkMonsterCollision(this);
+
             if(!collisionDetected) {
                 switch (direction) {
                     case "left":
@@ -90,18 +89,7 @@ public class Character extends Entity {
         }
     }
 
-//    public void moveFlashAnimation() {
-//        if (keyHandler.flashPressed) {
-//            speed = 10;
-//            if (++spriteTick > 5) {
-//                if (spriteIndex > 4) spriteIndex = 1;
-//                else spriteIndex ++;
-//                spriteTick = 0;
-//                flash = false;
-//                speed = 2;
-//            }
-//        }
-//    }
+
 
     public void updateAttackAnimation() {
         if (++attackTick >= attackInterval) {
@@ -115,12 +103,5 @@ public class Character extends Entity {
 
     public void checkAttacking() {}
 
-//    public void checkFlash() {
-//        if(keyHandler.flashPressed) {
-//            speed = 1000;
-//            flash = true;
-//        } else {
-//            speed = 2;
-//        }
-//    }
+
 }

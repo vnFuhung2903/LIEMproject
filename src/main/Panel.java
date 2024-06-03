@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import java.awt.*;
 import java.util.*;
 
+import assets.SkeletonSlash;
 import entity.*;
 import entity.Character;
 import entity.monsters.*;
@@ -25,7 +26,7 @@ public class Panel extends JPanel implements Runnable {
 
 
     public int timeNight = 500;
-    public int timeBoss = 3000;
+    public int timeBoss = 1000;
     final public int maxMapCol = 100;
     final public int maxMapRow = 100;
     final public int mapWidth = tileSize * maxMapRow;
@@ -159,8 +160,8 @@ public class Panel extends JPanel implements Runnable {
                     boss = new Ghost(this, 2, 10);
                     break;
             }
-            boss.setPosX(mapWidth / 2);
-            boss.setPosY(mapHeight / 2);
+            boss.setPosX(player.getPosX() - 10);
+            boss.setPosY(player.getPosY() + 10);
             monsters.add(boss);
             sound.ingameMusicVolControl.setValue(-80.0f);
             sound.bossPhaseMusic.loop(Clip.LOOP_CONTINUOUSLY);
@@ -212,7 +213,7 @@ public class Panel extends JPanel implements Runnable {
     void countdownBoss() {
         if(--timeBoss < 0 ){
             bossFighter = !bossFighter;
-            timeBoss = 20000;
+            timeBoss = 2000;
         }
     }
     public void paintComponent(Graphics g){
@@ -314,18 +315,17 @@ public class Panel extends JPanel implements Runnable {
     }
 
     void setMonsters() {
-
         for (int i = 0; i < 30; ++i) {
             boolean created = false;
 
             while (!created) {
                 Random randomX = new Random();
                 Random randomY = new Random();
-                int x = randomX.nextInt(mapWidth);
-                int y = randomY.nextInt(mapHeight);
+//                int x = randomX.nextInt(mapWidth);
+//                int y = randomY.nextInt(mapHeight);
 //
-//                int x = mapWidth / 2;
-//                int y = mapHeight / 2;
+                int x = mapWidth / 3;
+                int y = mapHeight / 3;
 
 //
                 if (collisionHandler.checkSpawn(x, y, 1)) {
@@ -340,7 +340,7 @@ public class Panel extends JPanel implements Runnable {
 
             }
         }
-        for (int i = 0; i < 20; ++i) {
+        for (int i = 0; i < 100; ++i) {
             boolean created = false;
 
             while (!created) {
@@ -349,12 +349,9 @@ public class Panel extends JPanel implements Runnable {
                 int x = randomX.nextInt(mapWidth);
                 int y = randomY.nextInt(mapHeight);
 
-//                int x = mapWidth / 2;
-//                int y = mapHeight / 2;
-
 //
-                if (collisionHandler.checkSpawn(x, y, 1)) {
-                    Hobgoblin monster = new Hobgoblin(this, 5, 10);
+                if(collisionHandler.checkSpawn(x, y, 1)) {
+                    Slime monster = new Slime(this, 5, 10);
                     monster.setPosX(x);
                     monster.setPosY(y);
                     monsters.add(monster);
@@ -365,56 +362,7 @@ public class Panel extends JPanel implements Runnable {
             }
             }
 
-            for (int i = 0; i < 50; ++i) {
-                boolean created = false;
 
-                while (!created) {
-                Random randomX = new Random();
-                Random randomY = new Random();
-                int x = randomX.nextInt(mapWidth);
-                int y = randomY.nextInt(mapHeight);
-
-//                    int x = mapWidth / 2;
-//                    int y = mapHeight / 2;
-
-//
-                    if (collisionHandler.checkSpawn(x, y, 1)) {
-                        Slave monster = new Slave(this, 10, 10);
-                        monster.setPosX(x);
-                        monster.setPosY(y);
-                        monsters.add(monster);
-                        System.out.print(x);
-                        System.out.println(y);
-                        created = true;
-                    }
-
-                }
-            }
-        for(int i = 0; i < 100; ++i) {
-            boolean created = false;
-
-            while (!created) {
-                Random randomX = new Random();
-                Random randomY = new Random();
-                int x = randomX.nextInt(mapWidth);
-                int y = randomY.nextInt(mapHeight);
-
-//                int x = mapWidth/2;
-//                int y = mapHeight/2;
-
-//
-                if (collisionHandler.checkSpawn(x, y, 1)) {
-                    Slime monster = new Slime(this, 2, 10);
-                    monster.setPosX(x);
-                    monster.setPosY(y);
-                    monsters.add(monster);
-                    System.out.print(x);
-                    System.out.println(y);
-                    created = true;
-                }
-
-            }
-        }
         for(int i = 0; i < 50; ++i) {
             boolean created = false;
 
@@ -446,6 +394,7 @@ public class Panel extends JPanel implements Runnable {
         sandTrap = null;
         teleportGate = null;
         bossFighter = false;
+        monsters = new ArrayList<Monster>();
         mapTile.loadDesertMap();
         mapTile.getTileImage("mapDesert");
         setBgColor(243, 174, 92);

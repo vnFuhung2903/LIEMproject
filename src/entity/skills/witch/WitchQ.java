@@ -95,7 +95,7 @@ public class WitchQ extends Skill {
                     areaQ.width = panel.tileSize;
                     areaQ.height = panel.tileSize * 6;
                     if(areaQ.intersects(monsterHitBoxArea)){
-                        panel.setWitchSkillEffects(monster, 10);
+                        panel.setWitchSkillEffects(monster, 5);
                         System.out.println("dame");
                         monster.damage(1);
                     }
@@ -106,7 +106,7 @@ public class WitchQ extends Skill {
                     areaQ.width = panel.tileSize;
                     areaQ.height = panel.tileSize * 6;
                     if(areaQ.intersects(monsterHitBoxArea)) {
-                        panel.setWitchSkillEffects(monster, 10);
+                        panel.setWitchSkillEffects(monster, 5);
                         System.out.println("dame");
                         monster.damage(1);
                     }
@@ -117,7 +117,7 @@ public class WitchQ extends Skill {
                     areaQ.width = panel.tileSize * 6;
                     areaQ.height = panel.tileSize;
                     if(areaQ.intersects(monsterHitBoxArea)) {
-                        panel.setWitchSkillEffects(monster, 10);
+                        panel.setWitchSkillEffects(monster, 5);
                         System.out.println("dame");
                         monster.damage(1);
                     }
@@ -128,7 +128,7 @@ public class WitchQ extends Skill {
                     areaQ.width = panel.tileSize * 6;
                     areaQ.height = panel.tileSize;
                     if(areaQ.intersects(monsterHitBoxArea)) {
-                        panel.setWitchSkillEffects(monster, 10);
+                        panel.setWitchSkillEffects(monster, 5);
                         System.out.println("dame");
                         monster.damage(1);
                     }

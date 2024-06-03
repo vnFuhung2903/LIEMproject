@@ -32,9 +32,9 @@ public class Witch extends Character {
     public Witch(Panel panel, int skillThread, KeyHandler keyHandler, MouseEventHandler mouseEventHandler) {
         super(panel, skillThread, keyHandler, mouseEventHandler);
         this.attackInterval = 10;
-        this.hp = 1000;
+        this.hp = 2000;
         this.speed = 1;
-        this.maxHp = 1000;
+        this.maxHp = 2000;
         this.mana = 1000;
         this.maxMana = 1000;
         this.collisionArea = new Rectangle(panel.tileSize , panel.tileSize , 0, panel.tileSize / 2);
@@ -63,17 +63,10 @@ public class Witch extends Character {
             witchPassives[i].update();
         }
 
-//        if(getHit) {
-//            updateGetHitAnimation();
-//            moveAnimation();
-//            return;
-//        }
-
         if(usingSkillQ) {
             witchQ.update();
-            mana -= 3;
+            mana -= 2;
         }
-//        if(usingSkillE) witchE.update();
 
         if (attacking) {
 
@@ -97,7 +90,7 @@ public class Witch extends Character {
                         panel.setSkill(witchE);
                     }
                 }
-                mana -=100;
+                mana -=60;
                 usingSkillE = false;
             }
         }
@@ -114,26 +107,6 @@ public class Witch extends Character {
         for (int i = 0; i < 6; ++i) {
             witchPassives[i].draw(g2);
         }
-//        if(getHit) {
-//            switch (direction) {
-//                case "up":
-//                    currentFrameImg = getHitUp[getHitIndex];
-//                    break;
-//                case "down":
-//                    currentFrameImg = getHitDown[getHitIndex];
-//                    break;
-//                case "left":
-//                    currentFrameImg = getHitLeft[getHitIndex];
-//                    break;
-//                case "right":
-//                    currentFrameImg = getHitRight[getHitIndex];
-//                    break;
-//            }
-//
-//            g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
-//        }
-//
-//        else
             if (attacking) {
             switch (direction) {
                 case "up":
@@ -153,7 +126,6 @@ public class Witch extends Character {
             g2.drawImage(currentFrameImg, screenX, screenY, panel.tileSize * 2, panel.tileSize * 2, null);
 
             if(usingSkillQ) witchQ.draw(g2);
-//            if(usingSkillE) witchE.draw(g2);
         }
 
         else
@@ -297,16 +269,16 @@ public class Witch extends Character {
         spriteIndex = 0;
     }
     public void cooldownQ(){
-        if(readyQ == false){
-            if(++counterQ > 300){
+        if(!readyQ){
+            if(++counterQ > 200){
                 counterQ = 0;
                 readyQ = true;
             }
         }
     }
     public void cooldownE(){
-        if(readyE == false){
-            if(++counterE > 300){
+        if(!readyE){
+            if(++counterE > 200){
                 counterE = 0;
                 readyE = true;
             }

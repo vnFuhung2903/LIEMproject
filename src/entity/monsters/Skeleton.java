@@ -198,7 +198,7 @@ public class Skeleton extends Monster {
 
     public void updateInvincibleTime() {
         if(++counterInvincible >= 150) {
-            hp += 30 * hp / 100;
+            hp += 40 * hp / 100;
             counterInvincible = 0;
             invincible = false;
             readySkillE = false;
@@ -335,7 +335,7 @@ public class Skeleton extends Monster {
                 attackArea.width = panel.tileSize*3;
                 attackArea.height = panel.tileSize*3;
                 if(attackArea.intersects(playerHitBoxArea)){
-                    panel.getPlayer().damage(1);
+                    panel.getPlayer().damage(10);
                 }
                 break;
             case "down":
@@ -344,7 +344,7 @@ public class Skeleton extends Monster {
                 attackArea.width = panel.tileSize * 3;
                 attackArea.height = panel.tileSize * 3;
                 if(attackArea.intersects(playerHitBoxArea)){
-                    panel.getPlayer().damage(1);
+                    panel.getPlayer().damage(10);
                 }
                 break;
             case "right":
@@ -353,7 +353,7 @@ public class Skeleton extends Monster {
                 attackArea.width = panel.tileSize * 3;
                 attackArea.height = panel.tileSize * 3;
                 if(attackArea.intersects(playerHitBoxArea)){
-                    panel.getPlayer().damage(1);
+                    panel.getPlayer().damage(10);
                 }
                 break;
             case "left":
@@ -362,7 +362,7 @@ public class Skeleton extends Monster {
                 attackArea.width = panel.tileSize * 3;
                 attackArea.height = panel.tileSize*3;
                 if(attackArea.intersects(playerHitBoxArea)){
-                    panel.getPlayer().damage(1);
+                    panel.getPlayer().damage(10);
                 }
                 break;
         }
@@ -386,7 +386,7 @@ public class Skeleton extends Monster {
                 attackArea.height = panel.tileSize * 3;
                 if(attackArea.intersects(playerHitBoxArea)){
 //                    System.out.println("SkeletonQ attack");
-                    panel.getPlayer().damage(1);
+                    panel.getPlayer().damage(10);
                 }
                 break;
             case "down":
@@ -396,7 +396,7 @@ public class Skeleton extends Monster {
                 attackArea.height = panel.tileSize*3;
                 if(attackArea.intersects(playerHitBoxArea)){
 //                    System.out.println("SkeletonQ attack");
-                    panel.getPlayer().damage(1);
+                    panel.getPlayer().damage(10);
                 }
                 break;
             case "right":
@@ -406,7 +406,7 @@ public class Skeleton extends Monster {
                 attackArea.height = panel.tileSize*3;
                 if(attackArea.intersects(playerHitBoxArea)){
 //                    System.out.println("SkeletonQ attack");
-                    panel.getPlayer().damage(1);
+                    panel.getPlayer().damage(10);
                 }
                 break;
             case "left":
@@ -416,7 +416,7 @@ public class Skeleton extends Monster {
                 attackArea.height = panel.tileSize*3;
                 if(attackArea.intersects(playerHitBoxArea)){
 //                    System.out.println("SkeletonQ attack");
-                    panel.getPlayer().damage(1);
+                    panel.getPlayer().damage(10);
                 }
                 break;
         }
